@@ -18,6 +18,7 @@ module.exports = function($q, $timeout, $rootScope) {
 
   this.setContentFilters = function(selectedRecommendationFilter, selectedOrderFilter, selectedLastActivityFilter){
     context.selectedRecommendationFilter = selectedRecommendationFilter;
+    context.selectedOfferFilter = selectedOfferFilter;
     context.selectedOrderFilter = selectedOrderFilter;
 
     context.selectedLastActivityFilter = selectedLastActivityFilter;
@@ -79,6 +80,9 @@ module.exports = function($q, $timeout, $rootScope) {
         shortDescription : context.shortDescription,
         recommendationJustification : context.justification,
         recommendation : context.selectedRecommendation,
+        offer : context.selectedOffer,
+        client : context.client,
+        technologies : context.technologies,
         description : context.description,
         website : context.webSite,
         image : context.image
@@ -91,6 +95,9 @@ module.exports = function($q, $timeout, $rootScope) {
         shortDescription : context.shortDescription,
         recommendationJustification : context.justification,
         recommendation : context.selectedRecommendation,
+        offer : context.selectedOffer,
+        client : context.client,
+        technologies : context.technologies,
         description : context.description,
         website : context.webSite,
         imageContent : context.image
@@ -318,6 +325,17 @@ module.exports = function($q, $timeout, $rootScope) {
     gapi.client.rest.getRecommendations().execute(function(data){
       deferred.resolve(data.items);
     });
+    return deferred.promise;
+  }
+
+  this.getOffers = function(){
+    var deferred = $q.defer();
+    //TODO: edgardc adicionar o método getOffers no backend
+  //  gapi.client.rest.getOffers().execute(function(data){
+  //    deferred.resolve(data.items);
+//    });
+    // remover a linha estática demois
+    deferred.resolve(['Mobile', 'Cloud Compute', 'Analyts', 'Agile Optimization']);
     return deferred.promise;
   }
 

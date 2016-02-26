@@ -32,6 +32,10 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.dropDownRecommendation = data;
   });
 
+  TechnologyService.getOffers().then(function(data){
+    context.dropDownOffer = data;
+  });
+
   this.addOrUpdateTechnology = function(form){
     var isEdit = (context.id !== undefined);
     if(context.name != null && context.description != null && context.shortDescription != null) {
@@ -65,6 +69,8 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.description = '';
     context.shortDescription = '';
     context.webSite = '';
+    context.client = '';
+    context.technologies = '';
     document.getElementById('technology-name').value = null;
     document.getElementById('list').innerHTML = ['<img src="/assets/images/no_image.png" title="Insira uma imagem" />'].join('');
   }
@@ -74,17 +80,24 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.id = technology.id;
     context.shortDescription = technology.shortDescription;
     context.description = technology.description;
+    context.client = technology.client;
+    context.technologies = technology.technologies;
     context.webSite = technology.website;
     context.image = technology.image;
     if(context.image){
       document.getElementById('list').innerHTML = ['<img src="', context.image,'" title="', context.name, '" />'].join('');
     }
     context.selectedRecommendation = technology.recommendation;
+    context.selectedOffer = technology.offer;
     context.justification = technology.recommendationJustification;
   }
 
   this.selectRecommendation = function(selected){
     context.selectedRecommendation = selected;
+  };
+
+  this.selectOffer = function(selected){
+    context.selectedOffer = selected;
   };
 
   $scope.handleFileSelect = function(file) {

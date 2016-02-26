@@ -37,6 +37,9 @@ public class Technology extends BaseEntity<String> {
   public static final String WEBSITE = "website";
   public static final String AUTHOR = "author";
   public static final String IMAGE = "image";
+  public static final String CLIENT = "client";
+  public static final String OFFER = "offer";
+  public static final String TECHNOLOGIES = "technologies";
   public static final String RECOMMENDATION = "recommendation";
   public static final String RECOMMENDATION_JUSTIFICATION = "recommendationJustification";
   public static final String POSITIVE_RECOMMENDATIONS_COUNTER = "positiveRecommendationsCounter";
@@ -70,6 +73,15 @@ public class Technology extends BaseEntity<String> {
 
   @Unindex
   private String image;
+
+  @Unindex
+  private String client;
+
+  @Unindex
+  private String offer;
+
+  @Unindex
+  private String technologies;
 
   /** company recommendation info. */
   @Unindex
@@ -209,6 +221,30 @@ public class Technology extends BaseEntity<String> {
 
   public void setImage(String image) {
     this.image = image;
+  }
+
+  public String getClient() {
+    return client;
+  }
+
+  public void setClient(String client) {
+    this.client = client;
+  }
+
+  public String getOffer() {
+    return offer;
+  }
+
+  public void setOffer(String offer) {
+    this.offer = offer;
+  }
+
+  public String getTechnologies(){
+    return technologies;
+  }
+
+  public void setTechnologies(String technologies){
+    this.technologies = technologies;
   }
 
   public Boolean getActive() {

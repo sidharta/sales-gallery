@@ -24,6 +24,12 @@ public class TechnologyTO implements Response {
   private String author;
   /** technology image. */
   private String image;
+  /** Proposal client. */
+  private String client;
+  /** Proposal offer. */
+  private String offer;
+  /** Proposal technologies. */
+  private String technologies;
   /** technology company recommendation. */
   private String recommendation;
   /** technology company recommendation justification. */
@@ -137,6 +143,30 @@ public class TechnologyTO implements Response {
 
   public void setImage(String image) {
     this.image = image;
+  }
+
+  public String getClient() {
+    return client;
+  }
+
+  public void setClient(String client) {
+    this.client = client;
+  }
+
+  public String getOffer() {
+    return offer;
+  }
+
+  public void setOffer(String offer) {
+    this.offer = offer;
+  }
+  
+  public String getTechnologies() {
+    return technologies;
+  }
+
+  public void setTechnologies(String technologies) {
+    this.technologies = technologies;
   }
 
   public String getRecommendation() {

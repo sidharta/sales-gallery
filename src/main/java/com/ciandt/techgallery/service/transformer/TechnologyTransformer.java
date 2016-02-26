@@ -18,6 +18,9 @@ public class TechnologyTransformer implements Transformer<Technology, Technology
     product.setRecommendationJustification(baseObject.getRecommendationJustification());
     product.setShortDescription(baseObject.getShortDescription());
     product.setWebsite(baseObject.getWebsite());
+    product.setClient(baseObject.getClient());
+    product.setOffer(baseObject.getOffer());
+    product.setTechnologies(baseObject.getTechnologies());
     product.setPositiveRecommendationsCounter(baseObject.getPositiveRecommendationsCounter());
     product.setNegativeRecommendationsCounter(baseObject.getNegativeRecommendationsCounter());
     product.setCommentariesCounter(baseObject.getCommentariesCounter());
@@ -41,6 +44,9 @@ public class TechnologyTransformer implements Transformer<Technology, Technology
       product.setRecommendationJustification(baseObject.getRecommendationJustification());
       product.setShortDescription(baseObject.getShortDescription());
       product.setWebsite(baseObject.getWebsite());
+      product.setClient(baseObject.getClient());
+      product.setOffer(baseObject.getOffer());
+      product.setTechnologies(baseObject.getTechnologies());
       product.setPositiveRecommendationsCounter(baseObject.getPositiveRecommendationsCounter());
       product.setNegativeRecommendationsCounter(baseObject.getNegativeRecommendationsCounter());
       product.setCommentariesCounter(baseObject.getCommentariesCounter());
