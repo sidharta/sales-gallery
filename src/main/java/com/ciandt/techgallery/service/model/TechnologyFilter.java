@@ -1,6 +1,7 @@
 package com.ciandt.techgallery.service.model;
 
 import com.ciandt.techgallery.service.enums.DateFilterEnum;
+import com.ciandt.techgallery.service.enums.OfferEnum;
 
 /**
  * Response with all technology entities.
@@ -25,6 +26,36 @@ public class TechnologyFilter implements Response {
   /** string for order option. */
   private DateFilterEnum dateFilter;
 
+  /** string for search in customerName. */
+  private String customerNameContains;
+  
+  /** string for search in offer. */
+  private OfferEnum offerIs;
+  
+  /** string for search in technologies. */
+  private String technologiesContains;
+  
+  public String getCustomerNameContains() {
+    return customerNameContains;
+  }
+  public void setCustomerNameContains(String value) {
+    this.customerNameContains = value;
+  }
+  
+  public OfferEnum getOfferIs() {
+    return offerIs;
+  }
+  public void setOfferIs(OfferEnum value) {
+    this.offerIs = value;
+  }
+  
+  public String getTechnologiesContains() {
+    return technologiesContains;
+  }
+  public void setTechnologiesContains(String value) {
+    this.technologiesContains = value;
+  }
+  
   public String getTitleContains() {
     return titleContains;
   }
@@ -81,7 +112,7 @@ public class TechnologyFilter implements Response {
    *          for sort the result
    */
   public TechnologyFilter(String titleContains, String shortDescriptionContains, String recommendationIs,
-      Integer dateFilter, String orderOptionIs) {
+      Integer dateFilter, String orderOptionIs, String customerNameContains, String offerIs, String technologiesContains) {
     this.titleContains = titleContains;
     this.shortDescriptionContains = shortDescriptionContains;
     this.recommendationIs = recommendationIs;
@@ -89,5 +120,10 @@ public class TechnologyFilter implements Response {
     if (dateFilter != null && (dateFilter >= 0 && dateFilter <= 2)) {
       this.dateFilter = DateFilterEnum.values()[dateFilter];
     }
+    this.customerNameContains = customerNameContains;
+    if (offerIs != null) {
+        this.offerIs = OfferEnum.valueOf(OfferEnum.class, offerIs);
+    }
+    this.technologiesContains = technologiesContains;
   }
 }

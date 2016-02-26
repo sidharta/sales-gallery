@@ -276,6 +276,9 @@ public class TechnologyServiceImpl implements TechnologyService {
   private void verifyFilters(TechnologyFilter techFilter, List<Technology> completeList,
       List<Technology> filteredList) {
     for (Technology technology : completeList) {
+        if (techFilter.getOfferIs() != null && !technology.getOffer().equals(techFilter.getOfferIs().toString())) {
+            continue;
+        }
       if (verifyTitleAndShortDescriptionFilter(techFilter, technology)) {
         if (techFilter.getRecommendationIs() != null) {
           if (verifyRecommendationFilter(techFilter, technology)) {
@@ -308,8 +311,11 @@ public class TechnologyServiceImpl implements TechnologyService {
 
   private boolean verifyTitleAndShortDescriptionFilter(TechnologyFilter techFilter, Technology technology) {
     if (techFilter.getTitleContains() != null
-        && (technology.getName().toLowerCase().contains(techFilter.getTitleContains().toLowerCase()) || technology
-            .getShortDescription().toLowerCase().contains(techFilter.getShortDescriptionContains().toLowerCase()))) {
+        && (technology.getName().toLowerCase().contains(techFilter.getTitleContains().toLowerCase()) || 
+            technology.getShortDescription().toLowerCase().contains(techFilter.getShortDescriptionContains().toLowerCase()) ||
+            technology.getCustomerName().toLowerCase().contains(techFilter.getCustomerNameContains().toString().toLowerCase()) ||
+            technology.getTechnologies().toLowerCase().contains(techFilter.getTechnologiesContains().toString().toLowerCase())
+           )) {
       return true;
     }
     return false;

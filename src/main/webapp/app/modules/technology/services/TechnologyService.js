@@ -122,7 +122,10 @@ module.exports = function($q, $timeout, $rootScope) {
       shortDescriptionContains: context.textSearch,
       orderOptionIs: context.selectedOrderFilter,
       dateFilter : context.selectedLastActivityFilter,
-      recommendationIs: context.selectedRecommendationFilter
+      recommendationIs: context.selectedRecommendationFilter,
+      customerNameContains: context.textSearch,
+      offerIs: context.offerIs,
+      technologiesContains: context.textSearch,
     }
     var deferred = $q.defer();
     gapi.client.rest.findByFilter(req).execute(function(data){

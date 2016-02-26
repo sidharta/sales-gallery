@@ -108,9 +108,39 @@ public class Technology extends BaseEntity<String> {
   @Ignore
   private String imageContent;
 
+  @Index
+  private String customerName;
+  
+  @Index
+  private String offer;
+  
+  @Index
+  private String technologies;
+
   /*
    * Getter's and Setter's --------------------------------------------
    */
+  public String getCustomerName() {
+    return customerName;
+  }
+  public void setCustomerName(String value) {
+    this.customerName = value;
+  }
+  
+  public String getOffer() {
+    return offer;
+  }
+  public void setOffer(String value) {
+    this.offer = value;
+  }
+  
+  public String getTechnologies() {
+    return technologies;
+  }
+  public void setTechnologies(String value) {
+    this.technologies = value;
+  }
+  
   @Override
   public String getId() {
     return id;
