@@ -16,7 +16,7 @@ module.exports = function ($rootScope, $location, Analytics) {
    * Application name
    * @type {String}
    */
-  this.appName = 'Tech Gallery';
+  this.appName = 'Sales Gallery';
 
   /**
    * Application-wide alert message

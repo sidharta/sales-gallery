@@ -1,12 +1,22 @@
 /**
  * Configuration variables
  */
+$blue_cit: #20BEC6;
+
 $icon-font-path: '../assets/fonts/';
 $navbar-default-link-color: #fff;
 $navbar-default-link-active-color: #fff;
 $navbar-default-link-hover-color: rgba(255, 255, 255, .8);
 $navbar-default-brand-hover-color: #fff;
-$navbar-default-bg: #EE4C6A;
+$navbar-default-bg: #fff;
+$navbar-default-border: $blue_cit;
+$navbar-default-brand-color: #333;
+$navbar-default-brand-hover-color: lighten(#333, 30);
+$navbar-default-link-color: $navbar-default-brand-color;
+$navbar-default-link-hover-color: $navbar-default-brand-hover-color;
+$navbar-default-link-hover-bg: #fff;
+$navbar-default-link-active-color: $navbar-default-brand-hover-color;
+
 $border-radius-base: 3px;
 $border-radius-large: 4px;
 $link-color: #427fed;
@@ -44,7 +54,6 @@ $border-color: #ddd;
   position: relative;
 
   .form-control {
-    border: none;
     padding-right: 32px;
     width: 250px;
     opacity: .8;
