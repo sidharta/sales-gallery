@@ -27,27 +27,6 @@
         <div class="technology-section row">
           <div class="technology-description col-md-7" ng-bind-html="technology.item.description | nl2p">
           </div>
-          <div class="col-md-5">
-            <div class="card no-margin">
-              <div class="card-section">
-                <h3 class="card-title">Como você se avalia em {{ technology.item.name }}?</h3>
-              </div>
-              <div class="card-section">
-                <form action="" class="form-inline">
-                  <div class="radio technology-rating" ng-repeat="rating in technology.ratings" ng-class="{'active' : rating.value == technology.rating}">
-                    <label for="rating-{{ rating.value }}">
-                      <img ng-src="assets/images/{{ rating.title | lowercase }}.png" class="technology-rating-image" alt="{{ rating.title }}">
-                      <span class="technology-rating-text">
-                        <span class="glyphicon glyphicon-star-empty" ng-repeat="i in [] | range:rating.value"></span>
-                      </span>
-                      <span class="technology-rating-text">{{ rating.title }}</span>
-                      <input type="radio" ng-model="technology.rating" ng-change="technology.setSkill(technology.id, rating.value)" name="rating" class="technology-rating-input" id="rating-{{ rating.value }}" value="{{ rating.value }}" ng-checked="rating.value == technology.rating">
-                    </label>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- TECHNOLOGY ENDORSMENTS -->
