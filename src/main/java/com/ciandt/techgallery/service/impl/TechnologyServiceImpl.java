@@ -186,17 +186,17 @@ public class TechnologyServiceImpl implements TechnologyService {
   private List<Technology> setDateFilteredList(List<Technology> completeList, Date dateReference) {
     List<Technology> dateFilteredList = new ArrayList<>();
     for (Technology technology : completeList) {
-      if (technology.getLastActivity().after(dateReference) || technology.getLastActivity().equals(dateReference)) {
+      if (technology.getCreationDate().after(dateReference) || technology.getCreationDate().equals(dateReference)) {
         dateFilteredList.add(technology);
       }
     }
     return dateFilteredList;
   }
 
-  private Date setDateReference(Date currentDate, int daysToSubtract) {
+  private Date setDateReference(Date currentDate, int toSubtract) {
     Calendar cal = Calendar.getInstance();
     cal.setTime(currentDate);
-    cal.add(Calendar.DATE, daysToSubtract);
+    cal.add(Calendar.MONTH, toSubtract);
     Date dateReference = cal.getTime();
     return dateReference;
   }
@@ -239,19 +239,19 @@ public class TechnologyServiceImpl implements TechnologyService {
     if (techFilter.getDateFilter() != null) {
       Date currentDate = new Date();
       switch (techFilter.getDateFilter()) {
-      case LAST_DAY:
-        Date lastDay = setDateReference(currentDate, -1);
-        dateFilteredList = setDateFilteredList(completeList, lastDay);
+      case LAST_MONTH:
+        Date lastOne = setDateReference(currentDate, -1);
+        dateFilteredList = setDateFilteredList(completeList, lastOne);
         break;
 
-      case LAST_7_DAYS:
-        Date last7Days = setDateReference(currentDate, -7);
-        dateFilteredList = setDateFilteredList(completeList, last7Days);
+      case LAST_6_MONTHS:
+        Date lastSix = setDateReference(currentDate, -6);
+        dateFilteredList = setDateFilteredList(completeList, lastSix);
         break;
 
-      case LAST_30_DAYS:
-        Date last30Days = setDateReference(currentDate, -30);
-        dateFilteredList = setDateFilteredList(completeList, last30Days);
+      case LAST_12_MONTHS:
+        Date lastTwelve = setDateReference(currentDate, -12);
+        dateFilteredList = setDateFilteredList(completeList, lastTwelve);
         break;
       default:
         break;

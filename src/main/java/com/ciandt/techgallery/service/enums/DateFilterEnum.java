@@ -2,13 +2,13 @@ package com.ciandt.techgallery.service.enums;
 
 /**
  * Enum for mapping Date Filters.
- * 
+ *
  * @author Thulio Ribeiro
  *
  */
 public enum DateFilterEnum {
 
-  LAST_DAY("Último Dia"), LAST_7_DAYS("Últimos sete dias"), LAST_30_DAYS("Últimos trinta dias");
+  LAST_MONTH("Último mês"), LAST_6_MONTHS("Últimos seis meses"), LAST_12_MONTHS("Últimos doze meses");
 
   private String message;
 
