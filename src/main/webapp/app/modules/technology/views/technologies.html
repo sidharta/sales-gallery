@@ -17,17 +17,6 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="technology-order" tabindex="0" tooltip-placement="bottom" uib-tooltip="Ordenar por"><span class="glyphicon glyphicon-sort"></span></label>
-            <select ng-disabled="technologies.loading" ng-model="technologies.orderFilter" ng-change="technologies.updateFilters()" class="form-control" id="technology-order">
-              <option value="">Selecione</option>
-              <option value="Alfabética">Alfabética</option>
-              <option value="Recomendações positivas">Recomendações positivas</option>
-              <option value="Recomendações negativas">Recomendações negativas</option>
-              <option value="Comentários">Comentários</option>
-              <option value="Indicações">Indicações</option>
-            </select>
-          </div>
-          <div class="form-group">
             <label for="technology-order" tabindex="0" tooltip-placement="bottom" uib-tooltip="Última atividade"><span class="glyphicon glyphicon-time"></span></label>
             <select ng-disabled="technologies.loading" ng-model="technologies.lastActivityDateFilter" ng-change="technologies.updateFilters()" class="form-control" id="technology-order">
               <option value="">Selecione</option>
