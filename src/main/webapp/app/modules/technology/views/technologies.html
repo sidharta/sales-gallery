@@ -72,13 +72,11 @@
           </div>
           <div class="card-meta card-section">
             <div class="titleThumbnail">
-              <span class="glyphicon glyphicon-thumbs-up"></span> {{ technology.positiveRecommendationsCounter }}
-              <span class="glyphicon glyphicon-thumbs-down"></span> {{ technology.negativeRecommendationsCounter }}
               <span class="glyphicon glyphicon-user"></span> {{ technology.endorsersCounter }}
               <span class="glyphicon glyphicon-list-alt"></span> {{ technology.commentariesCounter }}
             </div>
             <small class="technology-last-activity">
-              <span class="lastActivityLabel">Última Atividade:</span>
+              <span class="lastActivityLabel">Data de Criação:</span>
               <time>{{ technology.lastActivity | date:"dd/MM/yyyy H:mm" }}</time>
             </small>
           </div>
