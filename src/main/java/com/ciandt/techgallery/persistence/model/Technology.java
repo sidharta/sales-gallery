@@ -123,12 +123,6 @@ public class Technology extends BaseEntity<String> {
   @Index
   private String customerName;
   
-  @Index
-  private String offer;
-  
-  @Index
-  private String technologies;
-
   /*
    * Getter's and Setter's --------------------------------------------
    */
@@ -229,22 +223,6 @@ public class Technology extends BaseEntity<String> {
 
   public void setClient(String client) {
     this.client = client;
-  }
-
-  public String getOffer() {
-    return offer;
-  }
-
-  public void setOffer(String offer) {
-    this.offer = offer;
-  }
-
-  public String getTechnologies(){
-    return technologies;
-  }
-
-  public void setTechnologies(String technologies){
-    this.technologies = technologies;
   }
 
   public Boolean getActive() {
