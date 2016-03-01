@@ -147,8 +147,8 @@ public class TechnologyServiceImpl implements TechnologyService {
       throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_NAME_CANNOT_BLANK.message());
     } else if (StringUtils.isBlank(technology.getClient())) {
       throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_CLIENT_CANNOT_BLANK.message());
-    } else if (StringUtils.isBlank(technology.getOffer())) {
-      throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_OFFER_CANNOT_BLANK.message());
+  //  } else if (StringUtils.isBlank(technology.getOffer())) {
+//      throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_OFFER_CANNOT_BLANK.message());
     } else if (StringUtils.isBlank(technology.getShortDescription())) {
       throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_SHORT_DESCRIPTION_BLANK.message());
     } else if (StringUtils.isBlank(technology.getDescription())) {
@@ -315,7 +315,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 
   private boolean verifyTitleAndShortDescriptionFilter(TechnologyFilter techFilter, Technology technology) {
     if (techFilter.getTitleContains() != null
-        && (technology.getName().toLowerCase().contains(techFilter.getTitleContains().toLowerCase()) || 
+        && (technology.getName().toLowerCase().contains(techFilter.getTitleContains().toLowerCase()) ||
             technology.getShortDescription().toLowerCase().contains(techFilter.getShortDescriptionContains().toLowerCase()) ||
             technology.getCustomerName().toLowerCase().contains(techFilter.getCustomerNameContains().toString().toLowerCase()) ||
             technology.getTechnologies().toLowerCase().contains(techFilter.getTechnologiesContains().toString().toLowerCase())
