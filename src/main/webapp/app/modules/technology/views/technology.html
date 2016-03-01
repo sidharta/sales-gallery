@@ -11,7 +11,7 @@
           <div class="media-image no-margin">
             <img ng-src="{{ technology.item.image }}" class="technology-image" />
           </div>
-          <div class="media-content">
+          <div class="media-content"> 
             <div class="pull-right">
               <a href="#/technologies/{{ technology.item.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.item.name }}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
             </div>
@@ -34,7 +34,7 @@
           <div class="col-md-12">
             <div class="card no-margin">
               <div class="card-section">
-                <h3 class="card-title">Quem manja muito de {{ technology.item.name }} na CI&amp;T?</h3>
+                <h3 class="card-title">Quem participou da proposta {{ technology.item.name }} ?</h3>
               </div>
               <div class="card-section">
                 <div class="form-inline">
@@ -49,14 +49,13 @@
                     <i class="glyphicon glyphicon-remove"></i> Não foram encontrados registros...
                   </div>-->
                   <button ng-click="technology.endorseUser()" class="btn btn-primary"
-                  role="button">Indicar</button>
+                  role="button">Adicionar participante</button>
                 </div>
               </div>
               <div class="card-section">
-                <h4>Quem já foi indicado:</h4>
+                <h4>Quem participou:</h4>
                 <div ng-show="!technology.showEndorsementResponse">
-                  <h5>Ainda não tem ninguém aqui. Indique um colega que saiba
-                    disso ali em cima!</h5>
+                  <h5>Ainda não tem ninguém aqui. Adicione alguém que participou desta proposta!</h5>
                 </div>
                 <div class="technology-endorsement row" ng-repeat="response in technology.showEndorsementResponse track by $index">
                   <div class="media col-md-7">
@@ -116,7 +115,7 @@
         <div id="comments" class="col-md-6">
           <div class="card no-margin">
             <div class="card-section">
-              <h3 class="card-title">Comente sobre {{ technology.item.name }}?</h3>
+              <h3 class="card-title">Comente sobre a propsta {{ technology.item.name }}</h3>
             </div>
             <div class="card-section">
               <div class="row">
