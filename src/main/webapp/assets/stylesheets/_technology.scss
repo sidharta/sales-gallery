@@ -145,11 +145,16 @@ $technology-spacing: 20px;
   margin: $technology-spacing 0;
   padding: 0;
 }
+
+.technology-client {
+    background-color: #20bec6 !important; 
+}
+
 .technology-comment,
 .technology-recommendation {
   display: inline-block;
   list-style: none;
-  margin-bottom: $technology-spacing;
+  margin-bottom: 5px;
 
   &:last-of-type {
     margin-bottom: 0;

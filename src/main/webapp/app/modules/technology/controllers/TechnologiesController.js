@@ -23,6 +23,8 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
    this.getTechnologies = function(){
     context.loading = true;
     TechnologyService.getTechnologies().then(function(){
+         console.log(TechnologyService.foundItems);
+        
       context.items = TechnologyService.foundItems;
       context.loading = false;
     });

@@ -54,7 +54,8 @@
               <a href="#/technologies/{{ technology.id }}"><img ng-src="{{ technology.image }}" alt="{{ technology.name }}" data-holder-rendered="true"></a>
             </div>
             <h3 class="card-title"><a href="#/technologies/{{ technology.id }}">{{ technology.name }}</a></h3>
-            <span class="label label-default technology-recommendation">{{ technology.recommendation }}</span>
+            <span class="label label-default technology-recommendation technology-client">{{ technology.client }}</span>
+            <span class="label label-default technology-recommendation">{{ technology.technologies }}</span>            
           </div>
           <div class="card-content card-section">
             <div class="technology-description">
@@ -77,7 +78,7 @@
             </div>
             <small class="technology-last-activity">
               <span class="lastActivityLabel">Data de Criação:</span>
-              <time>{{ technology.lastActivity | date:"dd/MM/yyyy H:mm" }}</time>
+              <time>{{ technology.creationDate | date:"dd/MM/yyyy H:mm" }}</time>
             </small>
           </div>
         </div>
