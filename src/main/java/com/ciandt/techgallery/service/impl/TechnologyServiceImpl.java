@@ -40,411 +40,437 @@ import com.google.appengine.api.users.User;
  */
 public class TechnologyServiceImpl implements TechnologyService {
 
-  /*
-   * Attributes --------------------------------------------
-   */
-  private static TechnologyServiceImpl instance;
+	/*
+	 * Attributes --------------------------------------------
+	 */
+	private static TechnologyServiceImpl instance;
 
-  /** tech gallery user service. */
-  UserServiceTG userService = UserServiceTGImpl.getInstance();
-  TechnologyDAO technologyDAO = TechnologyDAOImpl.getInstance();
-  StorageDAO storageDAO = StorageDAOImpl.getInstance();
+	/** tech gallery user service. */
+	UserServiceTG userService = UserServiceTGImpl.getInstance();
+	TechnologyDAO technologyDAO = TechnologyDAOImpl.getInstance();
+	StorageDAO storageDAO = StorageDAOImpl.getInstance();
 
-  /*
-   * Constructors --------------------------------------------
-   */
-  private TechnologyServiceImpl() {
-  }
+	/*
+	 * Constructors --------------------------------------------
+	 */
+	private TechnologyServiceImpl() {
+	}
 
-  /**
-   * Singleton method for the service.
-   *
-   * @author <a href="mailto:joaom@ciandt.com"> João Felipe de Medeiros
-   *         Moreira </a>
-   * @since 07/10/2015
-   *
-   * @return TechnologyServiceImpl instance.
-   */
-  public static TechnologyServiceImpl getInstance() {
-    if (instance == null) {
-      instance = new TechnologyServiceImpl();
-    }
-    return instance;
-  }
+	/**
+	 * Singleton method for the service.
+	 *
+	 * @author <a href="mailto:joaom@ciandt.com"> João Felipe de Medeiros
+	 *         Moreira </a>
+	 * @since 07/10/2015
+	 *
+	 * @return TechnologyServiceImpl instance.
+	 */
+	public static TechnologyServiceImpl getInstance() {
+		if (instance == null) {
+			instance = new TechnologyServiceImpl();
+		}
+		return instance;
+	}
 
-  /*
-   * Methods --------------------------------------------
-   */
-  @Override
-  public Technology addOrUpdateTechnology(Technology technology, User user)
-      throws BadRequestException, IOException, GeneralSecurityException {
+	/*
+	 * Methods --------------------------------------------
+	 */
+	@Override
+	public Technology addOrUpdateTechnology(Technology technology, User user)
+			throws BadRequestException, IOException, GeneralSecurityException {
 
-    Technology foundTechnology = validateInformations(technology);
-    Boolean isUpdate = foundTechnology != null && foundTechnology.getId().equals(technology.getId())
-        && foundTechnology.getActive().equals(Boolean.TRUE);
+		Technology foundTechnology = validateInformations(technology);
+		Boolean isUpdate = foundTechnology != null && foundTechnology.getId().equals(technology.getId())
+				&& foundTechnology.getActive().equals(Boolean.TRUE);
 
-    String imageLink = technology.getImage();
-    if (technology.getImageContent() != null) {
-      imageLink = storageDAO.insertImage(technology.convertNameToId(technology.getName()),
-          new ByteArrayInputStream(DatatypeConverter.parseBase64Binary(technology.getImageContent())));
-    }
+		String imageLink = technology.getImage();
+		if (technology.getImageContent() != null) {
+			imageLink = storageDAO.insertImage(technology.convertNameToId(technology.getName()),
+					new ByteArrayInputStream(DatatypeConverter.parseBase64Binary(technology.getImageContent())));
+		}
 
-    fillTechnology(technology, user, imageLink, isUpdate);
+		fillTechnology(technology, user, imageLink, isUpdate);
 
-    technologyDAO.add(technology);
+		technologyDAO.add(technology);
 
-    return technology;
-  }
+		return technology;
+	}
 
-  /**
-   * Fill a few informations about the technology.
-   *
-   * @author <a href="mailto:joaom@ciandt.com"> João Felipe de Medeiros
-   *         Moreira </a>
-   * @since 13/10/2015
-   *
-   * @param technology
-   *          to be converted.
-   * @param user
-   *          to get informations.
-   * @param imageLink
-   *          returned by the cloud storage.
-   *
-   */
-  private void fillTechnology(Technology technology, User user, String imageLink, Boolean isUptate) {
-    technology.setId(technology.convertNameToId(technology.getName()));
-    if (user != null && user.getEmail() != null) {
-      if (!isUptate) {
-        technology.setAuthor(user.getEmail());
-      }
-      technology.setLastActivityUser(user.getEmail());
-    }
-    technology.setActive(Boolean.TRUE);
-    technology.setCreationDate(new Date());
-    technology.setLastActivity(new Date());
-    technology.setImage(imageLink);
-    technology.initCounters();
-  }
+	/**
+	 * Fill a few informations about the technology.
+	 *
+	 * @author <a href="mailto:joaom@ciandt.com"> João Felipe de Medeiros
+	 *         Moreira </a>
+	 * @since 13/10/2015
+	 *
+	 * @param technology
+	 *            to be converted.
+	 * @param user
+	 *            to get informations.
+	 * @param imageLink
+	 *            returned by the cloud storage.
+	 *
+	 */
+	private void fillTechnology(Technology technology, User user, String imageLink, Boolean isUptate) {
+		technology.setId(technology.convertNameToId(technology.getName()));
+		if (user != null && user.getEmail() != null) {
+			if (!isUptate) {
+				technology.setAuthor(user.getEmail());
+			}
+			technology.setLastActivityUser(user.getEmail());
+		}
+		technology.setActive(Boolean.TRUE);
+		technology.setCreationDate(new Date());
+		technology.setLastActivity(new Date());
+		technology.setImage(imageLink);
+		technology.initCounters();
+	}
 
+	/**
+	 * Method to validade informations of the technology to be added.
+	 *
+	 * @author <a href="mailto:joaom@ciandt.com"> João Felipe de Medeiros
+	 *         Moreira </a>
+	 * @since 13/10/2015
+	 *
+	 * @param technology
+	 *            to be validated.
+	 *
+	 * @throws BadRequestException
+	 *             in case a request with problem were made.
+	 */
+	private Technology validateInformations(Technology technology) throws BadRequestException {
+		if (StringUtils.isBlank(technology.getId())) {
+			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_ID_CANNOT_BLANK.message());
+		} else if (StringUtils.isBlank(technology.getName())) {
+			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_NAME_CANNOT_BLANK.message());
+		} else if (StringUtils.isBlank(technology.getClient())) {
+			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_CLIENT_CANNOT_BLANK.message());
+			// } else if (StringUtils.isBlank(technology.getOffer())) {
+			// throw new
+			// BadRequestException(ValidationMessageEnums.TECHNOLOGY_OFFER_CANNOT_BLANK.message());
+		} else if (StringUtils.isBlank(technology.getShortDescription())) {
+			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_SHORT_DESCRIPTION_BLANK.message());
+		} else if (StringUtils.isBlank(technology.getDescription())) {
+			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_DESCRIPTION_BLANK.message());
+		}
 
-  /**
-   * Method to validade informations of the technology to be added.
-   *
-   * @author <a href="mailto:joaom@ciandt.com"> João Felipe de Medeiros
-   *         Moreira </a>
-   * @since 13/10/2015
-   *
-   * @param technology
-   *          to be validated.
-   *
-   * @throws BadRequestException
-   *           in case a request with problem were made.
-   */
-  private Technology validateInformations(Technology technology) throws BadRequestException {
-    if (StringUtils.isBlank(technology.getId())) {
-      throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_ID_CANNOT_BLANK.message());
-    } else if (StringUtils.isBlank(technology.getName())) {
-      throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_NAME_CANNOT_BLANK.message());
-    } else if (StringUtils.isBlank(technology.getClient())) {
-      throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_CLIENT_CANNOT_BLANK.message());
-  //  } else if (StringUtils.isBlank(technology.getOffer())) {
-//      throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_OFFER_CANNOT_BLANK.message());
-    } else if (StringUtils.isBlank(technology.getShortDescription())) {
-      throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_SHORT_DESCRIPTION_BLANK.message());
-    } else if (StringUtils.isBlank(technology.getDescription())) {
-      throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_DESCRIPTION_BLANK.message());
-    }
+		Technology dbTechnology = technologyDAO.findByName(technology.getName());
+		if (dbTechnology != null && technology.getId() == null) {
+			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_NAME_ALREADY_USED.message());
+		}
+		if (technology.getId() != null && dbTechnology != null
+				&& !dbTechnology.getName().equals(technology.getName())) {
+			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_NAME_CANNOT_CHANGE.message());
+		}
+		return dbTechnology;
+	}
 
-    Technology dbTechnology = technologyDAO.findByName(technology.getName());
-    if (dbTechnology != null && technology.getId() == null) {
-      throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_NAME_ALREADY_USED.message());
-    }
-    if (technology.getId() != null && dbTechnology != null && !dbTechnology.getName().equals(technology.getName())) {
-      throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_NAME_CANNOT_CHANGE.message());
-    }
-    return dbTechnology;
-  }
+	/**
+	 * GET for getting all technologies.
+	 *
+	 * @throws NotFoundException
+	 *             .
+	 */
+	@Override
+	public Response getTechnologies(User user)
+			throws InternalServerErrorException, NotFoundException, BadRequestException {
+		List<Technology> techEntities = technologyDAO.findAllActives();
+		// if list is null, return a not found exception
+		if (techEntities == null || techEntities.isEmpty()) {
+			return new TechnologiesResponse();
+		} else {
+			verifyTechnologyFollowedByUser(user, techEntities);
+			TechnologiesResponse response = new TechnologiesResponse();
+			Technology.sortTechnologiesDefault(techEntities);
+			response.setTechnologies(techEntities);
+			return response;
+		}
+	}
 
-  /**
-   * GET for getting all technologies.
-   *
-   * @throws NotFoundException
-   *           .
-   */
-  @Override
-  public Response getTechnologies(User user)
-      throws InternalServerErrorException, NotFoundException, BadRequestException {
-    List<Technology> techEntities = technologyDAO.findAllActives();
-    // if list is null, return a not found exception
-    if (techEntities == null || techEntities.isEmpty()) {
-      return new TechnologiesResponse();
-    } else {
-      verifyTechnologyFollowedByUser(user, techEntities);
-      TechnologiesResponse response = new TechnologiesResponse();
-      Technology.sortTechnologiesDefault(techEntities);
-      response.setTechnologies(techEntities);
-      return response;
-    }
-  }
+	private List<Technology> setDateFilteredList(List<Technology> completeList, Date dateReference) {
+		List<Technology> dateFilteredList = new ArrayList<>();
+		for (Technology technology : completeList) {
+			if (technology.getCreationDate().after(dateReference)
+					|| technology.getCreationDate().equals(dateReference)) {
+				dateFilteredList.add(technology);
+			}
+		}
+		return dateFilteredList;
+	}
 
-  private List<Technology> setDateFilteredList(List<Technology> completeList, Date dateReference) {
-    List<Technology> dateFilteredList = new ArrayList<>();
-    for (Technology technology : completeList) {
-      if (technology.getCreationDate().after(dateReference) || technology.getCreationDate().equals(dateReference)) {
-        dateFilteredList.add(technology);
-      }
-    }
-    return dateFilteredList;
-  }
+	private Date setDateReference(Date currentDate, int toSubtract) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(currentDate);
+		cal.add(Calendar.MONTH, toSubtract);
+		Date dateReference = cal.getTime();
+		return dateReference;
+	}
 
-  private Date setDateReference(Date currentDate, int toSubtract) {
-    Calendar cal = Calendar.getInstance();
-    cal.setTime(currentDate);
-    cal.add(Calendar.MONTH, toSubtract);
-    Date dateReference = cal.getTime();
-    return dateReference;
-  }
+	@Override
+	public Response findTechnologiesByFilter(TechnologyFilter techFilter, User user)
+			throws InternalServerErrorException, NotFoundException, BadRequestException {
+		validateUser(user);
+		if (techFilter.getRecommendationIs() != null
+				&& techFilter.getRecommendationIs().equals(RecommendationEnums.UNINFORMED.message())) {
+			techFilter.setRecommendationIs("");
+		}
+		List<Technology> completeList = technologyDAO.findAllActives();
+		completeList = filterByLastActivityDate(techFilter, completeList);
 
-  @Override
-  public Response findTechnologiesByFilter(TechnologyFilter techFilter, User user)
-      throws InternalServerErrorException, NotFoundException, BadRequestException {
-    validateUser(user);
-    if (techFilter.getRecommendationIs() != null
-        && techFilter.getRecommendationIs().equals(RecommendationEnums.UNINFORMED.message())) {
-      techFilter.setRecommendationIs("");
-    }
-    List<Technology> completeList = technologyDAO.findAllActives();
-    completeList = filterByLastActivityDate(techFilter, completeList);
+		List<Technology> filteredList = new ArrayList<>();
+		if (StringUtils.isBlank(techFilter.getTitleContains()) && techFilter.getRecommendationIs() == null) {
+			filteredList.addAll(completeList);
+		} else {
+			verifyFilters(techFilter, completeList, filteredList);
+		}
 
-    List<Technology> filteredList = new ArrayList<>();
-    if (StringUtils.isBlank(techFilter.getTitleContains()) && techFilter.getRecommendationIs() == null) {
-      filteredList.addAll(completeList);
-    } else {
-      verifyFilters(techFilter, completeList, filteredList);
-    }
+		if (filteredList.isEmpty()) {
+			return new TechnologiesResponse();
+		} else {
+			if (techFilter.getOrderOptionIs() != null && !techFilter.getOrderOptionIs().isEmpty()) {
+				filteredList = Technology.sortTechnologies(filteredList,
+						TechnologyOrderOptionEnum.fromString(techFilter.getOrderOptionIs()));
+			} else {
+				Technology.sortTechnologiesDefault(filteredList);
+			}
+			TechnologiesResponse response = new TechnologiesResponse();
+			response.setTechnologies(filteredList);
+			return response;
+		}
+	}
 
-    if (filteredList.isEmpty()) {
-      return new TechnologiesResponse();
-    } else {
-      if (techFilter.getOrderOptionIs() != null && !techFilter.getOrderOptionIs().isEmpty()) {
-        filteredList = Technology.sortTechnologies(filteredList,
-            TechnologyOrderOptionEnum.fromString(techFilter.getOrderOptionIs()));
-      } else {
-        Technology.sortTechnologiesDefault(filteredList);
-      }
-      TechnologiesResponse response = new TechnologiesResponse();
-      response.setTechnologies(filteredList);
-      return response;
-    }
-  }
+	private List<Technology> filterByLastActivityDate(TechnologyFilter techFilter, List<Technology> completeList) {
+		List<Technology> dateFilteredList = new ArrayList<>();
+		if (techFilter.getDateFilter() != null) {
+			Date currentDate = new Date();
+			switch (techFilter.getDateFilter()) {
+			case LAST_MONTH:
+				Date lastOne = setDateReference(currentDate, -1);
+				dateFilteredList = setDateFilteredList(completeList, lastOne);
+				break;
 
-  private List<Technology> filterByLastActivityDate(TechnologyFilter techFilter, List<Technology> completeList) {
-    List<Technology> dateFilteredList = new ArrayList<>();
-    if (techFilter.getDateFilter() != null) {
-      Date currentDate = new Date();
-      switch (techFilter.getDateFilter()) {
-      case LAST_MONTH:
-        Date lastOne = setDateReference(currentDate, -1);
-        dateFilteredList = setDateFilteredList(completeList, lastOne);
-        break;
+			case LAST_6_MONTHS:
+				Date lastSix = setDateReference(currentDate, -6);
+				dateFilteredList = setDateFilteredList(completeList, lastSix);
+				break;
 
-      case LAST_6_MONTHS:
-        Date lastSix = setDateReference(currentDate, -6);
-        dateFilteredList = setDateFilteredList(completeList, lastSix);
-        break;
+			case LAST_12_MONTHS:
+				Date lastTwelve = setDateReference(currentDate, -12);
+				dateFilteredList = setDateFilteredList(completeList, lastTwelve);
+				break;
+			default:
+				break;
+			}
+			completeList = dateFilteredList;
+		}
+		return completeList;
+	}
 
-      case LAST_12_MONTHS:
-        Date lastTwelve = setDateReference(currentDate, -12);
-        dateFilteredList = setDateFilteredList(completeList, lastTwelve);
-        break;
-      default:
-        break;
-      }
-      completeList = dateFilteredList;
-    }
-    return completeList;
-  }
+	private void verifyTechnologyFollowedByUser(User user, List<Technology> filteredList)
+			throws NotFoundException, BadRequestException, InternalServerErrorException {
+		TechGalleryUser techUser = userService.getUserByGoogleId(user.getUserId());
+		if (techUser.getFollowedTechnologyIds() != null && !techUser.getFollowedTechnologyIds().isEmpty()) {
+			for (Technology technology : filteredList) {
+				if (techUser.getFollowedTechnologyIds().contains(technology.getId())) {
+					technology.setFollowedByUser(true);
+				}
+			}
+		}
+	}
 
-  private void verifyTechnologyFollowedByUser(User user, List<Technology> filteredList)
-      throws NotFoundException, BadRequestException, InternalServerErrorException {
-    TechGalleryUser techUser = userService.getUserByGoogleId(user.getUserId());
-    if (techUser.getFollowedTechnologyIds() != null && !techUser.getFollowedTechnologyIds().isEmpty()) {
-      for (Technology technology : filteredList) {
-        if (techUser.getFollowedTechnologyIds().contains(technology.getId())) {
-          technology.setFollowedByUser(true);
-        }
-      }
-    }
-  }
+	private void verifyFilters(TechnologyFilter techFilter, List<Technology> completeList,
+			List<Technology> filteredList) {
+		for (Technology technology : completeList) {
+			if (techFilter.getOfferIs() != null && !technology.getOffer().equals(techFilter.getOfferIs().toString())) {
+				continue;
+			}
+			if (verifyTitleAndShortDescriptionFilter(techFilter, technology)) {
+				if (techFilter.getRecommendationIs() != null) {
+					if (verifyRecommendationFilter(techFilter, technology)) {
+						filteredList.add(technology);
+					} else {
+						continue;
+					}
+				} else {
+					filteredList.add(technology);
+					continue;
+				}
+			} else if (verifyRecommendationFilter(techFilter, technology) && techFilter.getTitleContains() == null) {
+				filteredList.add(technology);
+				continue;
+			}
+		}
+	}
 
-  private void verifyFilters(TechnologyFilter techFilter, List<Technology> completeList,
-      List<Technology> filteredList) {
-    for (Technology technology : completeList) {
-        if (techFilter.getOfferIs() != null && !technology.getOffer().equals(techFilter.getOfferIs().toString())) {
-            continue;
-        }
-      if (verifyTitleAndShortDescriptionFilter(techFilter, technology)) {
-        if (techFilter.getRecommendationIs() != null) {
-          if (verifyRecommendationFilter(techFilter, technology)) {
-            filteredList.add(technology);
-          } else {
-            continue;
-          }
-        } else {
-          filteredList.add(technology);
-          continue;
-        }
-      } else if (verifyRecommendationFilter(techFilter, technology) && techFilter.getTitleContains() == null) {
-        filteredList.add(technology);
-        continue;
-      }
-    }
-  }
+	private boolean verifyRecommendationFilter(TechnologyFilter techFilter, Technology technology) {
+		if (technology.getRecommendation() == null && techFilter.getRecommendationIs() == "") {
+			return true;
+		} else if (technology.getRecommendation() != null && techFilter.getRecommendationIs() != null
+				&& (technology.getRecommendation().toLowerCase().equals(techFilter.getRecommendationIs().toLowerCase())
+						|| techFilter.getRecommendationIs().toLowerCase()
+								.equals(RecommendationEnums.ANY.message().toLowerCase()))) {
+			return true;
+		}
+		return false;
+	}
 
-  private boolean verifyRecommendationFilter(TechnologyFilter techFilter, Technology technology) {
-    if (technology.getRecommendation() == null && techFilter.getRecommendationIs() == "") {
-      return true;
-    } else if (technology.getRecommendation() != null && techFilter.getRecommendationIs() != null
-        && (technology.getRecommendation().toLowerCase().equals(techFilter.getRecommendationIs().toLowerCase())
-            || techFilter.getRecommendationIs().toLowerCase()
-                .equals(RecommendationEnums.ANY.message().toLowerCase()))) {
-      return true;
-    }
-    return false;
-  }
+	private boolean verifyTitleAndShortDescriptionFilter(TechnologyFilter techFilter, Technology technology) {
+		if (checkTitle(techFilter, technology)
+				|| checkCustomerName(techFilter, technology) 
+				|| checkDescription(techFilter, technology)				 
+				|| checkShortDescription(techFilter, technology)
+				|| checkTechnologies(techFilter, technology)) {
+			return true;
+		}
+		return false;
+	}
 
-  private boolean verifyTitleAndShortDescriptionFilter(TechnologyFilter techFilter, Technology technology) {
-    if (techFilter.getTitleContains() != null
-        && (technology.getName().toLowerCase().contains(techFilter.getTitleContains().toLowerCase()) ||
-            technology.getShortDescription().toLowerCase().contains(techFilter.getShortDescriptionContains().toLowerCase()) ||
-            technology.getCustomerName().toLowerCase().contains(techFilter.getCustomerNameContains().toString().toLowerCase()) ||
-            technology.getTechnologies().toLowerCase().contains(techFilter.getTechnologiesContains().toString().toLowerCase())
-           )) {
-      return true;
-    }
-    return false;
-  }
+	private boolean checkTechnologies(TechnologyFilter techFilter, Technology technology) {
+		return technology.getTechnologies() != null && technology.getTechnologies().toLowerCase()
+				.contains(techFilter.getTechnologiesContains().toString().toLowerCase());
+	}
 
-  @Override
-  public Technology getTechnologyById(String id, User user)
-      throws NotFoundException, BadRequestException, InternalServerErrorException {
-    Technology tech = technologyDAO.findByIdActive(id);
-    if (tech == null) {
-      throw new NotFoundException(ValidationMessageEnums.TECHNOLOGY_NOT_EXIST.message());
-    } else {
-      if (user != null) {
-        TechGalleryUser techUser = userService.getUserByGoogleId(user.getUserId());
-        if (techUser.getFollowedTechnologyIds() != null && techUser.getFollowedTechnologyIds().contains(tech.getId())) {
-          tech.setFollowedByUser(true);
-        }
-      }
-      return tech;
-    }
-  }
+	private boolean checkCustomerName(TechnologyFilter techFilter, Technology technology) {
+		return technology.getClient() != null && technology.getClient().toLowerCase()
+				.contains(techFilter.getCustomerNameContains().toString().toLowerCase());
+	}
 
-  /**
-   * Validate the user logged in.
-   *
-   * @param user
-   *          info about user from google
-   * @throws InternalServerErrorException
-   *           in case something goes wrong
-   * @throws NotFoundException
-   *           in case the information are not founded
-   * @throws BadRequestException
-   *           in case a request with problem were made.
-   */
-  private void validateUser(User user) throws BadRequestException, NotFoundException, InternalServerErrorException {
+	private boolean checkDescription(TechnologyFilter techFilter, Technology technology) {
+		return technology.getDescription() != null && technology.getDescription().toLowerCase()
+				.contains(techFilter.getShortDescriptionContains().toLowerCase());
+	}
+	
+	private boolean checkShortDescription(TechnologyFilter techFilter, Technology technology) {
+		return technology.getShortDescription() != null && technology.getShortDescription().toLowerCase()
+				.contains(techFilter.getShortDescriptionContains().toLowerCase());
+	}
 
-    if (user == null || user.getUserId() == null || user.getUserId().isEmpty()) {
-      throw new BadRequestException(ValidationMessageEnums.USER_GOOGLE_ENDPOINT_NULL.message());
-    }
+	private boolean checkTitle(TechnologyFilter techFilter, Technology technology) {
+		return technology.getName() != null && technology.getName().toLowerCase().contains(techFilter.getTitleContains().toLowerCase());
+	}
 
-    TechGalleryUser techUser = userService.getUserByGoogleId(user.getUserId());
-    if (techUser == null) {
-      throw new NotFoundException(ValidationMessageEnums.USER_NOT_EXIST.message());
-    }
-  }
+	@Override
+	public Technology getTechnologyById(String id, User user)
+			throws NotFoundException, BadRequestException, InternalServerErrorException {
+		Technology tech = technologyDAO.findByIdActive(id);
+		if (tech == null) {
+			throw new NotFoundException(ValidationMessageEnums.TECHNOLOGY_NOT_EXIST.message());
+		} else {
+			if (user != null) {
+				TechGalleryUser techUser = userService.getUserByGoogleId(user.getUserId());
+				if (techUser.getFollowedTechnologyIds() != null
+						&& techUser.getFollowedTechnologyIds().contains(tech.getId())) {
+					tech.setFollowedByUser(true);
+				}
+			}
+			return tech;
+		}
+	}
 
-  @Override
-  public List<String> getOrderOptions(User user) {
-    List<String> orderOptions = new ArrayList<String>();
-    for (TechnologyOrderOptionEnum item : TechnologyOrderOptionEnum.values()) {
-      orderOptions.add(item.option());
-    }
-    return orderOptions;
-  }
+	/**
+	 * Validate the user logged in.
+	 *
+	 * @param user
+	 *            info about user from google
+	 * @throws InternalServerErrorException
+	 *             in case something goes wrong
+	 * @throws NotFoundException
+	 *             in case the information are not founded
+	 * @throws BadRequestException
+	 *             in case a request with problem were made.
+	 */
+	private void validateUser(User user) throws BadRequestException, NotFoundException, InternalServerErrorException {
 
-  @Override
-  public void addCommentariesCounter(Technology entity) {
-    if (entity != null) {
-      entity.addCommentariesCounter();
-    }
-    technologyDAO.update(entity);
-  }
+		if (user == null || user.getUserId() == null || user.getUserId().isEmpty()) {
+			throw new BadRequestException(ValidationMessageEnums.USER_GOOGLE_ENDPOINT_NULL.message());
+		}
 
-  @Override
-  public void removeCommentariesCounter(Technology entity) {
-    if (entity != null) {
-      entity.removeCommentariesCounter();
-    }
-    technologyDAO.update(entity);
+		TechGalleryUser techUser = userService.getUserByGoogleId(user.getUserId());
+		if (techUser == null) {
+			throw new NotFoundException(ValidationMessageEnums.USER_NOT_EXIST.message());
+		}
+	}
 
-  }
+	@Override
+	public List<String> getOrderOptions(User user) {
+		List<String> orderOptions = new ArrayList<String>();
+		for (TechnologyOrderOptionEnum item : TechnologyOrderOptionEnum.values()) {
+			orderOptions.add(item.option());
+		}
+		return orderOptions;
+	}
 
-  @Override
-  public void addRecomendationCounter(Technology entity, Boolean score) {
-    if (entity == null) {
-      return;
-    }
-    if (score) {
-      entity.addPositiveRecommendationsCounter();
-    } else {
-      entity.addNegativeRecommendationsCounter();
-    }
-    technologyDAO.update(entity);
-  }
+	@Override
+	public void addCommentariesCounter(Technology entity) {
+		if (entity != null) {
+			entity.addCommentariesCounter();
+		}
+		technologyDAO.update(entity);
+	}
 
-  @Override
-  public void removeRecomendationCounter(Technology entity, Boolean score) {
-    if (entity == null) {
-      return;
-    }
-    if (score) {
-      entity.removePositiveRecommendationsCounter();
-    } else {
-      entity.removeNegativeRecommendationsCounter();
-    }
-    technologyDAO.update(entity);
-  }
+	@Override
+	public void removeCommentariesCounter(Technology entity) {
+		if (entity != null) {
+			entity.removeCommentariesCounter();
+		}
+		technologyDAO.update(entity);
 
-  @Override
-  public void updateEdorsedsCounter(Technology technology, Integer size) {
-    technology.setEndorsersCounter(size);
-    technologyDAO.update(technology);
-  }
+	}
 
-  @Override
-  public void audit(String technologyId, User user)
-      throws NotFoundException, BadRequestException, InternalServerErrorException {
-    Technology technology = getTechnologyById(technologyId, user);
-    technology.setLastActivity(new Date());
-    technology.setLastActivityUser(user.getEmail());
-    technologyDAO.update(technology);
-  }
+	@Override
+	public void addRecomendationCounter(Technology entity, Boolean score) {
+		if (entity == null) {
+			return;
+		}
+		if (score) {
+			entity.addPositiveRecommendationsCounter();
+		} else {
+			entity.addNegativeRecommendationsCounter();
+		}
+		technologyDAO.update(entity);
+	}
 
-  @Override
-  public Technology deleteTechnology(String technologyId, User user)
-      throws InternalServerErrorException, BadRequestException, NotFoundException, OAuthRequestException {
-    validateUser(user);
-    Technology technology = technologyDAO.findById(technologyId);
-    if (technology == null) {
-      throw new NotFoundException(ValidationMessageEnums.NO_TECHNOLOGY_WAS_FOUND.message());
-    }
-    technology.setActive(Boolean.FALSE);
-    technology.setLastActivity(new Date());
-    technology.setLastActivityUser(user.getEmail());
-    technologyDAO.update(technology);
-    return technology;
-  }
+	@Override
+	public void removeRecomendationCounter(Technology entity, Boolean score) {
+		if (entity == null) {
+			return;
+		}
+		if (score) {
+			entity.removePositiveRecommendationsCounter();
+		} else {
+			entity.removeNegativeRecommendationsCounter();
+		}
+		technologyDAO.update(entity);
+	}
+
+	@Override
+	public void updateEdorsedsCounter(Technology technology, Integer size) {
+		technology.setEndorsersCounter(size);
+		technologyDAO.update(technology);
+	}
+
+	@Override
+	public void audit(String technologyId, User user)
+			throws NotFoundException, BadRequestException, InternalServerErrorException {
+		Technology technology = getTechnologyById(technologyId, user);
+		technology.setLastActivity(new Date());
+		technology.setLastActivityUser(user.getEmail());
+		technologyDAO.update(technology);
+	}
+
+	@Override
+	public Technology deleteTechnology(String technologyId, User user)
+			throws InternalServerErrorException, BadRequestException, NotFoundException, OAuthRequestException {
+		validateUser(user);
+		Technology technology = technologyDAO.findById(technologyId);
+		if (technology == null) {
+			throw new NotFoundException(ValidationMessageEnums.NO_TECHNOLOGY_WAS_FOUND.message());
+		}
+		technology.setActive(Boolean.FALSE);
+		technology.setLastActivity(new Date());
+		technology.setLastActivityUser(user.getEmail());
+		technologyDAO.update(technology);
+		return technology;
+	}
 }
