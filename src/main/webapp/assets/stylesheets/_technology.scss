@@ -147,7 +147,7 @@ $technology-spacing: 20px;
 }
 
 .technology-client {
-    background-color: #20bec6 !important; 
+    background-color: #20bec6 !important;
 }
 
 .technology-comment,
@@ -190,4 +190,10 @@ $technology-spacing: 20px;
   height: 71px;
   display: inline-block;
   margin-bottom: 0;
+}
+
+.technology {
+  .dropdown-menu > li > a {
+    cursor: pointer;
+  }
 }

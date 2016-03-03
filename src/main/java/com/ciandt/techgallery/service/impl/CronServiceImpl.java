@@ -28,8 +28,8 @@ import com.ciandt.techgallery.service.enums.EmailTypeEnum;
 import com.ciandt.techgallery.service.model.email.TechGalleryActivitiesEmailTemplateTO;
 import com.ciandt.techgallery.service.model.email.TechnologyActivitiesEmailTemplateTO;
 import com.ciandt.techgallery.servlets.CronActivityResumeServlet;
+import com.ciandt.techgallery.transaction.Transactional;
 import com.ciandt.techgallery.utils.timezone.TimezoneManager;
-import com.ciant.techgallery.transaction.Transactional;
 
 import java.util.ArrayList;
 import java.util.Calendar;

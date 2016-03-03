@@ -22,7 +22,7 @@ import com.ciandt.techgallery.service.impl.TechnologyServiceImpl;
 import com.ciandt.techgallery.service.impl.UserServiceTGImpl;
 import com.ciandt.techgallery.service.model.Response;
 import com.ciandt.techgallery.service.model.TechnologyFilter;
-import com.ciant.techgallery.transaction.ServiceFactory;
+import com.ciandt.techgallery.transaction.ServiceFactory;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;

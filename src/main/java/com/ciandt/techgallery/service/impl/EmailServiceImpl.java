@@ -11,8 +11,8 @@ import com.ciandt.techgallery.persistence.dao.impl.EmailNotificationDAOImpl;
 import com.ciandt.techgallery.persistence.model.EmailNotification;
 import com.ciandt.techgallery.service.EmailService;
 import com.ciandt.techgallery.service.email.EmailConfig;
+import com.ciandt.techgallery.transaction.Transactional;
 import com.ciandt.techgallery.utils.TechGalleryUtil;
-import com.ciant.techgallery.transaction.Transactional;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
