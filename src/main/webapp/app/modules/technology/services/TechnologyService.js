@@ -330,12 +330,9 @@ module.exports = function($q, $timeout, $rootScope) {
 
   this.getOffers = function(){
     var deferred = $q.defer();
-    //TODO: edgardc adicionar o método getOffers no backend
-  //  gapi.client.rest.getOffers().execute(function(data){
-  //    deferred.resolve(data.items);
-//    });
-    // remover a linha estática demois
-    deferred.resolve(['Mobile', 'Cloud Compute', 'Analyts', 'Agile Optimization']);
+    gapi.client.rest.getOffers().execute(function(data){
+      deferred.resolve(data.items);
+    });
     return deferred.promise;
   }
 

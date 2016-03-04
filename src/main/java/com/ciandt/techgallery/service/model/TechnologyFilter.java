@@ -5,7 +5,7 @@ import com.ciandt.techgallery.service.enums.OfferEnum;
 
 /**
  * Response with all technology entities.
- * 
+ *
  * @author Thulio Ribeiro
  *
  */
@@ -28,34 +28,34 @@ public class TechnologyFilter implements Response {
 
   /** string for search in customerName. */
   private String customerNameContains;
-  
+
   /** string for search in offer. */
-  private OfferEnum offerIs;
-  
+  private String offerIs;
+
   /** string for search in technologies. */
   private String technologiesContains;
-  
+
   public String getCustomerNameContains() {
     return customerNameContains;
   }
   public void setCustomerNameContains(String value) {
     this.customerNameContains = value;
   }
-  
-  public OfferEnum getOfferIs() {
+
+  public String getOfferIs() {
     return offerIs;
   }
-  public void setOfferIs(OfferEnum value) {
+  public void setOfferIs(String value) {
     this.offerIs = value;
   }
-  
+
   public String getTechnologiesContains() {
     return technologiesContains;
   }
   public void setTechnologiesContains(String value) {
     this.technologiesContains = value;
   }
-  
+
   public String getTitleContains() {
     return titleContains;
   }
@@ -101,7 +101,7 @@ public class TechnologyFilter implements Response {
 
   /**
    * Construtor for TechnologyFilter.
-   * 
+   *
    * @param titleContains
    *          part of the technology's title
    * @param shortDescriptionContains
@@ -121,9 +121,7 @@ public class TechnologyFilter implements Response {
       this.dateFilter = DateFilterEnum.values()[dateFilter];
     }
     this.customerNameContains = customerNameContains;
-    if (offerIs != null) {
-        this.offerIs = OfferEnum.valueOf(OfferEnum.class, offerIs);
-    }
+    this.offerIs = offerIs;
     this.technologiesContains = technologiesContains;
   }
 }

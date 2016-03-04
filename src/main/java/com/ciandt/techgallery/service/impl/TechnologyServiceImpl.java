@@ -20,6 +20,7 @@ import com.ciandt.techgallery.persistence.model.TechGalleryUser;
 import com.ciandt.techgallery.persistence.model.Technology;
 import com.ciandt.techgallery.service.TechnologyService;
 import com.ciandt.techgallery.service.UserServiceTG;
+import com.ciandt.techgallery.service.enums.OfferEnums;
 import com.ciandt.techgallery.service.enums.RecommendationEnums;
 import com.ciandt.techgallery.service.enums.TechnologyOrderOptionEnum;
 import com.ciandt.techgallery.service.enums.ValidationMessageEnums;
@@ -146,9 +147,8 @@ public class TechnologyServiceImpl implements TechnologyService {
 			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_NAME_CANNOT_BLANK.message());
 		} else if (StringUtils.isBlank(technology.getClient())) {
 			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_CLIENT_CANNOT_BLANK.message());
-			// } else if (StringUtils.isBlank(technology.getOffer())) {
-			// throw new
-			// BadRequestException(ValidationMessageEnums.TECHNOLOGY_OFFER_CANNOT_BLANK.message());
+		} else if (StringUtils.isBlank(technology.getOffer())) {
+			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_OFFER_CANNOT_BLANK.message());
 		} else if (StringUtils.isBlank(technology.getShortDescription())) {
 			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_SHORT_DESCRIPTION_BLANK.message());
 		} else if (StringUtils.isBlank(technology.getDescription())) {
@@ -215,11 +215,16 @@ public class TechnologyServiceImpl implements TechnologyService {
 				&& techFilter.getRecommendationIs().equals(RecommendationEnums.UNINFORMED.message())) {
 			techFilter.setRecommendationIs("");
 		}
+
+		if (techFilter.getOfferIs() != null){
+			techFilter.setOfferIs("");
+		}
+
 		List<Technology> completeList = technologyDAO.findAllActives();
 		completeList = filterByLastActivityDate(techFilter, completeList);
 
 		List<Technology> filteredList = new ArrayList<>();
-		if (StringUtils.isBlank(techFilter.getTitleContains()) && techFilter.getRecommendationIs() == null) {
+		if (StringUtils.isBlank(techFilter.getTitleContains()) && techFilter.getRecommendationIs() == null && techFilter.getOfferIs() == null) {
 			filteredList.addAll(completeList);
 		} else {
 			verifyFilters(techFilter, completeList, filteredList);
@@ -315,10 +320,20 @@ public class TechnologyServiceImpl implements TechnologyService {
 		return false;
 	}
 
+	private boolean verifyOfferFilter(TechnologyFilter techFilter, Technology technology) {
+		if (technology.getOffer() == null && techFilter.getOfferIs() == "") {
+			return true;
+		} else if (technology.getOffer() != null && techFilter.getOfferIs() != null
+				&& (technology.getOffer().toLowerCase().equals(techFilter.getOfferIs().toLowerCase()))) {
+			return true;
+		}
+		return false;
+	}
+
 	private boolean verifyTitleAndShortDescriptionFilter(TechnologyFilter techFilter, Technology technology) {
 		if (checkTitle(techFilter, technology)
-				|| checkCustomerName(techFilter, technology) 
-				|| checkDescription(techFilter, technology)				 
+				|| checkCustomerName(techFilter, technology)
+				|| checkDescription(techFilter, technology)
 				|| checkShortDescription(techFilter, technology)
 				|| checkTechnologies(techFilter, technology)) {
 			return true;
@@ -340,7 +355,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 		return technology.getDescription() != null && technology.getDescription().toLowerCase()
 				.contains(techFilter.getShortDescriptionContains().toLowerCase());
 	}
-	
+
 	private boolean checkShortDescription(TechnologyFilter techFilter, Technology technology) {
 		return technology.getShortDescription() != null && technology.getShortDescription().toLowerCase()
 				.contains(techFilter.getShortDescriptionContains().toLowerCase());
