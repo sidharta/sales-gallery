@@ -16,7 +16,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     checkLogin(false);
   };
 
-  AppService.setPageTitle('Adicionar nova tecnologia');
+  AppService.setPageTitle('Adicionar nova proposta');
 
   TechnologyService.getTechnology($stateParams.id).then(function(data){
     if (data.hasOwnProperty('error')) {
@@ -24,7 +24,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
       context.showTechNotExists = true;
       return;
     }
-    AppService.setPageTitle('Editar tecnologia');
+    AppService.setPageTitle('Editar proposta');
     fillTechnology(data);
   });
 
@@ -52,9 +52,9 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
             $state.go('root.technologies');
           }
           if(isEdit){
-            AppService.setAlert('Tecnologia editada com sucesso', 'success');
+            AppService.setAlert('Proposta editada com sucesso', 'success');
           }else{
-            AppService.setAlert('Tecnologia criada com sucesso', 'success');
+            AppService.setAlert('Proposta criada com sucesso', 'success');
           }
         }
       });

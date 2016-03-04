@@ -21,5 +21,5 @@ module.exports = function (TechnologyService, AppService, UserService) {
   /**
    * Page title
    */
-   AppService.setPageTitle('Tecnologias');
+   AppService.setPageTitle('Propostas');
  }

@@ -93,7 +93,7 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
   }
 
   this.deleteTechnology = function(idTechnology){
-    if(confirm('Você realmente quer apagar a tecnologia?')) {
+    if(confirm('Você realmente quer apagar a proposta?')) {
       context.loading = true;
       TechnologyService.deleteTechnology(idTechnology).then(function(data){
         if(!data.hasOwnProperty('error')){
@@ -106,5 +106,5 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
   /**
    * Page title
    */
-   AppService.setPageTitle('Tecnologias');
+   AppService.setPageTitle('Propostas');
  }
