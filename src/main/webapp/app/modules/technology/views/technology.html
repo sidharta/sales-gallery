@@ -13,7 +13,7 @@
           </div>
           <div class="media-content">
             <div class="pull-right">
-              <a href="#/technologies/{{ technology.item.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.item.name }}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+              <a href="#/proposals/{{ technology.item.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.item.name }}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
             </div>
             <h1 class="technology-name">{{ technology.item.name }} <button id="idFollowButton" ng-click="technology.followTechnology()" ng-class="technology.setFollowedClass(technology.item.followedByUser)"><span class="glyphicon glyphicon-star-empty"></span> Seguir</button></h1>
             <ul class="technology-meta">

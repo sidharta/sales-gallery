@@ -29,10 +29,10 @@
             <button type="reset" class="btn btn-default btn-sm" ng-click="technologies.resetFilters()" tooltip-placement="bottom" uib-tooltip="Limpar filtros"><span class="glyphicon glyphicon-remove"></span></button>
           </div>
         </form>
-      </div> 
+      </div>
 
       <div class="btn-group pull-right" role="group" ng-if="isUserLogged">
-        <a href="#/technologies/new" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar proposta</a>
+        <a href="#/proposals/new" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Adicionar proposta</a>
       </div>
     </div>
   </div>
@@ -51,11 +51,11 @@
         <div class="card">
           <div class="card-header card-section">
             <div class="technology-image">
-              <a href="#/technologies/{{ technology.id }}"><img ng-src="{{ technology.image }}" alt="{{ technology.name }}" data-holder-rendered="true"></a>
+              <a href="#/proposals/{{ technology.id }}"><img ng-src="{{ technology.image }}" alt="{{ technology.name }}" data-holder-rendered="true"></a>
             </div>
-            <h3 class="card-title"><a href="#/technologies/{{ technology.id }}">{{ technology.name }}</a></h3>
+            <h3 class="card-title"><a href="#/proposals/{{ technology.id }}">{{ technology.name }}</a></h3>
             <span class="label label-default technology-recommendation technology-client">{{ technology.client }}</span>
-            <span class="label label-default technology-recommendation">{{ technology.technologies }}</span>            
+            <span class="label label-default technology-recommendation">{{ technology.technologies }}</span>
           </div>
           <div class="card-content card-section">
             <div class="technology-description">
@@ -67,7 +67,7 @@
               <button type="button" ng-click="technologies.followTechnology(technology.id, $event)" ng-class="technologies.setFollowedClass(technology.followedByUser)"><span class="glyphicon glyphicon-star-empty"></span> Seguir</button>
             </div>
             <div class="pull-right">
-              <a href="#/technologies/{{ technology.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.name }}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+              <a href="#/proposals/{{ technology.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.name }}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
               <button type="button" ng-if="loggedUserInformation.admin" ng-click="technologies.deleteTechnology(technology.id)" class="btn btn-danger btn-xs" title="Deletar {{ technology.name }}"><span class="glyphicon glyphicon-trash"></span></button>
             </div>
           </div>
