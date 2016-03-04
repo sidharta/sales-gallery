@@ -49,6 +49,8 @@ public class TechnologyTO implements Response {
 
   private Date lastActivity;
 
+  private Date creationDate;
+
   public String getId() {
     return id;
   }
@@ -160,7 +162,7 @@ public class TechnologyTO implements Response {
   public void setOffer(String offer) {
     this.offer = offer;
   }
-  
+
   public String getTechnologies() {
     return technologies;
   }
@@ -191,6 +193,14 @@ public class TechnologyTO implements Response {
 
   public void setLastActivity(Date lastActivity) {
     this.lastActivity = lastActivity;
+  }
+
+  public Date getCreationDate() {
+    return lastActivity;
+  }
+
+  public void setCreationDate(Date creationDate) {
+    this.creationDate = creationDate;
   }
 
   public String getRecommendationJustification() {
