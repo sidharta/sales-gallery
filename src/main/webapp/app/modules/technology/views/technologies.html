@@ -54,8 +54,12 @@
               <a href="#/technologies/{{ technology.id }}"><img ng-src="{{ technology.image }}" alt="{{ technology.name }}" data-holder-rendered="true"></a>
             </div>
             <h3 class="card-title"><a href="#/technologies/{{ technology.id }}">{{ technology.name }}</a></h3>
-            <span class="label label-default technology-recommendation technology-client">{{ technology.client }}</span>
-            <span class="label label-default technology-recommendation">{{ technology.technologies }}</span>            
+            <div>
+                <span class="label label-default technology-client">{{ technology.client }}</span>
+            </div>            
+            <div class="technologies-box">
+                <span class="label label-default technology-recommendation" ng-repeat="tech in split(technology.technologies)">{{ tech }}</span>
+            </div>            
           </div>
           <div class="card-content card-section">
             <div class="technology-description">

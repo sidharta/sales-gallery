@@ -146,18 +146,23 @@ $technology-spacing: 20px;
   padding: 0;
 }
 
+.technologies-box {
+    display: inline-block;
+    clear: both;
+}
+
 .technology-client {
     background-color: #20bec6 !important;
+    clear: both;
+    display: inline-block;
+    margin: 6px 4px 0px 0px;
 }
 
 .technology-comment,
 .technology-recommendation {
-  clear: both;
-  margin: 5px 0px;
+  margin: 6px 4px 0px 0px;
   list-style: none;
-  margin-bottom: 5px;
   float: left;
-
   &:last-of-type {
     margin-bottom: 0;
   }
