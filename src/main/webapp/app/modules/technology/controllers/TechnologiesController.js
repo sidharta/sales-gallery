@@ -15,6 +15,11 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
     context.loading = false;
     $scope.$apply();
   })
+  
+  $scope.split = function(string) {
+    var array = string.split(',');
+    return array;
+  }
 
   /**
    * List of technologies
@@ -23,8 +28,6 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
    this.getTechnologies = function(){
     context.loading = true;
     TechnologyService.getTechnologies().then(function(){
-         console.log(TechnologyService.foundItems);
-        
       context.items = TechnologyService.foundItems;
       context.loading = false;
     });
