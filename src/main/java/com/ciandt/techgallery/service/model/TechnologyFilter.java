@@ -1,7 +1,7 @@
 package com.ciandt.techgallery.service.model;
 
 import com.ciandt.techgallery.service.enums.DateFilterEnum;
-import com.ciandt.techgallery.service.enums.OfferEnum;
+import com.ciandt.techgallery.service.enums.OfferEnums;
 
 /**
  * Response with all technology entities.

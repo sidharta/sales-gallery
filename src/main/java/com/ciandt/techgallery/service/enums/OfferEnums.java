@@ -8,16 +8,15 @@ package com.ciandt.techgallery.service.enums;
  */
 public enum OfferEnums {
 
-  SMART_CANVAS("Smart Canvas"),
-  DIGITAL_STRATEGY_CONSULTING("Digital Strategy Consulting"),
-  LEGACY_OPTIMIZATION("Legacy Optimization"),
   API_EXTENDED_ENTERPRISE("API-Extended Enterprise"),
-  DIGITAL_IMPLEMENTATION("Digital Implementation"),
   BUSINESS_TECHNOLOGY_AGILE_CONSULTING("Business-Technology Agile Consulting"),
-  IOT_EXPERIMENTATION("IoT Experimentation"),
+  DIGITAL_IMPLEMENTATION("Digital Implementation"),
+  DIGITAL_STRATEGY_CONSULTING("Digital Strategy Consulting"),
+  ENTERPRISE_AGILE("Enterprise Agile"),
   GOOGLE_CLOUD("Google Cloud"),
-  ENTERPRISE_AGILE("Enterprise Agile");
-
+  IOT_EXPERIMENTATION("IoT Experimentation"),
+  LEGACY_OPTIMIZATION("Legacy Optimization"),
+  SMART_CANVAS("Smart Canvas");
 
   private String message;
 
