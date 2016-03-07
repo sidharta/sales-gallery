@@ -31,6 +31,12 @@
 
         <!-- TECHNOLOGY ENDORSMENTS -->
         <div id="endorsements" class="technology-section row">
+          <div class="col-md-12" ng-if="app.alertBotton.message.length">
+            <uib-alert type="{{ app.alertBotton.type }}" close="app.closeAlertBotton()">
+              {{ app.alertBotton.message }}
+            </uib-alert>
+          </div>
+
           <div class="col-md-6">
             <div class="card no-margin">
               <div class="card-section">
@@ -77,11 +83,6 @@
           </div>
         </div>
       <!-- TECHNOLOGY RECOMMENDATIONS & COMMENTS -->
-        <div class="col-md-12" ng-if="app.alertBotton.message.length">
-          <uib-alert type="{{ app.alertBotton.type }}" close="app.closeAlertBotton()">
-            {{ app.alertBotton.message }}
-          </uib-alert>
-        </div>
         <div id="comments" class="col-md-6">
           <div class="card no-margin">
             <div class="card-section">
