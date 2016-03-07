@@ -162,11 +162,7 @@ public class EndorsementServiceImpl implements EndorsementService {
       }
     }
 
-    // final checks and persist
-    // user cannot endorse itself
-    if (tgEndorserUser.getId().equals(tgEndorsedUser.getId())) {
-      throw new BadRequestException(i18n.t("You cannot endorse yourself!"));
-    }
+
     // user cannot endorse the same people twice
     if (endorsementDao.findActivesByUsers(tgEndorserUser, tgEndorsedUser, technology).size() > 0) {
       throw new BadRequestException(i18n.t("You already endorsed this user for this technology"));
@@ -247,12 +243,6 @@ public class EndorsementServiceImpl implements EndorsementService {
       if (technology == null) {
         throw new BadRequestException(i18n.t("Technology do not exists!"));
       }
-    }
-
-    // final checks and persist
-    // user cannot endorse itself
-    if (tgEndorserUser.getId().equals(tgEndorsedUser.getId())) {
-      throw new BadRequestException(i18n.t("You cannot endorse yourself!"));
     }
 
     // should exist only one active endorsement per endorser/endorsed/technology. the others are

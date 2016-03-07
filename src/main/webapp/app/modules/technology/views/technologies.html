@@ -15,6 +15,10 @@
               <option value="Não recomendadas ou aposentar">Não recomendadas ou aposentar</option>
               <option value="Não informado">Não informado</option>
             </select>
+            <select ng-disabled="technologies.loading" id="technology-filter" ng-model="technologies.offerFilter" ng-change="technologies.updateFilters()" class="form-control">
+              <option value="">Todos</option>
+              <option ng-repeat="offer in technologies.offers" value="{{offer}}">{{offer}}</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="technology-order" tabindex="0" tooltip-placement="bottom" uib-tooltip="Última atividade"><span class="glyphicon glyphicon-time"></span></label>
@@ -89,7 +93,7 @@
       </div>
     </div>
     <div class="row" ng-if="!technologies.items.length">
-      Nenhuma tecnologia encontrada.
+      Nenhuma proposta encontrada.
     </div>
   </div>
 </div>

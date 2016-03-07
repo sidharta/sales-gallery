@@ -16,11 +16,10 @@ module.exports = function($q, $timeout, $rootScope) {
     context.textSearch = textSearch;
   };
 
-  this.setContentFilters = function(selectedRecommendationFilter, selectedOrderFilter, selectedLastActivityFilter){
+  this.setContentFilters = function(selectedRecommendationFilter, selectedOrderFilter, selectedLastActivityFilter, selectedOfferFilter){
     context.selectedRecommendationFilter = selectedRecommendationFilter;
     context.selectedOfferFilter = selectedOfferFilter;
     context.selectedOrderFilter = selectedOrderFilter;
-
     context.selectedLastActivityFilter = selectedLastActivityFilter;
 
     context.searchTechnologies();
@@ -129,8 +128,8 @@ module.exports = function($q, $timeout, $rootScope) {
       dateFilter : context.selectedLastActivityFilter,
       recommendationIs: context.selectedRecommendationFilter,
       customerNameContains: context.textSearch,
-      offerIs: context.offerIs,
       technologiesContains: context.textSearch,
+      offerIs : context.selectedOfferFilter
     }
     var deferred = $q.defer();
     gapi.client.rest.findByFilter(req).execute(function(data){
