@@ -104,7 +104,7 @@ module.exports = function ($rootScope, $stateParams, AppService, TechnologyServi
   }
 
   this.addComment = function(){
-    if(context.comment && context.comment.trim().length <= 500){
+    if(context.comment && context.comment.trim().length <= 2000){
       TechnologyService.addComment(context, $stateParams.id).then(function(){
     	Analytics.sendCommentEvent(context.item.name);
     	context.comment = '';
