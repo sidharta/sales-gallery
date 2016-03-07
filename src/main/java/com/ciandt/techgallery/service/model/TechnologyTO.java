@@ -174,7 +174,7 @@ public class TechnologyTO implements Response {
   }
 
   public Date getCreationDate() {
-    return lastActivity;
+    return creationDate;
   }
 
   public void setCreationDate(Date creationDate) {
