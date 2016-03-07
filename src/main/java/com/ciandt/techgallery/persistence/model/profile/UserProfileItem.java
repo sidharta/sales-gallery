@@ -19,7 +19,7 @@ public class UserProfileItem implements Comparable<UserProfileItem> {
 
   private String technologyPhotoUrl;
 
-  private String companyRecommendation;
+  private String companyStatus;
 
   private Integer endorsementQuantity;
 
@@ -31,14 +31,14 @@ public class UserProfileItem implements Comparable<UserProfileItem> {
   public UserProfileItem() {}
 
   /**
-   * Construct a profile item from a Technology. Only the technology name, recommendation and image
+   * Construct a profile item from a Technology. Only the technology name, status and image
    * url are set.
-   * 
+   *
    * @param technology the technology related to this item
    */
   public UserProfileItem(Technology technology) {
     setTechnologyName(technology.getName());
-    setCompanyRecommendation(technology.getRecommendation());
+    setCompanyStatus(technology.getStatus());
     setTechnologyPhotoUrl(technology.getImage());
     endorsementQuantity = 0;
     setSkillLevel(0);
@@ -46,7 +46,7 @@ public class UserProfileItem implements Comparable<UserProfileItem> {
 
   /**
    * Adds a new comment to the profile item.
-   * 
+   *
    * @param originComment the key to the original TechnologyComment entity
    */
   public void addComment(TechnologyComment originComment) {
@@ -58,7 +58,7 @@ public class UserProfileItem implements Comparable<UserProfileItem> {
 
   /**
    * Removes a comment from the profile item.
-   * 
+   *
    * @param originComment the key of the comment to be removed
    */
   public void removeComment(TechnologyComment originComment) {
@@ -76,8 +76,8 @@ public class UserProfileItem implements Comparable<UserProfileItem> {
     this.technologyName = technologyName;
   }
 
-  public String getCompanyRecommendation() {
-    return companyRecommendation;
+  public String getCompanyStatus() {
+    return companyStatus;
   }
 
 
@@ -89,13 +89,13 @@ public class UserProfileItem implements Comparable<UserProfileItem> {
     this.technologyPhotoUrl = technologyPhotoUrl;
   }
 
-  public void setCompanyRecommendation(String companyRecommendation) {
-    this.companyRecommendation = companyRecommendation;
+  public void setCompanyStatus(String companyStatus) {
+    this.companyStatus = companyStatus;
   }
 
   /**
    * Adds a number (positive or negative) to the endorsements counter and returns the result.
-   * 
+   *
    * @param number the number to be added to the counter
    * @return the final result
    */
@@ -125,7 +125,7 @@ public class UserProfileItem implements Comparable<UserProfileItem> {
   /**
    * Items with more endorsements come first. If equal, follows lexicographical order for the name
    * of the Technology.
-   * 
+   *
    * @param arg0 the other item to be compared with returns -1 if this item has more endorsements, 0
    *        if the quantities are the same, +1 if the other item has more endorsements
    */
@@ -138,4 +138,3 @@ public class UserProfileItem implements Comparable<UserProfileItem> {
   }
 
 }
-

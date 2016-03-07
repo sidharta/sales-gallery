@@ -28,8 +28,8 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     fillTechnology(data);
   });
 
-  TechnologyService.getRecommendations().then(function(data){
-    context.dropDownRecommendation = data;
+  TechnologyService.getStatus().then(function(data){
+    context.dropDownStatus = data;
   });
 
   TechnologyService.getOffers().then(function(data){
@@ -87,13 +87,12 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     if(context.image){
       document.getElementById('list').innerHTML = ['<img src="', context.image,'" title="', context.name, '" />'].join('');
     }
-    context.selectedRecommendation = technology.recommendation;
+    context.selectedStatus = technology.status;
     context.selectedOffer = technology.offer;
-    context.justification = technology.recommendationJustification;
   }
 
-  this.selectRecommendation = function(selected){
-    context.selectedRecommendation = selected;
+  this.selectStatus = function(selected){
+    context.selectedStatus = selected;
   };
 
   this.selectOffer = function(selected){

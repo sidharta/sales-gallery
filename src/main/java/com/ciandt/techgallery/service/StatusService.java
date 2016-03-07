@@ -8,21 +8,21 @@ import com.google.appengine.api.users.User;
 import java.util.List;
 
 /**
- * Services for Recommendations.
- * 
+ * Services for Statuss.
+ *
  * @author Thulio Ribeiro
  *
  */
-public interface RecommendationService {
+public interface StatusService {
 
   /**
-   * Service for getting a list of possibles recommendations.
-   * 
+   * Service for getting a list of possibles Statuss.
+   *
    * @return List of recomendations
    * @throws NotFoundException when entity is not found
    * @throws InternalServerErrorException in case something goes wrong
    */
-  List<String> getRecommendations(User user)
+  List<String> getStatus(User user)
       throws NotFoundException, BadRequestException, InternalServerErrorException;
 
 }

@@ -6,7 +6,7 @@ public class UserProfileItemTo {
 
   private String technologyName;
 
-  private String companyRecommendation;
+  private String companyStatus;
 
   private String technologyPhotoUrl;
 
@@ -15,26 +15,26 @@ public class UserProfileItemTo {
   private Integer skillLevel;
 
   private List<SubItemCommentTo> comments;
-  
+
   private RecomendationTo recommendation;
 
   public UserProfileItemTo() {}
 
   /**
    * All fields constructor.
-   * 
+   *
    * @param technologyName the name of the Technology
    * @param companyRecommendation the company statement for the Technology
    * @param endorsementQuantity how many people is endorsed for the Technology
    * @param skillLevel the skill level of the Profile owner, for the Technology
    * @param comments the comments of the Profile owner, for the Technology
    */
-  public UserProfileItemTo(String technologyName, String companyRecommendation,
+  public UserProfileItemTo(String technologyName, String companyStatus,
       String technologyPhotoUrl, Integer endorsementQuantity, Integer skillLevel,
       List<SubItemCommentTo> comments) {
     super();
     this.technologyName = technologyName;
-    this.companyRecommendation = companyRecommendation;
+    this.companyStatus = companyStatus;
     this.technologyPhotoUrl = technologyPhotoUrl;
     this.endorsementsCount = endorsementQuantity;
     this.skillLevel = skillLevel;
@@ -49,12 +49,12 @@ public class UserProfileItemTo {
     this.technologyName = technologyName;
   }
 
-  public String getCompanyRecommendation() {
-    return companyRecommendation;
+  public String getCompanyStatus() {
+    return companyStatus;
   }
 
-  public void setCompanyRecommendation(String companyRecommendation) {
-    this.companyRecommendation = companyRecommendation;
+  public void setCompanyStatus(String companyStatus) {
+    this.companyStatus = companyStatus;
   }
 
   public Integer getEndorsementsCount() {

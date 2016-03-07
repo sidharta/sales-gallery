@@ -78,8 +78,7 @@ module.exports = function($q, $timeout, $rootScope) {
         id : slugify(context.name),
         name : context.name,
         shortDescription : context.shortDescription,
-        recommendationJustification : context.justification,
-        recommendation : context.selectedRecommendation,
+        status : context.selectedStatus,
         offer : context.selectedOffer,
         client : context.client,
         technologies : context.technologies,
@@ -93,8 +92,7 @@ module.exports = function($q, $timeout, $rootScope) {
         id : slugify(context.name),
         name : context.name,
         shortDescription : context.shortDescription,
-        recommendationJustification : context.justification,
-        recommendation : context.selectedRecommendation,
+        status : context.selectedStatus,
         offer : context.selectedOffer,
         client : context.client,
         technologies : context.technologies,
@@ -320,9 +318,9 @@ module.exports = function($q, $timeout, $rootScope) {
     return deferred.promise;
   }
 
-  this.getRecommendations = function(){
+  this.getStatus = function(){
     var deferred = $q.defer();
-    gapi.client.rest.getRecommendations().execute(function(data){
+    gapi.client.rest.getStatus().execute(function(data){
       deferred.resolve(data.items);
     });
     return deferred.promise;

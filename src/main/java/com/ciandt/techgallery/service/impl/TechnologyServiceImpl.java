@@ -21,7 +21,7 @@ import com.ciandt.techgallery.persistence.model.Technology;
 import com.ciandt.techgallery.service.TechnologyService;
 import com.ciandt.techgallery.service.UserServiceTG;
 import com.ciandt.techgallery.service.enums.OfferEnums;
-import com.ciandt.techgallery.service.enums.RecommendationEnums;
+import com.ciandt.techgallery.service.enums.StatusEnums;
 import com.ciandt.techgallery.service.enums.TechnologyOrderOptionEnum;
 import com.ciandt.techgallery.service.enums.ValidationMessageEnums;
 import com.ciandt.techgallery.service.model.Response;
@@ -211,9 +211,9 @@ public class TechnologyServiceImpl implements TechnologyService {
 	public Response findTechnologiesByFilter(TechnologyFilter techFilter, User user)
 			throws InternalServerErrorException, NotFoundException, BadRequestException {
 		validateUser(user);
-		if (techFilter.getRecommendationIs() != null
-				&& techFilter.getRecommendationIs().equals(RecommendationEnums.UNINFORMED.message())) {
-			techFilter.setRecommendationIs("");
+		if (techFilter.getStatusIs() != null
+				&& techFilter.getStatusIs().equals(StatusEnums.UNINFORMED.message())) {
+			techFilter.setStatusIs("");
 		}
 
 		if (techFilter.getOfferIs() != null){
@@ -224,7 +224,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 		completeList = filterByLastActivityDate(techFilter, completeList);
 
 		List<Technology> filteredList = new ArrayList<>();
-		if (StringUtils.isBlank(techFilter.getTitleContains()) && techFilter.getRecommendationIs() == null && techFilter.getOfferIs() == null) {
+		if (StringUtils.isBlank(techFilter.getTitleContains()) && techFilter.getStatusIs() == null && techFilter.getOfferIs() == null) {
 			filteredList.addAll(completeList);
 		} else {
 			verifyFilters(techFilter, completeList, filteredList);
@@ -291,8 +291,8 @@ public class TechnologyServiceImpl implements TechnologyService {
 				continue;
 			}
 			if (verifyTitleAndShortDescriptionFilter(techFilter, technology)) {
-				if (techFilter.getRecommendationIs() != null) {
-					if (verifyRecommendationFilter(techFilter, technology)) {
+				if (techFilter.getStatusIs() != null) {
+					if (verifyStatusFilter(techFilter, technology)) {
 						filteredList.add(technology);
 					} else {
 						continue;
@@ -301,20 +301,20 @@ public class TechnologyServiceImpl implements TechnologyService {
 					filteredList.add(technology);
 					continue;
 				}
-			} else if (verifyRecommendationFilter(techFilter, technology) && techFilter.getTitleContains() == null) {
+			} else if (verifyStatusFilter(techFilter, technology) && techFilter.getTitleContains() == null) {
 				filteredList.add(technology);
 				continue;
 			}
 		}
 	}
 
-	private boolean verifyRecommendationFilter(TechnologyFilter techFilter, Technology technology) {
-		if (technology.getRecommendation() == null && techFilter.getRecommendationIs() == "") {
+	private boolean verifyStatusFilter(TechnologyFilter techFilter, Technology technology) {
+		if (technology.getStatus() == null && techFilter.getStatusIs() == "") {
 			return true;
-		} else if (technology.getRecommendation() != null && techFilter.getRecommendationIs() != null
-				&& (technology.getRecommendation().toLowerCase().equals(techFilter.getRecommendationIs().toLowerCase())
-						|| techFilter.getRecommendationIs().toLowerCase()
-								.equals(RecommendationEnums.ANY.message().toLowerCase()))) {
+		} else if (technology.getStatus() != null && techFilter.getStatusIs() != null
+				&& (technology.getStatus().toLowerCase().equals(techFilter.getStatusIs().toLowerCase())
+						|| techFilter.getStatusIs().toLowerCase()
+								.equals(StatusEnums.ANY.message().toLowerCase()))) {
 			return true;
 		}
 		return false;
@@ -431,32 +431,6 @@ public class TechnologyServiceImpl implements TechnologyService {
 		}
 		technologyDAO.update(entity);
 
-	}
-
-	@Override
-	public void addRecomendationCounter(Technology entity, Boolean score) {
-		if (entity == null) {
-			return;
-		}
-		if (score) {
-			entity.addPositiveRecommendationsCounter();
-		} else {
-			entity.addNegativeRecommendationsCounter();
-		}
-		technologyDAO.update(entity);
-	}
-
-	@Override
-	public void removeRecomendationCounter(Technology entity, Boolean score) {
-		if (entity == null) {
-			return;
-		}
-		if (score) {
-			entity.removePositiveRecommendationsCounter();
-		} else {
-			entity.removeNegativeRecommendationsCounter();
-		}
-		technologyDAO.update(entity);
 	}
 
 	@Override

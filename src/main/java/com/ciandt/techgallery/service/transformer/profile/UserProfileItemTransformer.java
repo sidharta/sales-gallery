@@ -28,7 +28,7 @@ public class UserProfileItemTransformer implements Transformer<UserProfileItem, 
     List<SubItemCommentTo> sortedCommentsTo = techCommentToSubItemCommentToList(comments);
     sortCommentsByTimestamp(sortedCommentsTo);
 
-    return new UserProfileItemTo(arg0.getTechnologyName(), arg0.getCompanyRecommendation(),
+    return new UserProfileItemTo(arg0.getTechnologyName(), arg0.getCompanyStatus(),
         arg0.getTechnologyPhotoUrl(), arg0.getEndorsementQuantity(), arg0.getSkillLevel(),
         sortedCommentsTo);
   }

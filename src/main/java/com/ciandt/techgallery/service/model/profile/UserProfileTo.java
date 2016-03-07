@@ -20,12 +20,12 @@ public class UserProfileTo {
   private TechGalleryUser owner;
 
   private List<UserProfileItemTo> technologies;
-  
-  private HashMap<String, UserProfileItemTo> itemByTech; 
+
+  private HashMap<String, UserProfileItemTo> itemByTech;
 
   /**
    * All args constructor.
-   * 
+   *
    * @param owner the profile owner
    * @param positiveRecItems itens with positive recommendation by the owner
    * @param negativeRecItems itens with negative recommendation by the owner
@@ -37,13 +37,13 @@ public class UserProfileTo {
     this.owner = owner;
     this.itemByTech=new HashMap<String, UserProfileItemTo>();
     this.setTechnologies(new ArrayList<UserProfileItemTo>());
-    
+
     populate(positiveRecItems, negativeRecItems, otherItems);
   }
 
   private void populate(List<UserProfileItem> positiveRecItems,
       List<UserProfileItem> negativeRecItems, List<UserProfileItem> otherItems) {
-    
+
     UserProfileItemTo itemTo;
     String technologyName;
     if(positiveRecItems!=null){
@@ -85,7 +85,7 @@ public class UserProfileTo {
 
   private UserProfileItemTo transformToItemTo(UserProfileItem userProfileItem,
       Boolean isPositive) {
-    
+
     UserProfileItemTo userProfileItemTo = new UserProfileItemTo();
     if (isPositive!=null) {
       Technology tech = TechnologyDAOImpl.getInstance().findByName(userProfileItem.getTechnologyName());
@@ -97,21 +97,21 @@ public class UserProfileTo {
         userProfileItemTo.setRecommendation(recomendationTo);
       }
     }
-    
+
     transformComment(userProfileItem, userProfileItemTo);
-    
-   userProfileItemTo.setCompanyRecommendation(userProfileItem.getCompanyRecommendation());
+
+   userProfileItemTo.setCompanyStatus(userProfileItem.getCompanyStatus());
    userProfileItemTo.setEndorsementsCount(userProfileItem.getEndorsementQuantity());
    userProfileItemTo.setSkillLevel(userProfileItem.getSkillLevel());
    userProfileItemTo.setTechnologyName(userProfileItem.getTechnologyName());
    userProfileItemTo.setTechnologyPhotoUrl(userProfileItemTo.getTechnologyPhotoUrl());
-    
+
     return userProfileItemTo;
   }
 
   private void transformComment(UserProfileItem userProfileItem,
       UserProfileItemTo userProfileItemTo) {
-    
+
     if (userProfileItem.getComments() != null){
       if(userProfileItemTo.getComments()==null){
         userProfileItemTo.setComments(new ArrayList<SubItemCommentTo>());

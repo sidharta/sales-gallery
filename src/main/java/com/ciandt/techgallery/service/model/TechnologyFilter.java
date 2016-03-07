@@ -17,8 +17,8 @@ public class TechnologyFilter implements Response {
   /** string for search in shortDescription. */
   private String shortDescriptionContains;
 
-  /** string for search in recommendation. */
-  private String recommendationIs;
+  /** string for search in status. */
+  private String statusIs;
 
   /** string for order option. */
   private String orderOptionIs;
@@ -45,6 +45,7 @@ public class TechnologyFilter implements Response {
   public String getOfferIs() {
     return offerIs;
   }
+
   public void setOfferIs(String value) {
     this.offerIs = value;
   }
@@ -60,12 +61,12 @@ public class TechnologyFilter implements Response {
     return titleContains;
   }
 
-  public String getRecommendationIs() {
-    return recommendationIs;
+  public String getStatusIs() {
+    return statusIs;
   }
 
-  public void setRecommendationIs(String recommendationIs) {
-    this.recommendationIs = recommendationIs;
+  public void setStatusIs(String statusIs) {
+    this.statusIs = statusIs;
   }
 
   public void setTitleContains(String titleContains) {
@@ -106,16 +107,16 @@ public class TechnologyFilter implements Response {
    *          part of the technology's title
    * @param shortDescriptionContains
    *          titleContains part of the technology's short description
-   * @param recommendationIs
-   *          technology's Ci&T Recommendation
+   * @param statusIs
+   *          technology's Ci&T status
    * @param orderOptionIs
    *          for sort the result
    */
-  public TechnologyFilter(String titleContains, String shortDescriptionContains, String recommendationIs,
+  public TechnologyFilter(String titleContains, String shortDescriptionContains, String statusIs,
       Integer dateFilter, String orderOptionIs, String customerNameContains, String offerIs, String technologiesContains) {
     this.titleContains = titleContains;
     this.shortDescriptionContains = shortDescriptionContains;
-    this.recommendationIs = recommendationIs;
+    this.statusIs = statusIs;
     this.orderOptionIs = orderOptionIs;
     if (dateFilter != null && (dateFilter >= 0 && dateFilter <= 2)) {
       this.dateFilter = DateFilterEnum.values()[dateFilter];

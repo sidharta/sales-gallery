@@ -103,10 +103,10 @@ public class TechnologyRecommendationServiceImpl implements TechnologyRecommenda
       previousRec.setActive(false);
       previousRec.setInactivatedDate(new Date());
       technologyRecommendationDAO.update(previousRec);
-      technologyService.removeRecomendationCounter(technology, previousRec.getScore());
+      // technologyService.removeRecomendationCounter(technology, previousRec.getScore());
     }
     recommendation.setId(technologyRecommendationDAO.add(recommendation).getId());
-    technologyService.addRecomendationCounter(technology, recommendation.getScore());
+    // technologyService.addRecomendationCounter(technology, recommendation.getScore());
 
     UserProfileServiceImpl.getInstance().handleRecommendationChanges(recommendation);
     return recommendation;
@@ -187,8 +187,8 @@ public class TechnologyRecommendationServiceImpl implements TechnologyRecommenda
 
     recommendation.setActive(false);
     technologyRecommendationDAO.update(recommendation);
-    technologyService.removeRecomendationCounter(recommendation.getTechnology().get(),
-        recommendation.getScore());
+    // technologyService.removeRecomendationCounter(recommendation.getTechnology().get(),
+    //     recommendation.getScore());
 
     UserProfileServiceImpl.getInstance().handleRecommendationChanges(recommendation);
     return techRecTransformer.transformTo(recommendation);

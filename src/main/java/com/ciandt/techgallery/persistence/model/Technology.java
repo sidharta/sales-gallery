@@ -40,10 +40,7 @@ public class Technology extends BaseEntity<String> {
   public static final String CLIENT = "client";
   public static final String OFFER = "offer";
   public static final String TECHNOLOGIES = "technologies";
-  public static final String RECOMMENDATION = "recommendation";
-  public static final String RECOMMENDATION_JUSTIFICATION = "recommendationJustification";
-  public static final String POSITIVE_RECOMMENDATIONS_COUNTER = "positiveRecommendationsCounter";
-  public static final String NEGATIVE_RECOMMENDATIONS_COUNTER = "negativeRecommendationsCounter";
+  public static final String STATUS = "status";
   public static final String COMMENTARIES_COUNTER = "commentariesCounter";
   public static final String ENDORSERS_COUNTER = "endorsersCounter";
   public static final String LAST_ACTIVITY = "lastActivity";
@@ -85,16 +82,7 @@ public class Technology extends BaseEntity<String> {
 
   /** company recommendation info. */
   @Unindex
-  private String recommendation;
-
-  @Unindex
-  private String recommendationJustification;
-
-  @Index
-  private Integer positiveRecommendationsCounter;
-
-  @Index
-  private Integer negativeRecommendationsCounter;
+  private String status;
 
   @Index
   private Integer commentariesCounter;
@@ -122,7 +110,7 @@ public class Technology extends BaseEntity<String> {
 
   @Index
   private String customerName;
-  
+
   /*
    * Getter's and Setter's --------------------------------------------
    */
@@ -132,21 +120,21 @@ public class Technology extends BaseEntity<String> {
   public void setCustomerName(String value) {
     this.customerName = value;
   }
-  
+
   public String getOffer() {
     return offer;
   }
   public void setOffer(String value) {
     this.offer = value;
   }
-  
+
   public String getTechnologies() {
     return technologies;
   }
   public void setTechnologies(String value) {
     this.technologies = value;
   }
-  
+
   @Override
   public String getId() {
     return id;
@@ -233,36 +221,12 @@ public class Technology extends BaseEntity<String> {
     this.active = active;
   }
 
-  public String getRecommendation() {
-    return recommendation;
+  public String getStatus() {
+    return status;
   }
 
-  public void setRecommendation(String recommendation) {
-    this.recommendation = recommendation;
-  }
-
-  public String getRecommendationJustification() {
-    return recommendationJustification;
-  }
-
-  public void setRecommendationJustification(String recommendationJustification) {
-    this.recommendationJustification = recommendationJustification;
-  }
-
-  public Integer getPositiveRecommendationsCounter() {
-    return positiveRecommendationsCounter;
-  }
-
-  public void setPositiveRecommendationsCounter(Integer positiveRecommendationsCounter) {
-    this.positiveRecommendationsCounter = positiveRecommendationsCounter;
-  }
-
-  public Integer getNegativeRecommendationsCounter() {
-    return negativeRecommendationsCounter;
-  }
-
-  public void setNegativeRecommendationsCounter(Integer negativeRecommendationsCounter) {
-    this.negativeRecommendationsCounter = negativeRecommendationsCounter;
+  public void setStatus(String status) {
+    this.status = status;
   }
 
   public Integer getCommentariesCounter() {
@@ -316,41 +280,6 @@ public class Technology extends BaseEntity<String> {
   /*
    * Methods --------------------------------------------
    */
-  /**
-   * Add 1 to the positive recomndations counter.
-   */
-  public void addPositiveRecommendationsCounter() {
-    positiveRecommendationsCounter++;
-  }
-
-  /**
-   * Remove 1 to the positive recomndations counter.
-   */
-  public void removePositiveRecommendationsCounter() {
-    if (positiveRecommendationsCounter > 0) {
-      positiveRecommendationsCounter--;
-    } else {
-      positiveRecommendationsCounter = 0;
-    }
-  }
-
-  /**
-   * Add 1 to the negative recomndations counter.
-   */
-  public void addNegativeRecommendationsCounter() {
-    negativeRecommendationsCounter++;
-  }
-
-  /**
-   * Remove 1 to the negative recomndations counter.
-   */
-  public void removeNegativeRecommendationsCounter() {
-    if (negativeRecommendationsCounter > 0) {
-      negativeRecommendationsCounter--;
-    } else {
-      negativeRecommendationsCounter = 0;
-    }
-  }
 
   /**
    * Add 1 to the commentary counter.
@@ -376,8 +305,6 @@ public class Technology extends BaseEntity<String> {
   public void initCounters() {
     commentariesCounter = 0;
     endorsersCounter = 0;
-    negativeRecommendationsCounter = 0;
-    positiveRecommendationsCounter = 0;
   }
 
   /**

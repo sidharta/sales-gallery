@@ -77,10 +77,6 @@ public interface TechnologyService {
 
   void removeCommentariesCounter(Technology technology);
 
-  void addRecomendationCounter(Technology technology, Boolean score);
-
-  void removeRecomendationCounter(Technology technology, Boolean score);
-
   void updateEdorsedsCounter(Technology technology, Integer size);
 
   /**

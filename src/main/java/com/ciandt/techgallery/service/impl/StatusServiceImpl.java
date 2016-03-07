@@ -6,27 +6,27 @@ import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.users.User;
 
 import com.ciandt.techgallery.persistence.model.TechGalleryUser;
-import com.ciandt.techgallery.service.RecommendationService;
+import com.ciandt.techgallery.service.StatusService;
 import com.ciandt.techgallery.service.UserServiceTG;
-import com.ciandt.techgallery.service.enums.RecommendationEnums;
 import com.ciandt.techgallery.service.enums.ValidationMessageEnums;
+import com.ciandt.techgallery.service.enums.StatusEnums;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Services for Recommendation Endpoint requests.
+ * Services for Status Endpoint requests.
  *
  * @author Thulio Ribeiro
  *
  */
-public class RecommendationServiceImpl implements RecommendationService {
+public class StatusServiceImpl implements StatusService {
 
   UserServiceTG userService = UserServiceTGImpl.getInstance();
-  private static RecommendationServiceImpl instance;
+  private static StatusServiceImpl instance;
 
-  private RecommendationServiceImpl() {}
+  private StatusServiceImpl() {}
 
   /**
    * Singleton method for the service.
@@ -34,25 +34,26 @@ public class RecommendationServiceImpl implements RecommendationService {
    * @author <a href="mailto:joaom@ciandt.com"> João Felipe de Medeiros Moreira </a>
    * @since 07/10/2015
    *
-   * @return RecommendationServiceImpl instance.
+   * @return StatusServiceImpl instance.
    */
-  public static RecommendationServiceImpl getInstance() {
+  public static StatusServiceImpl getInstance() {
     if (instance == null) {
-      instance = new RecommendationServiceImpl();
+      instance = new StatusServiceImpl();
     }
     return instance;
   }
 
   @Override
-  public List<String> getRecommendations(User user)
+  public List<String> getStatus(User user)
       throws NotFoundException, BadRequestException, InternalServerErrorException {
     validateUser(user);
-    final List<RecommendationEnums> enumValues = Arrays.asList(RecommendationEnums.values());
-    final List<String> recommendations = new ArrayList<>();
-    for (final RecommendationEnums enumEntry : enumValues) {
-      recommendations.add(enumEntry.message());
+
+    final List<StatusEnums> enumValues = Arrays.asList(StatusEnums.values());
+    final List<String> statuses = new ArrayList<>();
+    for (final StatusEnums enumEntry : enumValues) {
+      statuses.add(enumEntry.message());
     }
-    return recommendations;
+    return statuses;
   }
 
   /**

@@ -8,36 +8,12 @@ import java.util.List;
 
 /**
  * Enum for mapping Order Options.
- * 
+ *
  * @author Felipe Ibrahim
  *
  */
 public enum TechnologyOrderOptionEnum {
 
-  POSITIVE_RECOMMENDATION_AMOUNT("Recomendações Positivas") {
-    @Override
-    public void sort(List<Technology> techList) {
-      Collections.sort(techList, new Comparator<Technology>() {
-        @Override
-        public int compare(Technology counter1, Technology counter2) {
-          return Integer.compare(counter2.getPositiveRecommendationsCounter(),
-              counter1.getPositiveRecommendationsCounter());
-        }
-      });
-    }
-  },
-  NEGATIVE_RECOMMENDATION_AMOUNT("Recomendações Negativas") {
-    @Override
-    public void sort(List<Technology> techList) {
-      Collections.sort(techList, new Comparator<Technology>() {
-        @Override
-        public int compare(Technology counter1, Technology counter2) {
-          return Integer.compare(counter2.getNegativeRecommendationsCounter(),
-              counter1.getNegativeRecommendationsCounter());
-        }
-      });
-    }
-  },
   COMMENT_AMOUNT("Comentários") {
     @Override
     public void sort(List<Technology> techList) {
@@ -87,7 +63,7 @@ public enum TechnologyOrderOptionEnum {
    * Convert the text informed to Enum.
    *
    * @param text to be converted.
-   * 
+   *
    * @return the enum value.
    */
   public static TechnologyOrderOptionEnum fromString(String text) {

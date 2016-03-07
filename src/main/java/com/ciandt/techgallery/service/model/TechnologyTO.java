@@ -30,14 +30,8 @@ public class TechnologyTO implements Response {
   private String offer;
   /** Proposal technologies. */
   private String technologies;
-  /** technology company recommendation. */
-  private String recommendation;
-  /** technology company recommendation justification. */
-  private String recommendationJustification;
-  /** technology positives recommendations. */
-  private Integer positiveRecommendationsCounter;
-  /** technology negative recommendations. */
-  private Integer negativeRecommendationsCounter;
+  /** technology company status. */
+  private String status;
   /** technology commentaries. */
   private Integer commentariesCounter;
   /** technology endorseds. */
@@ -77,22 +71,6 @@ public class TechnologyTO implements Response {
 
   public void setImageContent(String imageContent) {
     this.imageContent = imageContent;
-  }
-
-  public Integer getPositiveRecommendationsCounter() {
-    return positiveRecommendationsCounter;
-  }
-
-  public void setPositiveRecommendationsCounter(Integer positiveRecommendationsCounter) {
-    this.positiveRecommendationsCounter = positiveRecommendationsCounter;
-  }
-
-  public Integer getNegativeRecommendationsCounter() {
-    return negativeRecommendationsCounter;
-  }
-
-  public void setNegativeRecommendationsCounter(Integer negativeRecommendationsCounter) {
-    this.negativeRecommendationsCounter = negativeRecommendationsCounter;
   }
 
   public Integer getCommentariesCounter() {
@@ -171,12 +149,12 @@ public class TechnologyTO implements Response {
     this.technologies = technologies;
   }
 
-  public String getRecommendation() {
-    return recommendation;
+  public String getStatus() {
+    return status;
   }
 
-  public void setRecommendation(String recommendation) {
-    this.recommendation = recommendation;
+  public void setStatus(String status) {
+    this.status = status;
   }
 
   public boolean isFollowedByUser() {
@@ -203,11 +181,4 @@ public class TechnologyTO implements Response {
     this.creationDate = creationDate;
   }
 
-  public String getRecommendationJustification() {
-    return recommendationJustification;
-  }
-
-  public void setRecommendationJustification(String recommendationJustification) {
-    this.recommendationJustification = recommendationJustification;
-  }
 }
