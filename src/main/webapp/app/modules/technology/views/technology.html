@@ -9,7 +9,7 @@
         </div>
         <div class="media col-md-12">
           <div class="media-image no-margin">
-            <img ng-src="{{ technology.item.image }}" class="technology-image" />
+            <img ng-src="{{ technology.item.image }}" data-placeholder-img class="technology-image" >
           </div>
           <div class="media-content">
             <div class="pull-right">
@@ -39,7 +39,7 @@
               <div class="card-section">
                 <div class="form-inline">
                   <div class="input-group typeahead-input">
-                    <input ng-model="technology.endorsed" type="text" class="form-control" placeholder="usuário" aria-describedby="basic-addon2" uib-typeahead="user as user.email for user in technology.getUsersList($viewValue)" typeahead-min-length="3" typeahead-template-url="customTemplate.html" style="width: 250px;">
+                    <input ng-model="technology.endorsed" type="text" class="form-control" placeholder="usuário" aria-describedby="basic-addon2" uib-typeahead="user as user.email for user in technology.getUsersList($viewValue)" typeahead-min-length="3" typeahead-template-url="customTemplate.html" style="width: 230px;">
                     <span class="input-group-addon">@ciandt.com</span>
                   </div>
                   <!--<div ng-show="loadingUsers">
@@ -63,11 +63,7 @@
                       <a href="#/people/{{technology.getUserLogin(response.endorsed.email)}}"><img ng-src={{response.endorsed.photo}} alt=""></a>
                     </div>
                     <div class="media-content">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <p><strong><a href="#/people/{{technology.getUserLogin(response.endorsed.email)}}">{{response.endorsed.name}}</a></strong></p>
-                        </div>
-                    </div>
+                      <p><strong><a href="#/people/{{technology.getUserLogin(response.endorsed.email)}}">{{response.endorsed.name}}</a></strong></p>
                   </div>
                 </div>
               </div>
