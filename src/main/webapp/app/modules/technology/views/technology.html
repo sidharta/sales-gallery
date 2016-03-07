@@ -64,7 +64,7 @@
                   <h5>Ainda não tem ninguém aqui. Adicione alguém que participou desta proposta!</h5>
                 </div>
                 <div class="technology-endorsement row" ng-repeat="response in technology.showEndorsementResponse track by $index">
-                  <div class="media col-md-7">
+                  <div class="media col-md-12">
                     <div class="media-image technology-endorsement-image">
                       <a href="#/people/{{technology.getUserLogin(response.endorsed.email)}}"><img ng-src={{response.endorsed.photo}} alt=""></a>
                     </div>

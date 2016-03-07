@@ -161,6 +161,7 @@ module.exports = function ($rootScope, $stateParams, AppService, TechnologyServi
       } else {
         AppService.setAlert(data.error.message ,'error');
       }
+      this.endorsed.email = '';
     });
   };
 
