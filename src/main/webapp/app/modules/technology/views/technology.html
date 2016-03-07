@@ -20,7 +20,23 @@
       </header>
       <div class="technology-body">
         <div class="technology-section row">
-          <div class="technology-description col-md-7" ng-bind-html="technology.item.description | nl2p">
+          <div class="technology-description col-md-8" ng-bind-html="technology.item.description | nl2p"></div>
+          <div class="col-md-4">
+            <div class="card no-margin">
+              <div class="card-section">
+                <h3 class="card-title ng-binding">Status</h3>
+              </div>
+              <div class="card-section">
+                <form action="" class="form-inline text-center">
+                  <div class="radio technology-rating" ng-repeat="status in technology.statuses" ng-class="{'active' : status.title == technology.item.status}">
+                    <span>
+                      <img ng-src="assets/images/{{ status.image }}" class="technology-rating-image" alt="{{status.title}}">
+                      <span class="technology-rating-text">{{status.title}}</span>
+                    </span>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
         </div>
 

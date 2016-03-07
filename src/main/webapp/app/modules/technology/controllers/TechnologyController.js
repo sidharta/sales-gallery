@@ -31,7 +31,16 @@ module.exports = function ($rootScope, $stateParams, AppService, TechnologyServi
     loadComments();
   });
 
-  this.ratings = TechnologyService.getRatings();
+  this.statuses = [];
+  var statusImages = ['shoeprints.png', 'denied.png', 'trophy-award-icon.png'];
+  TechnologyService.getStatus().then(function(data){
+    context.statuses = data.splice(1, 3).map(function(status, i) {
+      return {
+        title: status,
+        image: statusImages[i]
+      };
+    });
+  });
 
   this.getRating = function (rating){
     return TechnologyService.getRating(rating);

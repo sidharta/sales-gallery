@@ -85,22 +85,21 @@ $technology-spacing: 20px;
   overflow: hidden;
   margin-right: 8px;
   text-align: center;
+  opacity: .3;
 
   &:last-of-type {
     margin: 0;
   }
 
-  &:hover,
   &.active {
-    .technology-rating-image {
-      opacity: 1;
-    }
+    opacity: 1;
   }
 }
 .technology-rating-image {
   display: block;
   margin: 0 auto;
-  opacity: .3;
+  width: 78px;
+  height: 78px;
 }
 .technology-rating-text {
   display: block;

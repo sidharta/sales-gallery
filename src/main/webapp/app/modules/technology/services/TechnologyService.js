@@ -166,38 +166,6 @@ module.exports = function($q, $timeout, $rootScope) {
     return deferred.promise;
   }
 
-  /**
-   * Ratings for user skill on a technology
-   * @return {Array} The list of rating objects with value and title
-   */
-   this.getRatings = function () {
-    return [
-    {
-      value: 1,
-      title : 'Newbie'
-    },
-    {
-      value: 2,
-      title : 'Iniciante'
-    },{
-      value: 3,
-      title : 'Padawan'
-    },{
-      value: 4,
-      title : 'Knight'
-    },{
-      value: 5,
-      title : 'Jedi'
-    },
-    ];
-  }
-
-  this.getRating = function (rating) {
-    context.getRatings().filter(function (i) {
-      return i.value === rating;
-    })
-  }
-
   this.getUserSkill = function (idTech) {
     var deferred = $q.defer();
     if (!idTech) {
