@@ -216,10 +216,6 @@ public class TechnologyServiceImpl implements TechnologyService {
 			techFilter.setRecommendationIs("");
 		}
 
-		if (techFilter.getOfferIs() != null){
-			techFilter.setOfferIs("");
-		}
-
 		List<Technology> completeList = technologyDAO.findAllActives();
 		completeList = filterByLastActivityDate(techFilter, completeList);
 
@@ -287,12 +283,15 @@ public class TechnologyServiceImpl implements TechnologyService {
 	private void verifyFilters(TechnologyFilter techFilter, List<Technology> completeList,
 			List<Technology> filteredList) {
 		for (Technology technology : completeList) {
-			if (techFilter.getOfferIs() != null && !technology.getOffer().equals(techFilter.getOfferIs().toString())) {
-				continue;
-			}
 			if (verifyTitleAndShortDescriptionFilter(techFilter, technology)) {
 				if (techFilter.getRecommendationIs() != null) {
 					if (verifyRecommendationFilter(techFilter, technology)) {
+						filteredList.add(technology);
+					} else {
+						continue;
+					}
+				} else if (techFilter.getOfferIs() != null) {
+					if (verifyOfferFilter(techFilter, technology)) {
 						filteredList.add(technology);
 					} else {
 						continue;
@@ -302,6 +301,9 @@ public class TechnologyServiceImpl implements TechnologyService {
 					continue;
 				}
 			} else if (verifyRecommendationFilter(techFilter, technology) && techFilter.getTitleContains() == null) {
+				filteredList.add(technology);
+				continue;
+			}else if (verifyOfferFilter(techFilter, technology) && techFilter.getTitleContains() == null){
 				filteredList.add(technology);
 				continue;
 			}
@@ -324,13 +326,18 @@ public class TechnologyServiceImpl implements TechnologyService {
 		if (technology.getOffer() == null && techFilter.getOfferIs() == "") {
 			return true;
 		} else if (technology.getOffer() != null && techFilter.getOfferIs() != null
-				&& (technology.getOffer().toLowerCase().equals(techFilter.getOfferIs().toLowerCase()))) {
+				&& (technology.getOffer().toLowerCase().equals(techFilter.getOfferIs().toLowerCase())
+				   || techFilter.getOfferIs().toLowerCase()
+							.equals("Todos"))) {
 			return true;
 		}
 		return false;
 	}
 
 	private boolean verifyTitleAndShortDescriptionFilter(TechnologyFilter techFilter, Technology technology) {
+		if (techFilter.getTitleContains() == null){
+			return false;
+		}
 		if (checkTitle(techFilter, technology)
 				|| checkCustomerName(techFilter, technology)
 				|| checkDescription(techFilter, technology)

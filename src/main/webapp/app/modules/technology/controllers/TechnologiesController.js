@@ -15,7 +15,7 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
     context.loading = false;
     $scope.$apply();
   })
-  
+
   $scope.split = function(string) {
     var array = string.split(',');
     return array;
@@ -53,7 +53,10 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
     if(context.lastActivityDateFilter === ''){
       context.lastActivityDateFilter = null;
     }
-    TechnologyService.setContentFilters(context.recommendationFilter, context.orderFilter, context.lastActivityDateFilter);
+    if(context.offerFilter === ''){
+      context.offerFilter = null;
+    }
+    TechnologyService.setContentFilters(context.recommendationFilter, context.orderFilter, context.lastActivityDateFilter, context.offerFilter);
    }
 
   /**
@@ -63,6 +66,7 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
   this.resetFilters = function () {
     context.recommendationFilter = null;
     context.orderFilter = null;
+    context.offerFilter = null;
     context.lastActivityDateFilter = null;
     context.updateFilters();
   }
@@ -107,4 +111,8 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
    * Page title
    */
    AppService.setPageTitle('Propostas');
+
+   TechnologyService.getOffers().then(function(data){
+     context.offers = data;
+   });
  }
