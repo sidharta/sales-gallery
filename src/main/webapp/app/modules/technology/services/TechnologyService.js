@@ -83,7 +83,8 @@ module.exports = function($q, $timeout, $rootScope) {
         technologies : context.technologies,
         description : context.description,
         website : context.webSite,
-        image : context.image
+        image : context.image,
+        creationDate: context.creationDate
       };
       return req;
     }else{
@@ -97,7 +98,8 @@ module.exports = function($q, $timeout, $rootScope) {
         technologies : context.technologies,
         description : context.description,
         website : context.webSite,
-        imageContent : context.image
+        imageContent : context.image,
+        creationDate: context.creationDate
       };
       return req;
     }

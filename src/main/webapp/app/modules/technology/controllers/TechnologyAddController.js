@@ -89,6 +89,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     }
     context.selectedStatus = technology.status;
     context.selectedOffer = technology.offer;
+    context.creationDate = technology.creationDate;
   }
 
   this.selectStatus = function(selected){

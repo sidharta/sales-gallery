@@ -24,6 +24,7 @@ public class TechnologyTransformer implements Transformer<Technology, Technology
     product.setEndorsersCounter(baseObject.getEndorsersCounter());
     product.setFollowedByUser(baseObject.isFollowedByUser());
     product.setLastActivity(baseObject.getLastActivity());
+    product.setCreationDate(baseObject.getCreationDate());
     product.setImageContent(baseObject.getImageContent());
     return product;
   }
@@ -47,6 +48,7 @@ public class TechnologyTransformer implements Transformer<Technology, Technology
       product.setEndorsersCounter(baseObject.getEndorsersCounter());
       product.setFollowedByUser(baseObject.isFollowedByUser());
       product.setLastActivity(baseObject.getLastActivity());
+      product.setCreationDate(baseObject.getCreationDate());
       product.setImageContent(baseObject.getImageContent());
       return product;
     } else {

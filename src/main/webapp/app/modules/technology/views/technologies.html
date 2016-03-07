@@ -44,12 +44,13 @@
   <loading ng-if="technologies.loading"></loading>
   <div class="content container" ng-if="!technologies.loading">
 
-    <div class="col-md-12" ng-if="app.alert.message.length">
-      <uib-alert type="{{ app.alert.type }}" close="app.closeAlert()">
-        {{ app.alert.message }}
-      </uib-alert>
+    <div class="row">
+      <div class="col-md-12" ng-if="app.alert.message.length">
+        <uib-alert type="{{ app.alert.type }}" close="app.closeAlert()">
+          {{ app.alert.message }}
+        </uib-alert>
+      </div>
     </div>
-
     <div class="row" ng-if="technologies.items.length">
       <div class="col-sm-6 col-md-3" ng-repeat="technology in technologies.items">
         <div class="card">

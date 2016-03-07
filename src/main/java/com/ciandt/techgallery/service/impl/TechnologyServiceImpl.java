@@ -121,7 +121,11 @@ public class TechnologyServiceImpl implements TechnologyService {
 			technology.setLastActivityUser(user.getEmail());
 		}
 		technology.setActive(Boolean.TRUE);
-		technology.setCreationDate(new Date());
+
+		if(!isUptate){
+			technology.setCreationDate(new Date());
+		}
+
 		technology.setLastActivity(new Date());
 		technology.setImage(imageLink);
 		technology.initCounters();
