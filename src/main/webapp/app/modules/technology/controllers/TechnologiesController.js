@@ -41,14 +41,14 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
    */
    this.loading = true;
 
-  this.recommendationFilter = null;
+  this.statusFilter = null;
   this.orderFilter = null;
   this.lastActivityDateFilter = null;
 
    this.updateFilters = function(){
     context.loading = true;
-    if(context.recommendationFilter === ''){
-      context.recommendationFilter = null;
+    if(context.statusFilter === ''){
+      context.statusFilter = null;
     }
     if(context.lastActivityDateFilter === ''){
       context.lastActivityDateFilter = null;
@@ -56,7 +56,7 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
     if(context.offerFilter === ''){
       context.offerFilter = null;
     }
-    TechnologyService.setContentFilters(context.recommendationFilter, context.orderFilter, context.lastActivityDateFilter, context.offerFilter);
+    TechnologyService.setContentFilters(context.statusFilter, context.orderFilter, context.lastActivityDateFilter, context.offerFilter);
    }
 
   /**
@@ -64,7 +64,7 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
    * @return {Void}
    */
   this.resetFilters = function () {
-    context.recommendationFilter = null;
+    context.statusFilter = null;
     context.orderFilter = null;
     context.offerFilter = null;
     context.lastActivityDateFilter = null;

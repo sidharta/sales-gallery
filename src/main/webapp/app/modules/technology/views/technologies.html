@@ -6,14 +6,11 @@
         <form class="form-inline">
           <div class="form-group">
             <label for="technology-filter" tabindex="0" tooltip-placement="bottom" uib-tooltip="Filtrar por"><span class="glyphicon glyphicon-filter"></span></label>
-            <select ng-disabled="technologies.loading" ng-model="technologies.recommendationFilter" ng-change="technologies.updateFilters()" class="form-control" id="technology-filter">
+            <select ng-disabled="technologies.loading" ng-model="technologies.statusFilter" ng-change="technologies.updateFilters()" class="form-control" id="technology-filter">
               <option value="">Todos</option>
-              <option value="Recomendada">Recomendada</option>
-              <option value="Recomendada alternativa">Recomendada alternativa</option>
-              <option value="Usar e aprender">Usar e aprender</option>
-              <option value="Observar e fazer provas de conceito">Observar e fazer provas de conceito</option>
-              <option value="Não recomendadas ou aposentar">Não recomendadas ou aposentar</option>
-              <option value="Não informado">Não informado</option>
+              <option value="Proposta">Proposta</option>
+              <option value="Perdida">Perdida</option>
+              <option value="Ganha">Ganha</option>
             </select>
             <select ng-disabled="technologies.loading" id="technology-filter" ng-model="technologies.offerFilter" ng-change="technologies.updateFilters()" class="form-control">
               <option value="">Todos</option>
@@ -29,7 +26,7 @@
               <option value="2">Últimos 12 Meses</option>
             </select>
           </div>
-          <div class="form-group" ng-if="technologies.recommendationFilter || technologies.orderFilter || technologies.lastActivityDateFilter">
+          <div class="form-group" ng-if="technologies.statusFilter || technologies.orderFilter || technologies.lastActivityDateFilter">
             <button type="reset" class="btn btn-default btn-sm" ng-click="technologies.resetFilters()" tooltip-placement="bottom" uib-tooltip="Limpar filtros"><span class="glyphicon glyphicon-remove"></span></button>
           </div>
         </form>

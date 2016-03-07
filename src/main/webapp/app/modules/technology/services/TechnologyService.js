@@ -16,8 +16,8 @@ module.exports = function($q, $timeout, $rootScope) {
     context.textSearch = textSearch;
   };
 
-  this.setContentFilters = function(selectedRecommendationFilter, selectedOrderFilter, selectedLastActivityFilter, selectedOfferFilter){
-    context.selectedRecommendationFilter = selectedRecommendationFilter;
+  this.setContentFilters = function(selectedStatusFilter, selectedOrderFilter, selectedLastActivityFilter, selectedOfferFilter){
+    context.selectedStatusFilter = selectedStatusFilter;
     context.selectedOfferFilter = selectedOfferFilter;
     context.selectedOrderFilter = selectedOrderFilter;
     context.selectedLastActivityFilter = selectedLastActivityFilter;
@@ -128,7 +128,7 @@ module.exports = function($q, $timeout, $rootScope) {
       shortDescriptionContains: context.textSearch,
       orderOptionIs: context.selectedOrderFilter,
       dateFilter : context.selectedLastActivityFilter,
-      recommendationIs: context.selectedRecommendationFilter,
+      recommendationIs: context.selectedStatusFilter,
       customerNameContains: context.textSearch,
       technologiesContains: context.textSearch,
       offerIs : context.selectedOfferFilter
