@@ -2,11 +2,6 @@
   <div class="technology" ng-if="!technology.loading">
     <div class="content container technology">
       <header class="technology-header row">
-        <div class="col-md-12" ng-if="app.alert.message.length">
-          <uib-alert type="{{ app.alert.type }}" close="app.closeAlert()">
-            {{ app.alert.message }}
-          </uib-alert>
-        </div>
         <div class="media col-md-12">
           <div class="media-image no-margin">
             <img ng-src="{{ technology.item.image }}" data-placeholder-img class="technology-image" >
@@ -34,6 +29,11 @@
           <div class="col-md-12" ng-if="app.alertBotton.message.length">
             <uib-alert type="{{ app.alertBotton.type }}" close="app.closeAlertBotton()">
               {{ app.alertBotton.message }}
+            </uib-alert>
+          </div>
+          <div class="col-md-12" ng-if="app.alert.message.length">
+            <uib-alert type="{{ app.alert.type }}" close="app.closeAlert()">
+              {{ app.alert.message }}
             </uib-alert>
           </div>
 
