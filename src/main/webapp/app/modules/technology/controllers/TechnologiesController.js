@@ -16,7 +16,7 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
     $scope.$apply();
   })
 
-  $scope.split = function(string) {
+  this.split = function(string) {
     var array = string.split(',');
     return array;
   }
@@ -115,4 +115,16 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
    TechnologyService.getOffers().then(function(data){
      context.offers = data;
    });
+
+   this.getImageStatus = function(status){
+      if (status === 'Proposta'){
+        return 'shoeprints.png';
+      }else if (status === 'Perdida'){
+        return 'denied.png';
+      }else if (status === 'Ganha'){
+        return 'trophy-award-icon.png';
+      }else{
+        return 'placeholder.png';
+      }
+   }
  }

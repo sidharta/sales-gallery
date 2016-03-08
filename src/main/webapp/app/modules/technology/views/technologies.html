@@ -78,14 +78,19 @@
             </div>
           </div>
           <div class="card-meta card-section">
-            <div class="titleThumbnail">
-              <span class="glyphicon glyphicon-user"></span> {{ technology.endorsersCounter }}
-              <span class="glyphicon glyphicon-list-alt"></span> {{ technology.commentariesCounter }}
-            </div>
-            <small class="technology-last-activity">
-              <span class="lastActivityLabel">Data de Criação:</span>
-              <time>{{ technology.creationDate | date:"dd/MM/yyyy H:mm" }}</time>
-            </small>
+            <div class="row">
+              <div class="col-md-10">
+                <div class="titleThumbnail">
+                  <span class="glyphicon glyphicon-user"></span> {{ technology.endorsersCounter }}
+                  <span class="glyphicon glyphicon-list-alt"></span> {{ technology.commentariesCounter }}
+                </div>
+                <small class="technology-last-activity">
+                  <span class="lastActivityLabel">Data de Criação:</span>
+                  <time>{{ technology.creationDate | date:"dd/MM/yyyy H:mm" }}</time>
+                </small>
+              </div>
+            <div>
+            <img ng-src="assets/images/{{technologies.getImageStatus(technology.status)}}" class="technology-status"  data-toggle="tooltip" data-placement="bottom" title='Status: {{technology.status}}'>
           </div>
         </div>
       </div>

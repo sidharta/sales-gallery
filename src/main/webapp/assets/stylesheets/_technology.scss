@@ -105,6 +105,13 @@ $technology-spacing: 20px;
   display: block;
   margin: 5px 0 0;
 }
+.technology-status {
+  display: block;
+  margin: 0 auto;
+  width: 32px;
+  height: 32px;
+}
+
 .technology-rating-input,
 .technology-recommendation-input {
   position: absolute !important;
