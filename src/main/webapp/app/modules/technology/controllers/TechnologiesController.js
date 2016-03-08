@@ -127,4 +127,6 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
         return 'placeholder.png';
       }
    }
+
+
  }
