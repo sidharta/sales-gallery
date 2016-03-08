@@ -44,6 +44,7 @@
                   </div>
                 </div>
                 <div class="form-group col-md-12" ng-show="loggedUserInformation.admin">
+                  <label for="technology-cliente">Selecione o status da proposta</label> </br>
                   <div class="btn-group" uib-dropdown>
                     <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle>
                       {{ technology.selectedStatus==null ? 'Status Proposta' : technology.selectedStatus }}
@@ -56,7 +57,9 @@
                     </ul>
                   </div>
                 </div>
+
                 <div class="form-group col-md-12" ng-show="loggedUserInformation.admin">
+                  <label for="technology-cliente">Selecione a oferta</label> </br>
                   <div class="btn-group" uib-dropdown>
                     <button id="single-button" type="button" class="btn btn-default" uib-dropdown-toggle>
                       {{ technology.selectedOffer==null ? 'Ofertas Ci&T' : technology.selectedOffer }}
@@ -69,20 +72,23 @@
                     </ul>
                   </div>
                 </div>
-                <div class="form-group col-md-12">
+                <div class="form-group col-md-12" ng-class="{'has-error': (addTechnologyForm.client.$invalid && addTechnologyForm.client.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.client.$invalid)}">
                   <label for="technology-cliente">Nome do cliente</label>
-                  <input type="text" class="form-control" id="technology-cliente" ng-model="technology.client" placeholder="nome do cliente">
+                  <input type="text" class="form-control" id="technology-cliente" name="client" ng-model="technology.client" required placeholder="nome do cliente">
+                  <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.client.$touched">
+                    <span ng-show="addTechnologyForm.client.$error.required" class="help-block">O campo Cliente é obrigatório</span>
+                  </div>
                 </div>
                 <div class="form-group col-md-12" ng-class="{'has-error': (addTechnologyForm.description.$invalid && addTechnologyForm.description.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.description.$invalid)}">
                   <label for="technology-description">Descrição</label>
-                  <textarea class="form-control" id="technology-description" style="min-height: 150px; height: 150px; max-height: 300px;" name="description" ng-model="technology.description" maxlength="500" placeholder="Descrição" required></textarea>
+                  <textarea class="form-control" id="technology-description" style="min-height: 150px; height: 150px; max-height: 300px;" name="description" ng-model="technology.description" maxlength="2000" placeholder="Uma descrição mais detalhada ajudará nas buscas" required></textarea>
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.description.$touched">
                     <span ng-show="addTechnologyForm.description.$error.required" class="help-block">O campo Descrição é obrigatório</span>
                   </div>
                 </div>
                 <div class="form-group col-md-12" ng-class="{'has-error': (addTechnologyForm.shortDescription.$invalid && addTechnologyForm.shortDescription.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.shortDescription.$invalid)}">
                   <label for="technology-shortDescription">Resumo</label>
-                  <textarea class="form-control" id="technology-shortDescription" name="shortDescription" ng-model="technology.shortDescription" maxlength="140" placeholder="Resumo" required></textarea>
+                  <textarea class="form-control" id="technology-shortDescription" name="shortDescription" ng-model="technology.shortDescription" maxlength="140"  style="min-height: 150px; height: 150px; max-height: 300px;" placeholder="O resumo é o texto que aparece no card" required></textarea>
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.shortDescription.$touched">
                     <span ng-show="addTechnologyForm.shortDescription.$error.required" class="help-block">O campo Resumo é obrigatório</span>
                   </div>
