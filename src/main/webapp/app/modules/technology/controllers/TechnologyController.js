@@ -50,16 +50,7 @@ module.exports = function ($rootScope, $stateParams, AppService, TechnologyServi
 
   this.oldRating = {};
 
-  // Load techonlogy based on URL param
-  TechnologyService.getUserSkill($stateParams.id).then(function (rating) {
-    context.rating = rating;
-    context.oldRating = rating;
-  });
 
-  this.setSkill = function (technology, newRating) {
-    TechnologyService.addUserSkill($stateParams.id, newRating, context.oldRating);
-    Analytics.sendSkillEvent(context.item.name, newRating);
-  }
 
   this.recommended = TechnologyService.getRecommended();
 
