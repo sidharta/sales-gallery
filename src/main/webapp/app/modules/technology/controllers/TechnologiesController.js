@@ -6,6 +6,8 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
    */
    var context = this;
 
+   this.loading = true;
+
   /**
    * Listner to update list when text filter is fired
    * @type {Array}
@@ -25,6 +27,7 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
    * List of technologies
    * @type {Array}
    */
+
    this.getTechnologies = function(){
     context.loading = true;
     TechnologyService.getTechnologies().then(function(){
@@ -33,13 +36,17 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
     });
    }
 
-   this.getTechnologies();
+   if (TechnologyService.foundItems == undefined){
+     this.getTechnologies();
+   }else{
+     context.items = TechnologyService.foundItems;
+     context.loading = false;
+   }
 
   /**
    * Loading state
    * @type {Boolean}
    */
-   this.loading = true;
 
   this.statusFilter = null;
   this.orderFilter = null;

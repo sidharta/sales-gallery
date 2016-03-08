@@ -12,6 +12,10 @@ module.exports = function($q, $timeout, $rootScope) {
     RECOMMEND: 'RECOMMEND'
   };
 
+  this.getSearchedItem = function(){
+    return this.searchedItem;
+  }
+
    this.setTextFilter = function(textSearch){
     context.textSearch = textSearch;
   };
