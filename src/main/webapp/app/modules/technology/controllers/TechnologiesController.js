@@ -24,7 +24,9 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
   })
 
   this.split = function(string) {
-    var array = string.split(',');
+    var array = [];
+    if (string != undefined)
+       array = string.split(',');
     return array;
   }
 
