@@ -17,13 +17,15 @@
           <div class="card-section">
             <form id="addTechnologyForm" name="addTechnologyForm" ng-submit="technology.addOrUpdateTechnology(addTechnologyForm)" novalidate>
               <div class="row">
-                <div class="col-md-12">
-                  <div class="form-group">
+                  <div class="form-group col-md-12" ng-class="{'has-error': (addTechnologyForm.pipedriveLink.$invalid && addTechnologyForm.pipedriveLink.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.pipedriveLink.$invalid)}">
                     <label for="pipedrive-link">Link Pipedrive</label>
-                    <input type="text" class="form-control" id="pipedrive-link" ng-model="technology.pipedriveLink" ng-if="!technology.id || !technology.hasPipedriveLink">
+                    <input type="text" class="form-control"  id="technology-pipedriveLink" ng-model="technology.pipedriveLink"
+                           ng-if="!technology.id || !technology.hasPipedriveLink" ng-blur="technology.onLostFocus(technology.pipedriveLink)"
+                           ng-pattern='technology.regex' name="pipedriveLink" placeholder="Ex: https://citsoftware.pipedrive.com/deal/{id}">
                     <a readonly target="_blank" class="form-control" ng-href="{{technology.pipedriveLink}}" ng-if="technology.id && technology.hasPipedriveLink">{{ technology.pipedriveLink }}</a>
-                  </div>
-
+                    <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.pipedriveLink.$touched">
+                      <span ng-show="addTechnologyForm.pipedriveLink.$error.required" class="help-block">O link do pipedrive está incorreto</span>
+                    </div>
                 </div>
               </div>
               <div class="row">

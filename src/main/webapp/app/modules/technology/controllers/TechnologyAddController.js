@@ -12,6 +12,8 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
    */
   this.loading = false;
 
+  this.regex = "^(http(s)?:\\/\\/(citsoftware.pipedrive.com\\/deal\\/)*\\d+)";
+
   this.login = function(){
     checkLogin(false);
   };
@@ -140,5 +142,9 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
       } else {
         document.getElementById(id).className = elementClassIncrease;
       }
+  }
+
+  this.onLostFocus = function(link){
+    //console.log(link);
   }
 }
