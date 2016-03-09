@@ -1,11 +1,7 @@
 <loading ng-if="technology.loading"></loading>
 <div class="technology" ng-if="!technology.loading">
   <div class="content container">
-
-
-
     <div class="row">
-
       <div class="col-md-10 col-md-offset-1" ng-if="app.alert.message.length">
         <uib-alert type="{{ app.alert.type }}" close="app.closeAlert()">
           {{ app.alert.message }}
@@ -20,6 +16,16 @@
           </div>
           <div class="card-section">
             <form id="addTechnologyForm" name="addTechnologyForm" ng-submit="technology.addOrUpdateTechnology(addTechnologyForm)" novalidate>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="pipedrive-link">Link Pipedrive</label>
+                    <input type="text" class="form-control" id="pipedrive-link" ng-model="technology.pipedriveLink" ng-if="!technology.id || !technology.hasPipedriveLink">
+                    <a readonly target="_blank" class="form-control" ng-href="{{technology.pipedriveLink}}" ng-if="technology.id && technology.hasPipedriveLink">{{ technology.pipedriveLink }}</a>
+                  </div>
+
+                </div>
+              </div>
               <div class="row">
                 <div class="form-group col-md-5">
                   <div class="media">

@@ -45,6 +45,8 @@ public class TechnologyTO implements Response {
 
   private Date creationDate;
 
+  private String pipedriveLink;
+
   public String getId() {
     return id;
   }
@@ -181,4 +183,11 @@ public class TechnologyTO implements Response {
     this.creationDate = creationDate;
   }
 
+  public String getPipedriveLink() {
+    return this.pipedriveLink;
+  }
+
+  public void setPipedriveLink(String pipedriveLink) {
+    this.pipedriveLink = pipedriveLink;
+  }
 }

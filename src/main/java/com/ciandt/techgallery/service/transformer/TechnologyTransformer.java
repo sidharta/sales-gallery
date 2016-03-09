@@ -26,6 +26,7 @@ public class TechnologyTransformer implements Transformer<Technology, Technology
     product.setLastActivity(baseObject.getLastActivity());
     product.setCreationDate(baseObject.getCreationDate());
     product.setImageContent(baseObject.getImageContent());
+    product.setPipedriveLink(baseObject.getPipedriveLink());
     return product;
   }
 
@@ -50,6 +51,7 @@ public class TechnologyTransformer implements Transformer<Technology, Technology
       product.setLastActivity(baseObject.getLastActivity());
       product.setCreationDate(baseObject.getCreationDate());
       product.setImageContent(baseObject.getImageContent());
+      product.setPipedriveLink(baseObject.getPipedriveLink());
       return product;
     } else {
       return null;

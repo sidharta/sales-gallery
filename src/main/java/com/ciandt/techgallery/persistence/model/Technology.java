@@ -111,9 +111,21 @@ public class Technology extends BaseEntity<String> {
   @Index
   private String customerName;
 
+  @Index
+  private String pipedriveLink;
+
   /*
    * Getter's and Setter's --------------------------------------------
    */
+
+  public String getPipedriveLink() {
+    return pipedriveLink;
+  }
+
+  public void setPipedriveLink(String value) {
+    this.pipedriveLink = value;
+  }
+
   public String getCustomerName() {
     return customerName;
   }
