@@ -175,3 +175,4 @@ node
 
 ## Cloud Endpoints
 *.api
+src/main/resources/people_basic_auth.txt
