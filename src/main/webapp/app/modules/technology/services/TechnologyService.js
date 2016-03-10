@@ -395,4 +395,13 @@ module.exports = function($q, $timeout, $rootScope) {
     });
     return deferred.promise;
   };
+
+  this.getPipedriveDeal = function(id){
+    var deferred = $q.defer();
+    var req = {id: id};
+    gapi.client.rest.getPipedriveDeal(req).execute(function(data){
+      deferred.resolve(data);
+    });
+    return deferred.promise;
+  }
 };

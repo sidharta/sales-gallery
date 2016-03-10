@@ -72,7 +72,9 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.shortDescription = '';
     context.webSite = '';
     context.client = '';
+    context.owner = '';
     context.technologies = '';
+    context.pipedriveLink = '';
     document.getElementById('technology-name').value = null;
     document.getElementById('list').innerHTML = ['<img src="/assets/images/no_image.png" title="Insira uma imagem" />'].join('');
   }
@@ -83,7 +85,9 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.shortDescription = technology.shortDescription;
     context.description = technology.description;
     context.client = technology.client;
+    context.owner = technology.owner;
     context.technologies = technology.technologies;
+    context.pipedriveLink = technology.pipedriveLink;
     context.webSite = technology.website;
     context.image = technology.image;
     if(context.image){
@@ -145,6 +149,18 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   }
 
   this.onLostFocus = function(link){
-    //console.log(link);
+    if (link == undefined) return;
+    var s = link.split('/');
+    var id = s[4];
+
+    TechnologyService.getPipedriveDeal(id).then(function(data){
+      context.name = data.name;
+      context.selectedStatus  = data.status;
+      context.selectedOffer = data. offer;
+      context.client = data.cient;
+      contex.owner = data.owner;
+    });
+
+
   }
 }

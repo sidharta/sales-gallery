@@ -40,8 +40,10 @@ public enum ValidationMessageEnums {
   NO_TECHNOLOGY_WAS_FOUND("No technology was found."),
   FOLLOWERS_CANNOT_EMPTY("Followers cannot be empty"),
     // Message for Post
-  NOT_PERMITTED_BY_USER("The user choosed to not post on your Google+.");
-
+  NOT_PERMITTED_BY_USER("The user choosed to not post on your Google+."),
+  //pipedrive
+  PIPEDRIVE_API_KEY_NOT_FOUND("Pipedrive API key not found");
+ 	
 
   private String message;
   private final I18n i18n = I18n.getInstance();
