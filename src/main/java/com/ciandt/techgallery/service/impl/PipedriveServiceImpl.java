@@ -64,36 +64,28 @@ public class PipedriveServiceImpl implements PipedriveService {
 			}
 		});
 		GenericUrl url = new GenericUrl(PIPEDRIVE_DEAL_URL_BASE + id + "?api_token=" + loadApikey());
-		System.out.println(url.build());
-
 		HttpRequest request = requestFactory.buildGetRequest(url);
 		request.getHeaders().setContentType("application/json");
 
 		String json = request.execute().parseAsString();
-		System.out.print(json);
-
 		return parseJsonToDeal(json);
 	}
 
 	private DealTO parseJsonToDeal(String json) {
 		JSONObject dealObject = new JSONObject(json);
-		
+
 		JSONObject data = dealObject.getJSONObject("data");
 
 		DealTO deal = new DealTO();
 		deal.setName(data.getString("title"));
 		deal.setStatus(data.getString("status"));
-		
+
 		JSONObject user_id = data.getJSONObject("user_id");
 		deal.setOwner(user_id.getString("email"));
-		
+
 		JSONObject org_id = data.getJSONObject("org_id");
 		deal.setClient(org_id.getString("name"));
-		
-		
-
 		return deal;
-
 	}
 
 }

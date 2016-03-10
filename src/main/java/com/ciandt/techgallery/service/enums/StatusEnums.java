@@ -9,10 +9,10 @@ package com.ciandt.techgallery.service.enums;
 public enum StatusEnums {
 
   ANY("Todos"),
-  IN_PROPOSAL("Proposta"),
-  LOST("Perdida"),
-  WON("Ganha"),
-  UNINFORMED("Não informado"); 
+  IN_PROPOSAL("open"),
+  LOST("lost"),
+  WON("won"),
+  UNINFORMED("Não informado");
 
   private String message;
 

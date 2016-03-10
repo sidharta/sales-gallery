@@ -11,6 +11,8 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
    * @type {Boolean}
    */
   this.loading = false;
+  context.loadedByPipedrive = false;
+  context.backgroundColor = '#FFF';
 
   this.regex = "^(http(s)?:\\/\\/(citsoftware.pipedrive.com\\/deal\\/)*\\d+)";
 
@@ -149,16 +151,26 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   }
 
   this.onLostFocus = function(link){
-    if (link == undefined) return;
+      if (link == undefined) {
+        context.loadedByPipedrive = false;
+        context.backgroundColor = '#FFF';
+        return;
+      }
     var s = link.split('/');
     var id = s[4];
 
+
     TechnologyService.getPipedriveDeal(id).then(function(data){
+      context.loadedByPipedrive = true;
+      context.backgroundColor = '#EEE';
+      
       context.name = data.name;
       context.selectedStatus  = data.status;
-      context.selectedOffer = data. offer;
-      context.client = data.cient;
-      contex.owner = data.owner;
+      context.selectedOffer = data.offer;
+      context.client = data.client;
+      context.owner = data.owner;
+
+
     });
 
 
