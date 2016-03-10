@@ -87,10 +87,10 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.shortDescription = technology.shortDescription;
     context.description = technology.description;
     context.client = technology.client;
-    context.owner = technology.owner;
     context.technologies = technology.technologies;
     context.pipedriveLink = technology.pipedriveLink;
     context.webSite = technology.website;
+    context.owner = technology.owner;
     context.image = technology.image;
     if(context.image){
       document.getElementById('list').innerHTML = ['<img src="', context.image,'" title="', context.name, '" />'].join('');
@@ -163,7 +163,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     TechnologyService.getPipedriveDeal(id).then(function(data){
       context.loadedByPipedrive = true;
       context.backgroundColor = '#EEE';
-      
+
       context.name = data.name;
       context.selectedStatus  = data.status;
       context.selectedOffer = data.offer;

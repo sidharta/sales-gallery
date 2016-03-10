@@ -128,11 +128,11 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
    });
 
    this.getImageStatus = function(status){
-      if (status === 'Proposta'){
+      if (status === 'open'){
         return 'shoeprints.png';
-      }else if (status === 'Perdida'){
+      }else if (status === 'lost'){
         return 'denied.png';
-      }else if (status === 'Ganha'){
+      }else if (status === 'won'){
         return 'trophy-award-icon.png';
       }else{
         return 'placeholder.png';

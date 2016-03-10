@@ -39,6 +39,7 @@ public class Technology extends BaseEntity<String> {
   public static final String IMAGE = "image";
   public static final String CLIENT = "client";
   public static final String OFFER = "offer";
+  public static final String OWNER	= "owner";
   public static final String TECHNOLOGIES = "technologies";
   public static final String STATUS = "status";
   public static final String COMMENTARIES_COUNTER = "commentariesCounter";
@@ -76,6 +77,9 @@ public class Technology extends BaseEntity<String> {
 
   @Unindex
   private String offer;
+  
+  @Unindex
+  private String owner;
 
   @Unindex
   private String technologies;
@@ -138,6 +142,14 @@ public class Technology extends BaseEntity<String> {
   }
   public void setOffer(String value) {
     this.offer = value;
+  }
+
+  public String getOwner() {
+	return owner;
+  }
+
+  public void setOwner(String owner) {
+	this.owner = owner;
   }
 
   public String getTechnologies() {

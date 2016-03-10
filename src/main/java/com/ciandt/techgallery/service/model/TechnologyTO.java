@@ -28,6 +28,8 @@ public class TechnologyTO implements Response {
   private String client;
   /** Proposal offer. */
   private String offer;
+  /** Proposal owner. */
+  private String owner;
   /** Proposal technologies. */
   private String technologies;
   /** technology company status. */
@@ -141,6 +143,14 @@ public class TechnologyTO implements Response {
 
   public void setOffer(String offer) {
     this.offer = offer;
+  }
+  
+  public String getOwner() {
+	return owner;
+  }
+
+  public void setOwner(String owner) {
+	this.owner = owner;
   }
 
   public String getTechnologies() {
