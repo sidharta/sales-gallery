@@ -155,36 +155,36 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   }
 
   this.onLostFocus = function(link){
-      if (link == undefined || link == '') {
-        context.loadedByPipedrive = false;
-        context.backgroundColor = '#FFF';
-        context.name = '';
-        context.client = '';
-        context.ownerEmail = '';
-        context.ownerName = '';
-        context.pipedriveLink = '';
-        context.selectedStatus = null;
-        context.selectedOffer = null;
-        return;
-      }
+    if (link == undefined || link == '') {
+      context.loadedByPipedrive = false;
+      context.backgroundColor = '#FFF';
+      context.name = '';
+      context.client = '';
+      context.ownerEmail = '';
+      context.ownerName = '';
+      context.pipedriveLink = '';
+      context.selectedStatus = null;
+      context.selectedOffer = null;
+      return;
+    }
+
     var s = link.split('/');
     var id = s[4];
 
-
     TechnologyService.getPipedriveDeal(id).then(function(data){
-      context.loadedByPipedrive = true;
-      context.backgroundColor = '#EEE';
-
-      context.name = data.name;
-      context.selectedStatus  = data.status;
-      context.selectedOffer = data.offer;
-      context.client = data.client;
-      context.ownerEmail = data.ownerEmail;
-      context.ownerName = data.ownerName
-
-
+      if( data.name ) {
+        context.loadedByPipedrive = true;
+        context.backgroundColor = '#EEE';
+        context.name = data.name;
+        context.selectedStatus  = data.status;
+        context.selectedOffer = data.offer;
+        context.client = data.client;
+        context.ownerEmail = data.ownerEmail;
+        context.ownerName = data.ownerName
+      } else {
+        context.pipedriveLink = '';
+      }
     });
-
 
   }
 }
