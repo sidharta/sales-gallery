@@ -14,6 +14,7 @@ import com.ciandt.techgallery.service.enums.ValidationMessageEnums;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -48,9 +49,22 @@ public class OfferServiceImpl implements OfferService {
     final List<OfferEnums> enumValues = Arrays.asList(OfferEnums.values());
     final List<String> offers = new ArrayList<>();
     for (final OfferEnums enumEntry : enumValues) {
-      offers.add(enumEntry.message());
+      offers.add(enumEntry.getName());
     }
     return offers;
+  }
+  
+  public List<String> getOfferNames(List<String> ids){
+	  List<String> result = new LinkedList<>();
+	  final List<OfferEnums> enumValues = Arrays.asList(OfferEnums.values());
+	  for (final OfferEnums enumEntry : enumValues) {
+		  for (final String id : ids){
+			  if (enumEntry.getId() == Integer.valueOf(id)){
+				  result.add(enumEntry.getName());
+			  }
+		  }
+	    }
+	  return result; 
   }
 
   /**

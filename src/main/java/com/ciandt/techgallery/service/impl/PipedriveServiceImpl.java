@@ -2,7 +2,11 @@ package com.ciandt.techgallery.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
+
+import org.json.JSONObject;
 
 import com.ciandt.techgallery.service.PipedriveService;
 import com.ciandt.techgallery.service.enums.ValidationMessageEnums;
@@ -17,13 +21,13 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.server.spi.response.InternalServerErrorException;
-import org.json.JSONObject;
 
 public class PipedriveServiceImpl implements PipedriveService {
 
 	private static PipedriveServiceImpl instance;
 
 	private static String PIPEDRIVE_DEAL_URL_BASE = "https://api.pipedrive.com/v1/deals/";
+	private static String PIPEDRIVE_PRODUCT_KEY = "e16df82dc89790231a2169c6ee3d4b79a2230036";
 
 	static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	static final JsonFactory JSON_FACTORY = new JacksonFactory();
@@ -86,6 +90,11 @@ public class PipedriveServiceImpl implements PipedriveService {
 
 		JSONObject org_id = data.getJSONObject("org_id");
 		deal.setClient(org_id.getString("name"));
+		
+		String offerIds = data.getString(PIPEDRIVE_PRODUCT_KEY);
+		List<String> offerItems = Arrays.asList(offerIds.split(","));
+		deal.setOffers(OfferServiceImpl.getInstance().getOfferNames(offerItems));
+		
 		return deal;
 	}
 

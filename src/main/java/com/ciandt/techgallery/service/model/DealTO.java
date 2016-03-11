@@ -1,5 +1,6 @@
 package com.ciandt.techgallery.service.model;
 
+import java.util.List;
 
 /**
  * 
@@ -14,6 +15,7 @@ public class DealTO {
 	private String ownerEmail;
 	private String ownerName;
 	private String status;
+	private List<String> offers;
 	
 	public String getName() {
 		return name;
@@ -45,6 +47,14 @@ public class DealTO {
 	public void setOwnerName(String ownerName) {
 		this.ownerName = ownerName;
 	}
+	public List<String> getOffers() {
+		return offers;
+	}
+	public void setOffers(List<String> offers) {
+		this.offers = offers;
+	}
+
+
 	
 	
 	

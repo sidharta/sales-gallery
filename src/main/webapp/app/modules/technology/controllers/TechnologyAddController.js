@@ -13,6 +13,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   this.loading = false;
   context.loadedByPipedrive = false;
   context.backgroundColor = '#FFF';
+  context.offers = [];
 
   this.regexPipedrive = "^(http(s)?:\\/\\/(citsoftware.pipedrive.com\\/deal\\/)*\\d+)";
   this.regexGoogledrive = "(http(s)?:\\/\\/(drive.google.com\\/open\\?id=)\\S+)"
@@ -114,6 +115,17 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.selectedOffer = selected;
   };
 
+  this.addOffer = function(){
+    if (context.selectedOffer == undefined || context.selectedOffer == '') return;
+    if (context.offers.indexOf(context.selectedOffer) == -1)
+        context.offers.push(context.selectedOffer);
+  }
+
+  this.removeOffer = function(offer){
+    var index = context.offers.indexOf(offer);
+    context.offers.splice(index, 1);
+  }
+
   $scope.handleFileSelect = function(file) {
       var files = file.files;
       var f = files[0];
@@ -177,14 +189,10 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
 
       context.name = data.name;
       context.selectedStatus  = data.status;
-      context.selectedOffer = data.offer;
       context.client = data.client;
       context.ownerEmail = data.ownerEmail;
-      context.ownerName = data.ownerName
-
-
+      context.ownerName = data.ownerName;
+      context.offers = data.offers;
     });
-
-
   }
 }

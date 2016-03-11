@@ -210,3 +210,36 @@ $technology-spacing: 20px;
     cursor: pointer;
   }
 }
+
+.boxchip{
+    display: inline-block;
+    border-color: #ccc;
+    padding: 10px 10px 10px 10px;
+    border-style: solid;
+    border-width: 1px;
+
+}
+.chip {
+    display: inline-block;
+    padding: 0 25px;
+    margin: 3px 3px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #f1f1f1;
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: #ccc;
+}
+
+.closebtn {
+    padding-left: 20px;
+    color: #888;
+    font-weight: bold;
+    float: right;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.closebtn:hover {
+    color: #000;
+}

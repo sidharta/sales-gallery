@@ -32,6 +32,9 @@ $border-color: #ddd;
  */
 @import '../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
 
+
+
+
 /**
  * App styles
  */
@@ -43,6 +46,7 @@ $border-color: #ddd;
 @import 'content';
 @import 'technology';
 @import 'user';
+@import 'select';
 
 @import 'techgallery';
 
