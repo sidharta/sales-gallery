@@ -11,7 +11,6 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
    * @type {Boolean}
    */
   this.loading = false;
-  context.loadedByPipedrive = false;
   context.backgroundColor = '#FFF';
 
   this.regexPipedrive = "^(http(s)?:\\/\\/(\\w+.pipedrive.com\\/deal\\/)*\\d+)";
@@ -155,16 +154,10 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   }
 
   this.onLostFocus = function(link){
+    var self = this;
+
     if (link == undefined || link == '') {
-      context.loadedByPipedrive = false;
-      context.backgroundColor = '#FFF';
-      context.name = '';
-      context.client = '';
-      context.ownerEmail = '';
-      context.ownerName = '';
-      context.pipedriveLink = '';
-      context.selectedStatus = null;
-      context.selectedOffer = null;
+      self.clearPipedrive();
       return;
     }
 
@@ -173,7 +166,6 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
 
     TechnologyService.getPipedriveDeal(id).then(function(data){
       if( data.name ) {
-        context.loadedByPipedrive = true;
         context.backgroundColor = '#EEE';
         context.name = data.name;
         context.selectedStatus  = data.status;
@@ -182,9 +174,20 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
         context.ownerEmail = data.ownerEmail;
         context.ownerName = data.ownerName
       } else {
-        context.pipedriveLink = '';
+        self.clearPipedrive();
       }
     });
 
   }
+
+  this.clearPipedrive = function() {
+    context.backgroundColor = '#FFF';
+    context.name = '';
+    context.client = '';
+    context.ownerEmail = '';
+    context.ownerName = '';
+    context.pipedriveLink = '';
+    context.selectedStatus = null;
+    context.selectedOffer = null;
+  };
 }

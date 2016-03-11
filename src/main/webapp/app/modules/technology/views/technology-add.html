@@ -47,14 +47,14 @@
               <div class="row">
                 <div class="form-group col-md-6" ng-class="{'has-error': (addTechnologyForm.name.$invalid && addTechnologyForm.name.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.name.$invalid)}">
                   <label for="technology-name">Nome da proposta</label>
-                  <input type="text" class="form-control"  ng-disabled="technology.loadedByPipedrive" id="technology-name" name="name" ng-model="technology.name" placeholder="Ex.: GPV Ferrovias" required="" ng-disabled="technology.id.length">
+                  <input type="text" class="form-control"  ng-disabled="technology.pipedriveLink" id="technology-name" name="name" ng-model="technology.name" placeholder="Ex.: GPV Ferrovias" required="" ng-disabled="technology.id.length">
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.name.$touched">
                     <span ng-show="addTechnologyForm.name.$error.required" class="help-block">O campo Nome é obrigatório</span>
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-class="{'has-error': (addTechnologyForm.client.$invalid && addTechnologyForm.client.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.client.$invalid)}">
                   <label for="technology-client">Nome do cliente</label>
-                  <input type="text" class="form-control" id="technology-client" ng-disabled="technology.loadedByPipedrive" name="client" ng-model="technology.client" required placeholder="nome do cliente">
+                  <input type="text" class="form-control" id="technology-client" ng-disabled="technology.pipedriveLink" name="client" ng-model="technology.client" required placeholder="nome do cliente">
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.client.$touched">
                     <span ng-show="addTechnologyForm.client.$error.required" class="help-block">O campo Cliente é obrigatório</span>
                   </div>
@@ -63,7 +63,7 @@
               <div class="row">
                 <div class="form-group col-md-6" ng-class="{'has-error': (addTechnologyForm.ownerEmail.$invalid && addTechnologyForm.ownerEmail.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.ownerEmail.$invalid)}">
                   <label for="technology-status">Owner</label>
-                  <input type="email" class="form-control" name="ownerEmail" ng-model="technology.ownerEmail" ng-disabled="technology.loadedByPipedrive" placeholder="[login]>@ciandt.com">
+                  <input type="email" class="form-control" name="ownerEmail" ng-model="technology.ownerEmail" ng-disabled="technology.pipedriveLink" placeholder="[login]>@ciandt.com">
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.ownerEmail.$touched">
                     <span ng-show="addTechnologyForm.ownerEmail.$invalid" class="help-block">Email inválido</span>
                   </div>
@@ -71,7 +71,7 @@
                 <div class="form-group col-md-6" ng-show="loggedUserInformation.admin">
                   <label for="technology-status">Selecione o status da proposta</label> </br>
                   <div class="btn-group" uib-dropdown ng-style="{'background-color': technology.backgroundColor}">
-                    <button id="single-button" type="button" ng-disabled="technology.loadedByPipedrive" class="btn btn-default" uib-dropdown-toggle>
+                    <button id="single-button" type="button" ng-disabled="technology.pipedriveLink" class="btn btn-default" uib-dropdown-toggle>
                       {{ technology.selectedStatus==null ? 'Status Proposta' : technology.selectedStatus }}
                       <span class="caret"></span>
                     </button>
