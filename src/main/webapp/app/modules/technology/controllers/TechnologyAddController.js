@@ -11,8 +11,12 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
    * @type {Boolean}
    */
   this.loading = false;
+  context.loadedByPipedrive = false;
+  context.backgroundColor = '#FFF';
 
-  this.regex = "^(http(s)?:\\/\\/(citsoftware.pipedrive.com\\/deal\\/)*\\d+)";
+  this.regexPipedrive = "^(http(s)?:\\/\\/(citsoftware.pipedrive.com\\/deal\\/)*\\d+)";
+  this.regexGoogledrive = "(http(s)?:\\/\\/(drive.google.com\\/open\\?id=)\\S+)"
+
 
   this.login = function(){
     checkLogin(false);
@@ -72,7 +76,8 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.shortDescription = '';
     context.webSite = '';
     context.client = '';
-    context.owner = '';
+    context.ownerEmail = '';
+    context.ownerName = '';
     context.technologies = '';
     context.pipedriveLink = '';
     document.getElementById('technology-name').value = null;
@@ -85,10 +90,11 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.shortDescription = technology.shortDescription;
     context.description = technology.description;
     context.client = technology.client;
-    context.owner = technology.owner;
     context.technologies = technology.technologies;
     context.pipedriveLink = technology.pipedriveLink;
     context.webSite = technology.website;
+    context.ownerEmail = technology.ownerEmail;
+    context.ownerName = technology.ownerName;
     context.image = technology.image;
     if(context.image){
       document.getElementById('list').innerHTML = ['<img src="', context.image,'" title="', context.name, '" />'].join('');
@@ -149,16 +155,34 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   }
 
   this.onLostFocus = function(link){
-    if (link == undefined) return;
+      if (link == undefined || link == '') {
+        context.loadedByPipedrive = false;
+        context.backgroundColor = '#FFF';
+        context.name = '';
+        context.client = '';
+        context.ownerEmail = '';
+        context.ownerName = '';
+        context.pipedriveLink = '';
+        context.selectedStatus = null;
+        context.selectedOffer = null;
+        return;
+      }
     var s = link.split('/');
     var id = s[4];
 
+
     TechnologyService.getPipedriveDeal(id).then(function(data){
+      context.loadedByPipedrive = true;
+      context.backgroundColor = '#EEE';
+
       context.name = data.name;
       context.selectedStatus  = data.status;
-      context.selectedOffer = data. offer;
-      context.client = data.cient;
-      contex.owner = data.owner;
+      context.selectedOffer = data.offer;
+      context.client = data.client;
+      context.ownerEmail = data.ownerEmail;
+      context.ownerName = data.ownerName
+
+
     });
 
 
