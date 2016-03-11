@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import com.ciandt.techgallery.service.PipedriveService;
 import com.ciandt.techgallery.service.enums.ValidationMessageEnums;
-import com.ciandt.techgallery.service.model.DealTO;
+import com.ciandt.techgallery.service.model.pipedrive.DealTO;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;

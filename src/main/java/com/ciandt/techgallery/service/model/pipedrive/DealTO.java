@@ -1,4 +1,4 @@
-package com.ciandt.techgallery.service.model;
+package com.ciandt.techgallery.service.model.pipedrive;
 
 
 /**

@@ -1,6 +1,6 @@
 package com.ciandt.techgallery.service;
 
-import com.ciandt.techgallery.service.model.DealTO;
+import com.ciandt.techgallery.service.model.pipedrive.DealTO;
 import com.google.api.server.spi.response.InternalServerErrorException;
 import com.google.api.server.spi.response.NotFoundException;
 

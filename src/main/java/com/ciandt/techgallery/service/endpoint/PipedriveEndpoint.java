@@ -3,7 +3,7 @@ package com.ciandt.techgallery.service.endpoint;
 import com.ciandt.techgallery.Constants;
 import com.ciandt.techgallery.service.PipedriveService;
 import com.ciandt.techgallery.service.impl.PipedriveServiceImpl;
-import com.ciandt.techgallery.service.model.DealTO;
+import com.ciandt.techgallery.service.model.pipedrive.DealTO;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
