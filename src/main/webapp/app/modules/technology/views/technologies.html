@@ -74,7 +74,9 @@
               <button type="button" ng-click="technologies.followTechnology(technology.id, $event)" ng-class="technologies.setFollowedClass(technology.followedByUser)"><span class="glyphicon glyphicon-star-empty"></span> Seguir</button>
             </div>
             <div class="pull-right">
-              <a href="#/proposals/{{ technology.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.name }}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+              <a ng-href="{{technology.pipedriveLink}}" target="_blank" ng-if="technology.pipedriveLink"  class="btn primary  btn-xs"><img src="assets/images/pipedrive.png" title="Link to pipedrive" class="pull-left"/></a>
+              <a ng-href="{{technology.website}}" target="_blank" ng-if="technology.website" class="btn primary  btn-xs"><img src="assets/images/googledrive.png" title="Link to google drive" class="pull-left"/></a>
+              <a ng-href="#/proposals/{{ technology.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.name }}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
               <button type="button" ng-if="loggedUserInformation.admin" ng-click="technologies.deleteTechnology(technology.id)" class="btn btn-danger btn-xs" title="Deletar {{ technology.name }}"><span class="glyphicon glyphicon-trash"></span></button>
             </div>
           </div>
