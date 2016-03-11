@@ -35,7 +35,7 @@
                   <label for="pipedrive-link">Link Pipedrive</label>
                   <input type="text" class="form-control"  id="technology-pipedriveLink" ng-model="technology.pipedriveLink"
                   ng-if="!technology.id || !technology.hasPipedriveLink"
-                  ng-pattern='technology.regex' ng-blur="technology.onLostFocus(technology.pipedriveLink)"
+                  ng-pattern='technology.regexPipedrive' ng-blur="technology.onLostFocus(technology.pipedriveLink)"
                   name="pipedriveLink" placeholder="Ex: https://citsoftware.pipedrive.com/deal/{id}">
                   <a readonly target="_blank" class="form-control" ng-href="{{technology.pipedriveLink}}" ng-if="technology.id && technology.hasPipedriveLink">{{ technology.pipedriveLink }}</a>
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.pipedriveLink.$touched">
@@ -114,9 +114,12 @@
                     <span ng-show="addTechnologyForm.description.$error.required" class="help-block">O campo Descrição é obrigatório</span>
                   </div>
                 </div>
-                <div class="form-group col-md-12" >
+                <div class="form-group col-md-12" ng-class="{'has-error': (addTechnologyForm.website.$invalid && addTechnologyForm.website.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.website.$invalid)}">
                   <label for="technology-website">Link da pasta do drive</label>
-                  <input type="text" class="form-control" id="technology-website" ng-model="technology.webSite" placeholder="http://">
+                  <input type="text" class="form-control" ng-pattern='technology.regexGoogledrive' name="website" id="technology-website" ng-model="technology.webSite" placeholder="https://drive.google.com/open?id={}">
+                  <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.website.$touched">
+                    <span ng-show="addTechnologyForm.website.$invalid" class="help-block">O link do Google Drive está incorreto</span>
+                  </div>
                 </div>
                 <div class="form-group col-md-12">
                   <label for="technology-technologies">Principais tecnologias envolvidas</label>
