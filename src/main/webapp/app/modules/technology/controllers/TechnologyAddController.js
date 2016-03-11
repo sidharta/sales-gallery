@@ -14,7 +14,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   context.loadedByPipedrive = false;
   context.backgroundColor = '#FFF';
 
-  this.regexPipedrive = "^(http(s)?:\\/\\/(citsoftware.pipedrive.com\\/deal\\/)*\\d+)";
+  this.regexPipedrive = "^(http(s)?:\\/\\/(\\w+.pipedrive.com\\/deal\\/)*\\d+)";
   this.regexGoogledrive = "(http(s)?:\\/\\/(drive.google.com\\/open\\?id=)\\S+)"
 
 
