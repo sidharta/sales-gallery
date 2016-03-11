@@ -74,7 +74,8 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.shortDescription = '';
     context.webSite = '';
     context.client = '';
-    context.owner = '';
+    context.ownerEmail = '';
+    context.ownerName = '';
     context.technologies = '';
     context.pipedriveLink = '';
     document.getElementById('technology-name').value = null;
@@ -90,7 +91,8 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.technologies = technology.technologies;
     context.pipedriveLink = technology.pipedriveLink;
     context.webSite = technology.website;
-    context.owner = technology.owner;
+    context.ownerEmail = technology.ownerEmail;
+    context.ownerName = technology.ownerName;
     context.image = technology.image;
     if(context.image){
       document.getElementById('list').innerHTML = ['<img src="', context.image,'" title="', context.name, '" />'].join('');
@@ -151,9 +153,16 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   }
 
   this.onLostFocus = function(link){
-      if (link == undefined) {
+      if (link == undefined || link == '') {
         context.loadedByPipedrive = false;
         context.backgroundColor = '#FFF';
+        context.name = '';
+        context.client = '';
+        context.ownerEmail = '';
+        context.ownerName = '';
+        context.pipedriveLink = '';
+        context.selectedStatus = null;
+        context.selectedOffer = null;
         return;
       }
     var s = link.split('/');
@@ -168,7 +177,8 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
       context.selectedStatus  = data.status;
       context.selectedOffer = data.offer;
       context.client = data.client;
-      context.owner = data.owner;
+      context.ownerEmail = data.ownerEmail;
+      context.ownerName = data.ownerName
 
 
     });

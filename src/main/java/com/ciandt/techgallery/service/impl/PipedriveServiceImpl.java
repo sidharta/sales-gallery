@@ -81,7 +81,8 @@ public class PipedriveServiceImpl implements PipedriveService {
 		deal.setStatus(data.getString("status"));
 
 		JSONObject user_id = data.getJSONObject("user_id");
-		deal.setOwner(user_id.getString("email"));
+		deal.setOwnerEmail(user_id.getString("email"));
+		deal.setOwnerName(user_id.getString("name"));
 
 		JSONObject org_id = data.getJSONObject("org_id");
 		deal.setClient(org_id.getString("name"));

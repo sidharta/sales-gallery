@@ -39,7 +39,8 @@ public class Technology extends BaseEntity<String> {
   public static final String IMAGE = "image";
   public static final String CLIENT = "client";
   public static final String OFFER = "offer";
-  public static final String OWNER	= "owner";
+  public static final String OWNER_EMAIL = "ownerEmail";
+  public static final String OWNER_NAME	= "ownerName";
   public static final String TECHNOLOGIES = "technologies";
   public static final String STATUS = "status";
   public static final String COMMENTARIES_COUNTER = "commentariesCounter";
@@ -79,7 +80,10 @@ public class Technology extends BaseEntity<String> {
   private String offer;
   
   @Unindex
-  private String owner;
+  private String ownerEmail;
+  
+  @Unindex
+  private String ownerName;
 
   @Unindex
   private String technologies;
@@ -144,12 +148,12 @@ public class Technology extends BaseEntity<String> {
     this.offer = value;
   }
 
-  public String getOwner() {
-	return owner;
+  public String getOwnerEmail() {
+	return ownerEmail;
   }
 
-  public void setOwner(String owner) {
-	this.owner = owner;
+  public void setOwnerEmail(String ownerEmail) {
+	this.ownerEmail = ownerEmail;
   }
 
   public String getTechnologies() {
@@ -276,7 +280,7 @@ public class Technology extends BaseEntity<String> {
   public void setCreationDate(Date creationDate) {
     this.creationDate = creationDate;
   }
-
+  
   public boolean isFollowedByUser() {
     return followedByUser;
   }
@@ -300,12 +304,22 @@ public class Technology extends BaseEntity<String> {
   public void setLastActivityUser(String lastActivityUser) {
     this.lastActivityUser = lastActivityUser;
   }
+  
+  public String getOwnerName() {
+	return ownerName;
+  }
+
+  public void setOwnerName(String ownerName) {
+	this.ownerName = ownerName;
+  }  
 
   /*
    * Methods --------------------------------------------
    */
 
-  /**
+
+
+/**
    * Add 1 to the commentary counter.
    */
   public void addCommentariesCounter() {

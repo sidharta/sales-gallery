@@ -28,8 +28,10 @@ public class TechnologyTO implements Response {
   private String client;
   /** Proposal offer. */
   private String offer;
-  /** Proposal owner. */
-  private String owner;
+  /** Proposal ownerEmail. */
+  private String ownerEmail;
+  /** Proposal ownerName. */
+  private String ownerName;
   /** Proposal technologies. */
   private String technologies;
   /** technology company status. */
@@ -145,12 +147,12 @@ public class TechnologyTO implements Response {
     this.offer = offer;
   }
   
-  public String getOwner() {
-	return owner;
+  public String getOwnerEmail() {
+	return ownerEmail;
   }
 
-  public void setOwner(String owner) {
-	this.owner = owner;
+  public void setOwnerEmail(String ownerEmail) {
+	this.ownerEmail = ownerEmail;
   }
 
   public String getTechnologies() {
@@ -200,4 +202,12 @@ public class TechnologyTO implements Response {
   public void setPipedriveLink(String pipedriveLink) {
     this.pipedriveLink = pipedriveLink;
   }
+
+public String getOwnerName() {
+	return ownerName;
+}
+
+public void setOwnerName(String ownerName) {
+	this.ownerName = ownerName;
+}
 }

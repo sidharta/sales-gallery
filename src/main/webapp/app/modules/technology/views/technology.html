@@ -14,7 +14,7 @@
             <ul class="technology-meta">
               <li ng-if="technology.item.recommendation.length"><span class="label label-default technology-recommendation">{{ technology.item.recommendation }}</span></li>
               <li ng-if="technology.item.website.length"><span class="glyphicon glyphicon-link"></span> <a href="{{ technology.item.website }}" target="_blank" title="{{ technology.item.name }}">{{ technology.item.website }}</a></li>
-              <li><b>{{technology.item.owner? 'Owner:': ''}} {{technology.item.owner}} </b></li> 
+              <li><b>{{technology.item.ownerEmail? 'Owner:': ''}} {{technology.item.ownerName}}  {{technology.item.ownerEmail? '(': ''}} {{technology.item.ownerEmail}} {{technology.item.ownerEmail? ')': ''}} </b></li>
             </ul>
           </div>
         </div>
