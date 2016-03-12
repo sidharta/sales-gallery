@@ -63,7 +63,7 @@
               <div class="row">
                 <div class="form-group col-md-6" ng-class="{'has-error': (addTechnologyForm.ownerEmail.$invalid && addTechnologyForm.ownerEmail.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.ownerEmail.$invalid)}">
                   <label for="technology-status">Owner</label>
-                  <input type="email" class="form-control" name="ownerEmail" ng-model="technology.ownerEmail" ng-disabled="technology.pipedriveLink" placeholder="[login]>@ciandt.com">
+                  <input type="email" class="form-control" name="ownerEmail" ng-model="technology.ownerEmail" ng-disabled="technology.pipedriveLink" placeholder="[login]@ciandt.com">
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.ownerEmail.$touched">
                     <span ng-show="addTechnologyForm.ownerEmail.$invalid" class="help-block">Email inválido</span>
                   </div>
