@@ -11,11 +11,10 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
    * @type {Boolean}
    */
   this.loading = false;
-  context.loadedByPipedrive = false;
   context.backgroundColor = '#FFF';
   context.offers = [];
 
-  this.regexPipedrive = "^(http(s)?:\\/\\/(citsoftware.pipedrive.com\\/deal\\/)*\\d+)";
+  this.regexPipedrive = "^(http(s)?:\\/\\/(\\w+.pipedrive.com\\/deal\\/)*\\d+)";
   this.regexGoogledrive = "(http(s)?:\\/\\/(drive.google.com\\/open\\?id=)\\S+)"
 
 
@@ -167,32 +166,39 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   }
 
   this.onLostFocus = function(link){
-      if (link == undefined || link == '') {
-        context.loadedByPipedrive = false;
-        context.backgroundColor = '#FFF';
-        context.name = '';
-        context.client = '';
-        context.ownerEmail = '';
-        context.ownerName = '';
-        context.pipedriveLink = '';
-        context.selectedStatus = null;
-        context.selectedOffer = null;
-        return;
-      }
+    var self = this;
+
+    if (link == undefined || link == '') {
+      self.clearPipedrive();
+      return;
+    }
+
     var s = link.split('/');
     var id = s[4];
 
-
     TechnologyService.getPipedriveDeal(id).then(function(data){
-      context.loadedByPipedrive = true;
-      context.backgroundColor = '#EEE';
-
-      context.name = data.name;
-      context.selectedStatus  = data.status;
-      context.client = data.client;
-      context.ownerEmail = data.ownerEmail;
-      context.ownerName = data.ownerName;
-      context.offers = data.offers;
+      if( data.name ) {
+        context.backgroundColor = '#EEE';
+        context.name = data.name;
+        context.selectedStatus  = data.status;
+        context.selectedOffer = data.offer;
+        context.client = data.client;
+        context.ownerEmail = data.ownerEmail;
+        context.ownerName = data.ownerName
+      } else {
+        self.clearPipedrive();
+      }
     });
+
   }
+  this.clearPipedrive = function() {
+    context.backgroundColor = '#FFF';
+    context.name = '';
+    context.client = '';
+    context.ownerEmail = '';
+    context.ownerName = '';
+    context.pipedriveLink = '';
+    context.selectedStatus = null;
+    context.selectedOffer = null;
+  };
 }
