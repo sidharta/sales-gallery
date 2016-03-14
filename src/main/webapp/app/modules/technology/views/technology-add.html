@@ -86,7 +86,7 @@
               <div class="row">
                 <div class="form-group col-md-12" >
                   <label for="technology-offer">Selecione a oferta</label> </br>
-                  <ui-select multiple  ng-model="batata" theme="select2"  style="width: 300px;">
+                  <ui-select multiple  ng-model="technology.offers" theme="select2" style="width:inherit;"  ng-disabled="technology.pipedriveLink">
                     <ui-select-match placeholder="Selecione ofertas...">{{$item}}</ui-select-match>
                     <ui-select-choices repeat="item in technology.dropDownOffer | filter:$select.search">
                       {{item}}

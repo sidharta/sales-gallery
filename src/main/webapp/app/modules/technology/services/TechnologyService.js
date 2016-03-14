@@ -22,9 +22,9 @@ module.exports = function($q, $timeout, $rootScope) {
     context.textSearch = textSearch;
   };
 
-  this.setContentFilters = function(selectedStatusFilter, selectedOrderFilter, selectedLastActivityFilter, selectedOfferFilter){
+  this.setContentFilters = function(selectedStatusFilter, selectedOrderFilter, selectedLastActivityFilter, offersFilter){
     context.selectedStatusFilter = selectedStatusFilter;
-    context.selectedOfferFilter = selectedOfferFilter;
+    context.offersFilter = offersFilter;
     context.selectedOrderFilter = selectedOrderFilter;
     context.selectedLastActivityFilter = selectedLastActivityFilter;
 
@@ -85,7 +85,7 @@ module.exports = function($q, $timeout, $rootScope) {
         name : context.name,
         shortDescription : context.shortDescription,
         status : context.selectedStatus,
-        offer : context.selectedOffer,
+        offers : context.offers,
         ownerEmail : context.ownerEmail,
         ownerName : context.ownerName,
         client : context.client,
@@ -103,7 +103,7 @@ module.exports = function($q, $timeout, $rootScope) {
         name : context.name,
         shortDescription : context.shortDescription,
         status : context.selectedStatus,
-        offer : context.selectedOffer,
+        offers : context.offers,
         ownerEmail : context.ownerEmail,
         ownerName : context.ownerName,
         client : context.client,
@@ -145,7 +145,7 @@ module.exports = function($q, $timeout, $rootScope) {
       recommendationIs: context.selectedStatusFilter,
       customerNameContains: context.textSearch,
       technologiesContains: context.textSearch,
-      offerIs : context.selectedOfferFilter
+      offersIs : context.offersFilter
     }
     var deferred = $q.defer();
     gapi.client.rest.findByFilter(req).execute(function(data){

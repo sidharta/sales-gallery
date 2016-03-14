@@ -1,6 +1,7 @@
 package com.ciandt.techgallery.service.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Response with a technology entity.
@@ -26,8 +27,8 @@ public class TechnologyTO implements Response {
   private String image;
   /** Proposal client. */
   private String client;
-  /** Proposal offer. */
-  private String offer;
+  /** Proposal offers. */
+  private List<String> offers;
   /** Proposal ownerEmail. */
   private String ownerEmail;
   /** Proposal ownerName. */
@@ -139,12 +140,12 @@ public class TechnologyTO implements Response {
     this.client = client;
   }
 
-  public String getOffer() {
-    return offer;
+  public List<String> getOffers() {
+    return offers;
   }
 
-  public void setOffer(String offer) {
-    this.offer = offer;
+  public void setOffers(List<String> offers) {
+    this.offers = offers;
   }
   
   public String getOwnerEmail() {

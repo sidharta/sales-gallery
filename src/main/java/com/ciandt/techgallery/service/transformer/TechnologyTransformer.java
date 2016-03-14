@@ -18,7 +18,7 @@ public class TechnologyTransformer implements Transformer<Technology, Technology
     product.setShortDescription(baseObject.getShortDescription());
     product.setWebsite(baseObject.getWebsite());
     product.setClient(baseObject.getClient());
-    product.setOffer(baseObject.getOffer());
+    product.setOffers(baseObject.getOffers());
     product.setOwnerEmail(baseObject.getOwnerEmail());
     product.setOwnerName(baseObject.getOwnerName());
     product.setTechnologies(baseObject.getTechnologies());
@@ -45,7 +45,7 @@ public class TechnologyTransformer implements Transformer<Technology, Technology
       product.setShortDescription(baseObject.getShortDescription());
       product.setWebsite(baseObject.getWebsite());
       product.setClient(baseObject.getClient());
-      product.setOffer(baseObject.getOffer());
+      product.setOffers(baseObject.getOffers());
       product.setOwnerEmail(baseObject.getOwnerEmail());
       product.setOwnerName(baseObject.getOwnerName());
       product.setTechnologies(baseObject.getTechnologies());
