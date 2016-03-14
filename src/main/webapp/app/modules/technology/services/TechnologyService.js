@@ -408,4 +408,11 @@ module.exports = function($q, $timeout, $rootScope) {
     });
     return deferred.promise;
   }
+
+  this.split = function(string) {
+    var array = [];
+    if (string != undefined)
+       array = string.split(',');
+    return array;
+  }
 };

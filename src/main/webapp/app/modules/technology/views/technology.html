@@ -10,18 +10,35 @@
             <div class="pull-right">
               <a href="#/proposals/{{ technology.item.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.item.name }}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
             </div>
-            <h1 class="technology-name">{{ technology.item.name }} <button id="idFollowButton" ng-click="technology.followTechnology()" ng-class="technology.setFollowedClass(technology.item.followedByUser)"><span class="glyphicon glyphicon-star-empty"></span> Seguir</button></h1>
+            <h1 class="technology-name">{{ technology.item.name }}
+              <button id="idFollowButton" ng-click="technology.followTechnology()" ng-class="technology.setFollowedClass(technology.item.followedByUser)"><span class="glyphicon glyphicon-star-empty"></span> Seguir</button>
+              <a ng-href="{{technology.item.pipedriveLink}}" target="_blank" ng-if="technology.item.pipedriveLink"  class="btn primary  btn-xs"><img src="assets/images/pipedrive.png" title="Link to pipedrive" class="pull-left"/></a>
+              <a ng-href="{{technology.item.website}}" target="_blank" ng-if="technology.item.website" class="btn primary  btn-xs"><img src="assets/images/googledrive.png" title="Link to google drive" class="pull-left"/></a>
+            </h1>
+            <h4>{{technology.item.client}}</h4>
             <ul class="technology-meta">
-              <li ng-if="technology.item.recommendation.length"><span class="label label-default technology-recommendation">{{ technology.item.recommendation }}</span></li>
-              <li ng-if="technology.item.website.length"><span class="glyphicon glyphicon-link"></span> <a href="{{ technology.item.website }}" target="_blank" title="{{ technology.item.name }}">{{ technology.item.website }}</a></li>
               <li><b>{{technology.item.ownerEmail? 'Owner:': ''}} {{technology.item.ownerName}}  {{technology.item.ownerEmail? '(': ''}} {{technology.item.ownerEmail}} {{technology.item.ownerEmail? ')': ''}} </b></li>
             </ul>
+            <div class="offers-box" ng-if="technology.item.offers">
+                <span class="label label-default technology-client"  ng-repeat="offer in technology.item.offers">{{ offer }}</span>
+            </div>
+            </br>
+            <div class="technologies-box" ng-if="technology.item.technologies">
+                <span class="label label-default technology-recommendation" ng-repeat="tech in technology.split(technology.item.technologies)">{{ tech }}</span>
+            </div>
           </div>
         </div>
       </header>
       <div class="technology-body">
         <div class="technology-section row">
-          <div class="technology-description col-md-8" ng-bind-html="technology.item.description | nl2p"></div>
+          <div class="technology-description col-md-8" ng-if="technology.item.shortDescription ">
+            <p><b>Resumo</b></p>
+            <div ng-bind-html="technology.item.shortDescription | nl2p"></div>
+          </div>
+          <div class="technology-description technologydescriptionmargin col-md-8" ng-if="technology.item.description">
+            <p><b>Descrição</b></p>
+            <div ng-bind-html="technology.item.description | nl2p"></div>
+          </div>
           <div class="col-md-4">
             <div class="card no-margin">
               <div class="card-section">

@@ -235,4 +235,8 @@ module.exports = function ($rootScope, $stateParams, AppService, TechnologyServi
     return completeEmail[0];
   };
 
+  this.split = function(string) {
+    return TechnologyService.split(string);
+  }
+
 }

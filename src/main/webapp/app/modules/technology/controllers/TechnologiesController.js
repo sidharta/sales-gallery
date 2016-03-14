@@ -23,12 +23,9 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
     $scope.$apply();
   })
 
-  this.split = function(string) {
-    var array = [];
-    if (string != undefined)
-       array = string.split(',');
-    return array;
-  }
+    this.split = function(string) {
+      return TechnologyService.split(string);
+    }
 
   /**
    * List of technologies
