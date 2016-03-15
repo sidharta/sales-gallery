@@ -32,12 +32,14 @@
       <div class="technology-body">
         <div class="technology-section row">
           <div class="technology-description col-md-8" ng-if="technology.item.shortDescription ">
-            <p><b>Resumo</b></p>
-            <div ng-bind-html="technology.item.shortDescription | nl2p"></div>
+
+              <p><b>Resumo</b></p>
+              <div ng-bind-html="technology.item.shortDescription | nl2p"></div>
+            
+            <div class="technologydescriptionmargin">
+              <p><b>Descrição</b></p>
+              <div ng-bind-html="technology.item.description | nl2p"></div>
           </div>
-          <div class="technology-description technologydescriptionmargin col-md-8" ng-if="technology.item.description">
-            <p><b>Descrição</b></p>
-            <div ng-bind-html="technology.item.description | nl2p"></div>
           </div>
           <div class="col-md-4">
             <div class="card no-margin">
