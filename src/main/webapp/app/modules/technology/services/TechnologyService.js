@@ -415,4 +415,26 @@ module.exports = function($q, $timeout, $rootScope) {
        array = string.split(',');
     return array;
   }
+
+  this.deleteComment = function(commentId){
+    var deferred = $q.defer();
+    var req = {commentId: commentId};
+    gapi.client.rest.deleteComment(req).execute(function(data){
+      deferred.resolve(data);
+    });
+    return deferred.promise;
+  }
+
+  this.deleteEndorsedUser = function(endorsed, technology){
+    var deferred = $q.defer();
+    var req = {
+      endorsed : endorsed,	
+      technology : technology
+    };
+
+    gapi.client.rest.deleteEndorsement(req).execute(function(data){
+        deferred.resolve(data);
+    });
+    return deferred.promise;
+  }
 };

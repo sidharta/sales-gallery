@@ -135,14 +135,16 @@ module.exports = function ($rootScope, $stateParams, AppService, TechnologyServi
 
   this.getEndorsementsByTech();
 
-  this.verifyStyle = function(endorsers){
+  this.showButtonDeleteEndorsed = function(endorsers){
     for(var i in endorsers){
-      if(endorsers[i].email == $rootScope.userEmail){
+      if( endorsers[i].email == $rootScope.loggedUserInformation.email){
         return true;
       }
     }
     return false;
   };
+
+
 
   this.showAllEndorsements = function(){
     context.showEndorsementResponse = context.completeEndorsements;
@@ -237,6 +239,19 @@ module.exports = function ($rootScope, $stateParams, AppService, TechnologyServi
 
   this.split = function(string) {
     return TechnologyService.split(string);
-  }
+  };
+
+  this.deleteEndorsedUser = function(completeEndorsements, technology){
+    var endorsed = completeEndorsements.endorsed.email;
+    TechnologyService.deleteEndorsedUser(endorsed, technology).then(function(data){
+      context.getEndorsementsByTech();
+    })
+  };
+
+  this.deleteComment = function(comment){
+     TechnologyService.deleteComment(comment.id).then(function(data){
+      loadComments();
+     })
+  };
 
 }

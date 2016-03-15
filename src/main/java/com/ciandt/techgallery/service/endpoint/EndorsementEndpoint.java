@@ -104,5 +104,27 @@ public class EndorsementEndpoint {
       InternalServerErrorException, BadRequestException, OAuthRequestException {
     return service.getEndorsementsByTech(id, user);
   }
+  
+  /**
+   * Endpoint for remove an Endorsement.
+   * 
+   * @param endorsement json with endorsement info.
+   * @param user Endorsement User
+   * @return endorsement
+   * @throws InternalServerErrorException in case something goes wrong
+   * @throws OAuthRequestException in case of authentication problem
+   * @throws NotFoundException in case the information are not founded
+   * @throws BadRequestException in case a request with problem were made.
+   */
+  @ApiMethod(name = "deleteEndorsement", path = "endorsement-delete", httpMethod = "post")
+  public Endorsement deleteEndorsement(@Named("endorsed") String endorsed, 
+		                               @Named("technology") String technology , User user)
+      throws InternalServerErrorException, BadRequestException, NotFoundException,
+      OAuthRequestException {	  
+	  EndorsementResponse endorsement = new EndorsementResponse();
+	  endorsement.setEndorsed(endorsed);
+	  endorsement.setTechnology(technology);
+    return service.deleteEndorsement(endorsement, user);
+  }
 
 }
