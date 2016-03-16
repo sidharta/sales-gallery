@@ -13,7 +13,7 @@
         </div>
         </div>
         <div class="technology-section row">
-        <div class="col-md-8">
+        <div class="col-md-10">
           <div class="card no-margin">
             <div class="card-section">
               <h3 class="card-title ng-binding"><b>{{ technology.item.name }}</b></h3>
@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-2">
       <div class="card no-margin">
         <div class="card-section">
           <h3 class="card-title ng-binding">Status</h3>
@@ -53,7 +53,7 @@
         <div class="card-section technology-status-margin">
           <form action="" class="form-inline text-center">
             <div class="radio technology-rating" ng-repeat="status in technology.statuses" ng-class="{'active' : status.title == technology.item.status}">
-              <span>
+              <span ng-if="status.title == technology.item.status">
                 <img ng-src="assets/images/{{ status.image }}" class="technology-rating-image" alt="{{status.title}}">
                 <span class="technology-rating-text">{{status.title}}</span>
               </span>
@@ -66,9 +66,6 @@
     <div class="technology-section row">
       <div class="col-md-12">
         <div class="card no-margin">
-          <div class="card-section">
-            <h3 class="card-title">Resumo e descrição da proposta</h3>
-          </div>
           <div class="card-section">
             <div class="technology-description" ng-if="technology.item.shortDescription ">
               <h4>Resumo</h4>
@@ -192,11 +189,7 @@
             </li>
           </div>
         </ol>
-        <div class="row">
-          <div class="col-md-6 col-md-offset-3 text-center">
-            <button class="btn btn-link btn-sm btn-block"><span class="glyphicon glyphicon-plus"></span> Ver mais comentários</button>
-          </div>
-        </div>
+        <div class="row"></div>
       </div>
     </div>
   </div>
