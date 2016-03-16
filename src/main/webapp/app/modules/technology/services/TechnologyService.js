@@ -22,9 +22,10 @@ module.exports = function($q, $timeout, $rootScope) {
     context.textSearch = textSearch;
   };
 
-  this.setContentFilters = function(selectedStatusFilter, selectedOrderFilter, selectedLastActivityFilter, offersFilter){
+  this.setContentFilters = function(selectedStatusFilter, selectedOrderFilter, selectedLastActivityFilter, offersFilter, towerFilter){
     context.selectedStatusFilter = selectedStatusFilter;
     context.offersFilter = offersFilter;
+    context.towerFilter = towerFilter;
     context.selectedOrderFilter = selectedOrderFilter;
     context.selectedLastActivityFilter = selectedLastActivityFilter;
 
@@ -85,6 +86,7 @@ module.exports = function($q, $timeout, $rootScope) {
         name : context.name,
         shortDescription : context.shortDescription,
         status : context.selectedStatus,
+        tower : context.selectedTower,
         offers : context.offers,
         ownerEmail : context.ownerEmail,
         ownerName : context.ownerName,
@@ -103,6 +105,7 @@ module.exports = function($q, $timeout, $rootScope) {
         name : context.name,
         shortDescription : context.shortDescription,
         status : context.selectedStatus,
+        tower : context.selectedTower,
         offers : context.offers,
         ownerEmail : context.ownerEmail,
         ownerName : context.ownerName,
@@ -143,6 +146,7 @@ module.exports = function($q, $timeout, $rootScope) {
       orderOptionIs: context.selectedOrderFilter,
       dateFilter : context.selectedLastActivityFilter,
       recommendationIs: context.selectedStatusFilter,
+      towerIs : context.towerFilter,
       customerNameContains: context.textSearch,
       technologiesContains: context.textSearch,
       offersIs : context.offersFilter
@@ -309,6 +313,14 @@ module.exports = function($q, $timeout, $rootScope) {
     return deferred.promise;
   }
 
+  this.getTowers = function(){
+    var deferred = $q.defer();
+    gapi.client.rest.getTowers().execute(function(data){
+      deferred.resolve(data.items);
+    });
+    return deferred.promise;
+  }
+
   this.getOffers = function(){
     var deferred = $q.defer();
     gapi.client.rest.getOffers().execute(function(data){
@@ -428,7 +440,7 @@ module.exports = function($q, $timeout, $rootScope) {
   this.deleteEndorsedUser = function(endorsed, technology){
     var deferred = $q.defer();
     var req = {
-      endorsed : endorsed,	
+      endorsed : endorsed,
       technology : technology
     };
 

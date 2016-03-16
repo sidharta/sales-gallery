@@ -16,6 +16,7 @@ public class DealTO {
 	private String ownerName;
 	private String status;
 	private List<String> offers;
+	private String tower;
 	
 	public String getName() {
 		return name;
@@ -52,6 +53,12 @@ public class DealTO {
 	}
 	public void setOffers(List<String> offers) {
 		this.offers = offers;
+	}
+	public String getTower() {
+		return tower;
+	}
+	public void setTower(String tower) {
+		this.tower = tower;
 	}
 
 

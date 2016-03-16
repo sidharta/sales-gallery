@@ -162,18 +162,32 @@ $technology-spacing: 20px;
     clear: both;
 }
 
-.technology-client {
+.tower-box {
+    display: inline-block;
+    clear: both;
+}
+
+.technology-offer {
     background-color: #20bec6 !important;
     clear: both;
     display: inline-block;
     margin: 6px 4px 0px 0px;
 }
 
+.technology-tower {
+    background-color: #FF546E !important;
+    clear: both;
+    display: inline-block;
+    margin: 6px 4px 0px 0px;
+}
+
 .technology-comment,
-.technology-recommendation {
+.technology-techology {
+  background-color: #FFE255 !important;
   margin: 6px 4px 0px 0px;
   list-style: none;
   float: left;
+  color: #333;
   &:last-of-type {
     margin-bottom: 0;
   }

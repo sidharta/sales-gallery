@@ -84,14 +84,28 @@
                 </div>
               </div>
               <div class="row">
-                <div class="form-group col-md-12" >
+                <div class="form-group col-md-6" >
                   <label for="technology-offer">Selecione a oferta</label> </br>
-                  <ui-select multiple  ng-model="technology.offers" theme="select2" style="width:inherit;"  ng-disabled="technology.pipedriveLink">
+                  <ui-select multiple  ng-model="technology.offers" theme="select2" style="width:440px;"  ng-disabled="technology.pipedriveLink">
                     <ui-select-match placeholder="Selecione ofertas...">{{$item}}</ui-select-match>
                     <ui-select-choices repeat="item in technology.dropDownOffer | filter:$select.search">
                       {{item}}
                     </ui-select-choices>
                   </ui-select>
+                </div>
+                <div class="form-group col-md-6" >
+                  <label for="technology-status">Selecione a torre</label> </br>
+                  <div class="btn-group" uib-dropdown ng-style="{'background-color': technology.backgroundColor}">
+                    <button id="single-button" type="button" ng-disabled="technology.pipedriveLink" class="btn btn-default" uib-dropdown-toggle>
+                      {{ technology.selectedTower==null ? 'Selecione a Torre' : technology.selectedTower }}
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
+                      <li role="menuitem" ng-repeat="item in technology.dropDownTowers">
+                        <a ng-show="item != 'Todos' && item != 'Não informado'" ng-click="technology.selectTower(item)">{{item}}</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
               <div class="row">

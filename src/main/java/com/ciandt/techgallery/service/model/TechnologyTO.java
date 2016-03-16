@@ -29,6 +29,8 @@ public class TechnologyTO implements Response {
   private String client;
   /** Proposal offers. */
   private List<String> offers;
+  /** Proposal tower. */
+  private String tower;
   /** Proposal ownerEmail. */
   private String ownerEmail;
   /** Proposal ownerName. */
@@ -210,5 +212,13 @@ public String getOwnerName() {
 
 public void setOwnerName(String ownerName) {
 	this.ownerName = ownerName;
+}
+
+public String getTower() {
+	return tower;
+}
+
+public void setTower(String tower) {
+	this.tower = tower;
 }
 }

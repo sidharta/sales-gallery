@@ -38,6 +38,10 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.dropDownStatus = data;
   });
 
+  TechnologyService.getTowers().then(function(data){
+    context.dropDownTowers = data;
+  });
+
   TechnologyService.getOffers().then(function(data){
     context.dropDownOffer = data;
   });
@@ -100,6 +104,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
       document.getElementById('list').innerHTML = ['<img src="', context.image,'" title="', context.name, '" />'].join('');
     }
     context.selectedStatus = technology.status;
+    context.selectedTower = technology.tower;
     context.offers = technology.offers;
     context.creationDate = technology.creationDate;
     context.pipedriveLink = technology.pipedriveLink;
@@ -109,6 +114,10 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   this.selectStatus = function(selected){
     context.selectedStatus = selected;
   };
+
+  this.selectTower = function(selected){
+    context.selectedTower = selected;
+  }
 
   $scope.handleFileSelect = function(file) {
       var files = file.files;
@@ -166,6 +175,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
         context.backgroundColor = '#EEE';
         context.name = data.name;
         context.selectedStatus  = data.status;
+        context.selectedTower = data.tower;
         context.offers = data.offers;
         context.client = data.client;
         context.ownerEmail = data.ownerEmail;
@@ -184,6 +194,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.ownerName = '';
     context.pipedriveLink = '';
     context.selectedStatus = null;
+    context.selectedTower = null;
     context.offers = null;
   };
 }

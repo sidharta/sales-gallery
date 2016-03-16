@@ -50,6 +50,7 @@
 }
 
 div > .select2-container.open {
+  width: inherit;
   z-index: 9999; /* The z-index Select2 applies to the select2-drop */
 }
 
@@ -162,7 +163,7 @@ div > .select2-container.open {
 
 /* See Scrollable Menu with Bootstrap 3 http://stackoverflow.com/questions/19227496 */
 .ui-select-bootstrap > .ui-select-choices {
-  width: 100%;
+  width: inherit;
   height: auto;
   max-height: 200px;
   overflow-x: hidden;
@@ -179,6 +180,7 @@ div > .ui-select-bootstrap.open {
 }
 
 .ui-select-multiple.ui-select-bootstrap input.ui-select-search {
+  width: inherit;
   background-color: transparent !important; /* To prevent double background when disabled */
   border: none;
   outline: none;

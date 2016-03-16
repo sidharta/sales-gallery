@@ -110,10 +110,11 @@ public class TechnologyEndpoint {
       @Named("orderOptionIs") @Nullable String orderOptionIs,
       @Named("customerNameContains") @Nullable String customerNameContains,
       @Named("offersIs") @Nullable List<String> offersIs,
+      @Named("towerIs") @Nullable String towerIs,
       @Named("technologiesContains") @Nullable String technologiesContains) throws ServiceException {
     return service.findTechnologiesByFilter(new TechnologyFilter(titleContains,
         shortDescriptionContains, recommendationIs, dateFilter, orderOptionIs, customerNameContains, 
-        offersIs, technologiesContains), user);
+        offersIs, towerIs, technologiesContains), user);
   }
 
   /**

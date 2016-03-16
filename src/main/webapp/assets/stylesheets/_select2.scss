@@ -11,6 +11,7 @@ disabled look for disabled choices in the results dropdown
 /* end multiselect */
 /* Retina-ize icons */
 .select2-container {
+	width: inherit;
 	margin: 0;
 	position: relative;
 	display: inline-block;
@@ -426,6 +427,7 @@ disabled look for disabled choices in the results dropdown
 		height: 1%;
 		margin: 0;
 		padding: 0;
+		width:inherit;
 		position: relative;
 		border: 1px solid #aaa;
 		cursor: text;
@@ -443,6 +445,7 @@ disabled look for disabled choices in the results dropdown
 		.select2-search-field {
 			margin: 0;
 			padding: 0;
+			width:inherit;
 			white-space: nowrap;
 			input {
 				padding: 5px;
@@ -608,6 +611,7 @@ disabled look for disabled choices in the results dropdown
 		background-size: 60px 40px !important;
 	}
 	.select2-container {
+			width:inherit;
 		.select2-choice {
 			abbr {
 				background-image: url('../../assets/images/select2.png') !important;
@@ -639,6 +643,7 @@ disabled look for disabled choices in the results dropdown
 		background-size: 60px 40px !important;
 	}
 	.select2-container {
+	  width: inherit;
 		.select2-choice {
 			abbr {
 				background-image: url('../../assets/images/select2.png') !important;

@@ -32,6 +32,9 @@ public class TechnologyFilter implements Response {
 
   /** string for search in offer. */
   private List<String> offersIs;
+  
+  /** string for search in tower. */
+  private String towerIs;
 
   /** string for search in technologies. */
   private String technologiesContains;
@@ -114,7 +117,7 @@ public class TechnologyFilter implements Response {
    *          for sort the result
    */
   public TechnologyFilter(String titleContains, String shortDescriptionContains, String statusIs,
-      Integer dateFilter, String orderOptionIs, String customerNameContains, List<String> offersIs, String technologiesContains) {
+      Integer dateFilter, String orderOptionIs, String customerNameContains, List<String> offersIs, String towerIs, String technologiesContains) {
     this.titleContains = titleContains;
     this.shortDescriptionContains = shortDescriptionContains;
     this.statusIs = statusIs;
@@ -124,6 +127,13 @@ public class TechnologyFilter implements Response {
     }
     this.customerNameContains = customerNameContains;
     this.offersIs = offersIs;
+    this.towerIs = towerIs;
     this.technologiesContains = technologiesContains;
   }
+public String getTowerIs() {
+	return towerIs;
+}
+public void setTowerIs(String towerIs) {
+	this.towerIs = towerIs;
+}
 }
