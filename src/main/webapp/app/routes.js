@@ -1,7 +1,8 @@
 module.exports = function(
   $stateProvider,
   $urlRouterProvider,
-  $urlMatcherFactoryProvider
+  $urlMatcherFactoryProvider,
+  $locationProvider
   ) {
   // Disable ui-router strict mode
   $urlMatcherFactoryProvider.strictMode(false);
@@ -60,5 +61,11 @@ module.exports = function(
         AppService.setPageTitle('Página não encontrada');
       },
       templateUrl: 'app/templates/404.html'
+    });
+
+    // use the HTML5 History API
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
     });
 };
