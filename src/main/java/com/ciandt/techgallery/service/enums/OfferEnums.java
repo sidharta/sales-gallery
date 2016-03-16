@@ -54,9 +54,16 @@ public enum OfferEnums {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-
 	
+	public static OfferEnums fromId(Integer id) {
+	    if (id != null) {
+	      for (OfferEnums offer : OfferEnums.values()) {
+	        if (id.equals(offer.getId())) {
+	          return offer;
+	        }
+	      }
+	    }
+	    return null;
+	  }
 
 }

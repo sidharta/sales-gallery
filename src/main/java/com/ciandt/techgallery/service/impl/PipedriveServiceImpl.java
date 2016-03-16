@@ -129,6 +129,7 @@ public class PipedriveServiceImpl implements PipedriveService {
 		technology.setOffers(PipedriveUtil.getProducts(deal.getProducts()));
 		technology.setShortDescription(deal.getTitle());
 		technology.setDescription(deal.getTitle());
+		technology.setTower(deal.getTower().getName());
 		
 		technologyService.addOrUpdateTechnology(technology, null);
 	}

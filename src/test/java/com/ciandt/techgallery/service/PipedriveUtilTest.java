@@ -4,22 +4,10 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.ciandt.techgallery.service.model.pipedrive.webhook.Deal;
-import com.ciandt.techgallery.service.model.pipedrive.webhook.Tower;
 import com.ciandt.techgallery.utils.pipedrive.PipedriveUtil;
 
 public class PipedriveUtilTest {
 
-	
-	@Test
-	public void processFromTower() {
-		Deal deal = new Deal();
-		
-		deal.setTower(Tower.ResourcesAndLogistics);
-		
-		PipedriveUtil.isFromTower(deal);
-		Assert.assertTrue(PipedriveUtil.isFromTower(deal));
-	}
-	
 	@Test
 	public void processFromStage() {
 		Deal current = new Deal();

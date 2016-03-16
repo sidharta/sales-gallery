@@ -1,5 +1,6 @@
 package com.ciandt.techgallery.service.model.pipedrive.webhook;
 
+import com.ciandt.techgallery.service.enums.TowerEnum;
 import com.google.gson.annotations.SerializedName;
 
 public class Deal {
@@ -11,8 +12,8 @@ public class Deal {
 	private Long userId;
 	private String status;
 
-	@SerializedName("2584f6868b4876c0a1784795075d865ed3be0abe")
-	private Tower tower;
+	@SerializedName("7b4743f02e683528a10ec09ed249726b5adcf6ad")
+	private TowerEnum tower;
 	
 	@SerializedName("15303ba9a1ebf014e09d61eaabab35a9ccf911d2")
 	private String products;
@@ -57,11 +58,11 @@ public class Deal {
 		this.userId = userId;
 	}
 
-	public Tower getTower() {
+	public TowerEnum getTower() {
 		return tower;
 	}
 
-	public void setTower(Tower tower) {
+	public void setTower(TowerEnum tower) {
 		this.tower = tower;
 	}
 
