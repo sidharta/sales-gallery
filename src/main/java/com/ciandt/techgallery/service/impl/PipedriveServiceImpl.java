@@ -2,11 +2,18 @@ package com.ciandt.techgallery.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.GeneralSecurityException;
 import java.util.Properties;
 
+import org.json.JSONObject;
+
+import com.ciandt.techgallery.persistence.model.Technology;
 import com.ciandt.techgallery.service.PipedriveService;
+import com.ciandt.techgallery.service.TechnologyService;
 import com.ciandt.techgallery.service.enums.ValidationMessageEnums;
 import com.ciandt.techgallery.service.model.pipedrive.DealTO;
+import com.ciandt.techgallery.service.model.pipedrive.webhook.Deal;
+import com.ciandt.techgallery.utils.TechGalleryUtil;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
@@ -16,8 +23,8 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.JsonObjectParser;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.InternalServerErrorException;
-import org.json.JSONObject;
 
 public class PipedriveServiceImpl implements PipedriveService {
 
@@ -27,6 +34,8 @@ public class PipedriveServiceImpl implements PipedriveService {
 
 	static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	static final JsonFactory JSON_FACTORY = new JacksonFactory();
+	
+	private TechnologyService technologyService = TechnologyServiceImpl.getInstance();
 
 	private PipedriveServiceImpl() {
 	}
@@ -87,6 +96,20 @@ public class PipedriveServiceImpl implements PipedriveService {
 		JSONObject org_id = data.getJSONObject("org_id");
 		deal.setClient(org_id.getString("name"));
 		return deal;
+	}
+
+	@Override
+	public void saveFromWebhook(Deal deal) throws BadRequestException, IOException, GeneralSecurityException {
+		Technology technology = new Technology();
+		technology.setId(TechGalleryUtil.slugify(deal.getTitle()));
+		technology.setName(deal.getTitle());
+		technology.setClient(deal.getOrgName());
+		technology.setStatus(deal.getStatus());
+		technology.setOffer(deal.getProduct().name());
+		technology.setShortDescription(deal.getTitle());
+		technology.setDescription(deal.getTitle());
+		
+		technologyService.addOrUpdateTechnology(technology, null);
 	}
 
 }

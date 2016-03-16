@@ -47,7 +47,8 @@ public class PipedriveUtil {
 	}
 
 	public static boolean hasPropertiesChanges(Deal current, Deal previous) {
-		return !current.getOrgName().equals(previous.getOrgName()) || !current.getTitle().equals(previous.getTitle());
+		return !current.getOrgName().equals(previous.getOrgName()) || !current.getTitle().equals(previous.getTitle())
+				|| !current.getStatus().equals(previous.getStatus());
 	}
 
 	public static boolean isFromStage(Deal current, Deal previous) {

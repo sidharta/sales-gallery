@@ -3,6 +3,7 @@ package com.ciandt.techgallery.servlets;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.security.GeneralSecurityException;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
@@ -10,9 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ciandt.techgallery.service.impl.PipedriveServiceImpl;
 import com.ciandt.techgallery.service.model.pipedrive.webhook.WebhookResponse;
 import com.ciandt.techgallery.utils.pipedrive.PipedriveUtil;
 import com.google.api.client.util.Base64;
+import com.google.api.server.spi.response.BadRequestException;
 
 @SuppressWarnings("serial")
 public class PipedriveWebhookServlet extends HttpServlet {
@@ -32,9 +35,17 @@ public class PipedriveWebhookServlet extends HttpServlet {
 			WebhookResponse webhookResponse = PipedriveUtil.getJsonFromWebhook(jsonString);
 			
 			if (PipedriveUtil.shouldProcess(webhookResponse)) {
-				logger.info("Process Deal");
-			} else {
-				logger.info("Ignore change");
+				try {
+					PipedriveServiceImpl.getInstance().saveFromWebhook(webhookResponse.getCurrent());
+				} catch (BadRequestException e) {
+					logger.severe("Bad request");
+					logger.severe(e.getMessage());
+					resp.sendError(500);
+				} catch (GeneralSecurityException e) {
+					logger.severe("General Security");
+					logger.severe(e.getMessage());
+					resp.sendError(500);
+				}
 			}
 			
 			resp.getWriter().append(jsonString);

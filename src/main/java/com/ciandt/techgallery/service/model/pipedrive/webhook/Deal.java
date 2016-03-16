@@ -9,9 +9,13 @@ public class Deal {
 	private String title;
 	private String orgName;
 	private Long userId;
-	
+	private String status;
+
 	@SerializedName("2584f6868b4876c0a1784795075d865ed3be0abe")
 	private Tower tower;
+	
+	@SerializedName("ad046fd66ed1e5a0c5052ccaa85b9909a3f9c3cd")
+	private Product product;
 
 	public Long getId() {
 		return id;
@@ -59,5 +63,21 @@ public class Deal {
 
 	public void setTower(Tower tower) {
 		this.tower = tower;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 }
