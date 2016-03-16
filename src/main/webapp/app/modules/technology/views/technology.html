@@ -1,182 +1,200 @@
   <loading ng-if="technology.loading"></loading>
   <div class="technology" ng-if="!technology.loading">
-    <div class="content container technology">
-      <header class="technology-header row">
-        <div class="media col-md-12">
-          <div class="media-image no-margin">
-            <img ng-src="{{ technology.item.image }}" data-placeholder-img class="technology-image" >
-          </div>
-          <div class="media-content">
-            <h1 class="technology-name">{{ technology.item.name }}
-              <button id="idFollowButton" ng-click="technology.followTechnology()" ng-class="technology.setFollowedClass(technology.item.followedByUser)"><span class="glyphicon glyphicon-star-empty"></span> Seguir</button>
-              <a ng-href="{{technology.item.pipedriveLink}}" target="_blank" ng-if="technology.item.pipedriveLink"  class="btn primary  btn-xs"><img src="assets/images/pipedrive.png" title="Link to pipedrive" class="pull-left"/></a>
-              <a ng-href="{{technology.item.website}}" target="_blank" ng-if="technology.item.website" class="btn primary  btn-xs"><img src="assets/images/googledrive.png" title="Link to google drive" class="pull-left"/></a>
-            </h1>
-            <div class="pull-right">
-              <a href="#/proposals/{{ technology.item.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.item.name }}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
-            </div>
-            <h4>{{technology.item.client}}</h4>
-            <ul class="technology-meta">
-              <li>{{technology.item.ownerEmail? 'Owner:': ''}} {{technology.item.ownerName}}  {{technology.item.ownerEmail? '(': ''}} {{technology.item.ownerEmail}} {{technology.item.ownerEmail? ')': ''}} </li>
-            </ul>
-            <div class="offers-box" ng-if="technology.item.offers">
-                <span class="label label-default technology-client"  ng-repeat="offer in technology.item.offers">{{ offer }}</span>
-            </div>
-            </br>
-            <div class="technologies-box" ng-if="technology.item.technologies">
-                <span class="label label-default technology-recommendation" ng-repeat="tech in technology.split(technology.item.technologies)">{{ tech }}</span>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div class="content container">
       <div class="technology-body">
         <div class="technology-section row">
-          <div class="technology-description col-md-8" ng-if="technology.item.shortDescription ">
-
-              <p><b>Resumo</b></p>
-              <div ng-bind-html="technology.item.shortDescription | nl2p"></div>
-            
-            <div class="technologydescriptionmargin">
-              <p><b>Descrição</b></p>
-              <div ng-bind-html="technology.item.description | nl2p"></div>
-          </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card no-margin">
-              <div class="card-section">
-                <h3 class="card-title ng-binding">Status</h3>
-              </div>
-              <div class="card-section">
-                <form action="" class="form-inline text-center">
-                  <div class="radio technology-rating" ng-repeat="status in technology.statuses" ng-class="{'active' : status.title == technology.item.status}">
-                    <span>
-                      <img ng-src="assets/images/{{ status.image }}" class="technology-rating-image" alt="{{status.title}}">
-                      <span class="technology-rating-text">{{status.title}}</span>
-                    </span>
-                  </div>
-                </form>
-              </div>
-            </div>
+        <div class="col-md-12 ">
+          <div class="pull-right">
+              <a ng-href="{{technology.item.pipedriveLink}}" target="_blank" ng-if="technology.item.pipedriveLink"  class="btn primary  btn-xs"><img src="assets/images/pipedrive.png" title="Link to pipedrive" class="pull-left"/></a>
+              <a ng-href="{{technology.item.website}}" target="_blank" ng-if="technology.item.website" class="btn primary  btn-xs"><img src="assets/images/googledrive.png" title="Link to google drive" class="pull-left"/></a>
+              <button id="idFollowButton" ng-click="technology.followTechnology()" ng-class="technology.setFollowedClass(technology.item.followedByUser)"><span class="glyphicon glyphicon-star-empty"></span> Seguir</button>
+              <a href="#/proposals/{{ technology.item.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.item.name }}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
           </div>
         </div>
-
-        <!-- TECHNOLOGY ENDORSMENTS -->
-        <div id="endorsements" class="technology-section row">
-          <div class="col-md-12" ng-if="app.alertBotton.message.length">
-            <uib-alert type="{{ app.alertBotton.type }}" close="app.closeAlertBotton()">
-              {{ app.alertBotton.message }}
-            </uib-alert>
-          </div>
-          <div class="col-md-12" ng-if="app.alert.message.length">
-            <uib-alert type="{{ app.alert.type }}" close="app.closeAlert()">
-              {{ app.alert.message }}
-            </uib-alert>
-          </div>
-
-          <div class="col-md-6">
-            <div class="card no-margin">
-              <div class="card-section">
-                <h3 class="card-title">Quem participou da proposta {{ technology.item.name }} ?</h3>
-              </div>
-              <div class="card-section">
-                <div class="form-inline">
-                  <div class="input-group typeahead-input">
-                    <input ng-model="technology.endorsed" type="text" class="form-control" placeholder="usuário" aria-describedby="basic-addon2" uib-typeahead="user as user.email for user in technology.getUsersList($viewValue)" typeahead-min-length="3" typeahead-template-url="customTemplate.html" style="width: 230px;">
-                    <span class="input-group-addon">@ciandt.com</span>
-                  </div>
-                  <!--<div ng-show="loadingUsers">
-                    <i class="glyphicon glyphicon-refresh"> Carregando...</i>
-                  </div>
-                  <div ng-show="noResults">
-                    <i class="glyphicon glyphicon-remove"></i> Não foram encontrados registros...
-                  </div>-->
-                  <button ng-click="technology.endorseUser()" class="btn btn-primary"
-                  role="button">Adicionar participante</button>
-                </div>
-              </div>
-              <div class="card-section">
-                <h4>Quem participou:</h4>
-                <div ng-show="!technology.showEndorsementResponse">
-                  <h5>Ainda não tem ninguém aqui. Adicione alguém que participou desta proposta!</h5>
-                </div>
-                <div class="technology-endorsement row" ng-repeat="response in technology.showEndorsementResponse track by $index">
-                  <div class="media col-md-12">
-                    <div class="media-image technology-endorsement-image">
-                      <a href="#/people/{{technology.getUserLogin(response.endorsed.email)}}"><img ng-src={{response.endorsed.photo}} alt=""></a>
-                    </div>
-                    <div class="media-content">
-                      <strong><a href="#/people/{{technology.getUserLogin(response.endorsed.email)}}">{{response.endorsed.name}}</a></strong>
-                      <button type="button" ng-show="technology.showButtonDeleteEndorsed(response.endorsers)" ng-click="technology.deleteEndorsedUser(response, technology.item.name)" class="pull-right btn btn-danger btn-xs" title="Deletar {{ response.endorsed.name }}"><span class="glyphicon glyphicon-trash"></span></button>
-                    </div>
-
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 col-md-offset-3 text-center">
-                  <button class="btn btn-link btn-sm btn-block" ng-click="technology.showAllEndorsements()" ng-show="technology.showEndorsementResponse.length<=5 && technology.completeEndorsements.length>5"><span class="glyphicon glyphicon-plus"></span> Ver todos</button>
-                  <button class="btn btn-link btn-sm btn-block" ng-show="technology.showEndorsementResponse.length>5" ng-click="technology.showResumedEndorsements()"><span class="glyphicon glyphicon-minus"></span> Ver menos</button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      <!-- TECHNOLOGY RECOMMENDATIONS & COMMENTS -->
-        <div id="comments" class="col-md-6">
+        <div class="technology-section row">
+        <div class="col-md-8">
           <div class="card no-margin">
             <div class="card-section">
-              <h3 class="card-title">Comente sobre a proposta {{ technology.item.name }}</h3>
+              <h3 class="card-title ng-binding"><b>{{ technology.item.name }}</b></h3>
             </div>
             <div class="card-section">
-              <div class="row">
-                <form ng-submit="technology.addComment()" class="col-md-12">
-                  <div class="form-group">
-                    <textarea ng-model="technology.comment" id="recommendation-comment-input" class="form-control"  maxlength="2000" style="max-width: 523px;"></textarea>
-                    <span class="help-block">Max: 2000 caracteres</span>
+              <div class="technology-header row">
+                <div class="media-image no-margin">
+                  <img ng-src="{{ technology.item.image }}" data-placeholder-img class="technology-image" >
+                </div>
+                <div class="media-content">
+                  <h4>{{technology.item.client}}</h4>
+                  <ul class="technology-meta">
+                    <li>{{technology.item.ownerEmail? 'Owner:': ''}} {{technology.item.ownerName}}  {{technology.item.ownerEmail? '(': ''}} {{technology.item.ownerEmail}} {{technology.item.ownerEmail? ')': ''}} </li>
+                  </ul>
+                  <div class="offers-box" ng-if="technology.item.tower">
+                    <span class="label label-default technology-tower">{{ technology.item.tower }}</span>
                   </div>
-                  <div class="form-inline text-right">
-                    <div class="checkbox" ng-show="app.showGPlus">
-                      <label>
-                        <input type="checkbox" ng-model="technology.postGooglePlus" ng-checked="technology.share.gplus"> Postar no Google+
-                      </label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Comentar</button>
-                  </div>
-                </form>
+                </br>
+                <div class="offers-box" ng-if="technology.item.offers">
+                  <span class="label label-default technology-offer"  ng-repeat="offer in technology.item.offers">{{ offer }}</span>
+                </div>
+              </br>
+              <div class="technologies-box" ng-if="technology.item.technologies">
+                <span class="label label-default technology-techology" ng-repeat="tech in technology.split(technology.item.technologies)">{{ tech }}</span>
               </div>
             </div>
-            <div class="card-section">
-              <h4>Comentários</h4>
-              <ol class="technology-recommendations">
-                <div ng-repeat="comment in technology.techComments track by $index">
-                  <li class="technology-recommendation media col-md-12">
-                    <div class="media-content">
-                      <p>{{comment.comment}}</p>
-                      <div class="technology-recommendation-meta">
-                        <div class="media-image">
-                          <a ng-href='#/people/{{comment.author.login}}'>
-                            <img class="technology-recommendation-meta-image" ng-src="{{comment.author.photo}}" alt="">
-                          </a>
-                        </div>
-                        <div class="media-content">
-                          <strong>
-                            <a ng-href='#/people/{{comment.author.login}}'>{{comment.author.name}}</a>
-                          </strong>
-                          <button type="button" ng-if="loggedUserInformation.email == comment.author.email" ng-click="technology.deleteComment(comment)" class="pull-right btn btn-danger btn-xs" title="Deletar comentário"><span class="glyphicon glyphicon-trash"></span></button>
-                          <br>
-                          em {{comment.creation | date:"dd/MM/yyyy 'às' H:mm"}}
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                </div>
-              </ol>
+          </div>
+        </div>
+      </div>
+    </div>
 
-              <div class="row">
-                <div class="col-md-6 col-md-offset-3 text-center">
-                  <button class="btn btn-link btn-sm btn-block"><span class="glyphicon glyphicon-plus"></span> Ver mais comentários</button>
-                </div>
+    <div class="col-md-4">
+      <div class="card no-margin">
+        <div class="card-section">
+          <h3 class="card-title ng-binding">Status</h3>
+        </div>
+        <div class="card-section technology-status-margin">
+          <form action="" class="form-inline text-center">
+            <div class="radio technology-rating" ng-repeat="status in technology.statuses" ng-class="{'active' : status.title == technology.item.status}">
+              <span>
+                <img ng-src="assets/images/{{ status.image }}" class="technology-rating-image" alt="{{status.title}}">
+                <span class="technology-rating-text">{{status.title}}</span>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="technology-section row">
+      <div class="col-md-12">
+        <div class="card no-margin">
+          <div class="card-section">
+            <h3 class="card-title">Resumo e descrição da proposta</h3>
+          </div>
+          <div class="card-section">
+            <div class="technology-description" ng-if="technology.item.shortDescription ">
+              <h4>Resumo</h4>
+              <div class="technolgoy-description-item" ng-bind-html="technology.item.shortDescription | nl2p"></div>
+              <div class="technologydescriptionmargin">
+                <h4>Descrição</h4>
+                <div class="technolgoy-description-item" ng-bind-html="technology.item.description | nl2p"></div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- TECHNOLOGY ENDORSMENTS -->
+    <div id="endorsements" class="technology-section row">
+      <div class="col-md-12" ng-if="app.alertBotton.message.length">
+        <uib-alert type="{{ app.alertBotton.type }}" close="app.closeAlertBotton()">
+          {{ app.alertBotton.message }}
+        </uib-alert>
+      </div>
+      <div class="col-md-12" ng-if="app.alert.message.length">
+        <uib-alert type="{{ app.alert.type }}" close="app.closeAlert()">
+          {{ app.alert.message }}
+        </uib-alert>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card no-margin">
+          <div class="card-section">
+            <h3 class="card-title">Quem participou da proposta {{ technology.item.name }} ?</h3>
+          </div>
+          <div class="card-section">
+            <div class="form-inline">
+              <div class="input-group typeahead-input">
+                <input ng-model="technology.endorsed" type="text" class="form-control" placeholder="usuário" aria-describedby="basic-addon2" uib-typeahead="user as user.email for user in technology.getUsersList($viewValue)" typeahead-min-length="3" typeahead-template-url="customTemplate.html" style="width: 230px;">
+                <span class="input-group-addon">@ciandt.com</span>
+              </div>
+              <!--<div ng-show="loadingUsers">
+              <i class="glyphicon glyphicon-refresh"> Carregando...</i>
+            </div>
+            <div ng-show="noResults">
+            <i class="glyphicon glyphicon-remove"></i> Não foram encontrados registros...
+          </div>-->
+          <button ng-click="technology.endorseUser()" class="btn btn-primary"
+          role="button">Adicionar participante</button>
+        </div>
+      </div>
+      <div class="card-section">
+        <h4>Quem participou:</h4>
+        <div ng-show="!technology.showEndorsementResponse">
+          <h5>Ainda não tem ninguém aqui. Adicione alguém que participou desta proposta!</h5>
+        </div>
+        <div class="technology-endorsement row" ng-repeat="response in technology.showEndorsementResponse track by $index">
+          <div class="media col-md-12">
+            <div class="media-image technology-endorsement-image">
+              <a href="#/people/{{technology.getUserLogin(response.endorsed.email)}}"><img ng-src={{response.endorsed.photo}} alt=""></a>
+            </div>
+            <div class="media-content">
+              <strong><a href="#/people/{{technology.getUserLogin(response.endorsed.email)}}">{{response.endorsed.name}}</a></strong>
+              <button type="button" ng-show="technology.showButtonDeleteEndorsed(response.endorsers)" ng-click="technology.deleteEndorsedUser(response, technology.item.name)" class="pull-right btn btn-danger btn-xs" title="Deletar {{ response.endorsed.name }}"><span class="glyphicon glyphicon-trash"></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 text-center">
+            <button class="btn btn-link btn-sm btn-block" ng-click="technology.showAllEndorsements()" ng-show="technology.showEndorsementResponse.length<=5 && technology.completeEndorsements.length>5"><span class="glyphicon glyphicon-plus"></span> Ver todos</button>
+            <button class="btn btn-link btn-sm btn-block" ng-show="technology.showEndorsementResponse.length>5" ng-click="technology.showResumedEndorsements()"><span class="glyphicon glyphicon-minus"></span> Ver menos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- TECHNOLOGY RECOMMENDATIONS & COMMENTS -->
+  <div id="comments" class="col-md-6">
+    <div class="card no-margin">
+      <div class="card-section">
+        <h3 class="card-title">Comente sobre a proposta {{ technology.item.name }}</h3>
+      </div>
+      <div class="card-section">
+        <div class="row">
+          <form ng-submit="technology.addComment()" class="col-md-12">
+            <div class="form-group">
+              <textarea ng-model="technology.comment" id="recommendation-comment-input" class="form-control"  maxlength="2000" style="max-width: 523px;"></textarea>
+              <span class="help-block">Max: 2000 caracteres</span>
+            </div>
+            <div class="form-inline text-right">
+              <div class="checkbox" ng-show="app.showGPlus">
+                <label>
+                  <input type="checkbox" ng-model="technology.postGooglePlus" ng-checked="technology.share.gplus"> Postar no Google+
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary">Comentar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="card-section">
+        <h4>Comentários</h4>
+        <ol class="technology-recommendations">
+          <div ng-repeat="comment in technology.techComments track by $index">
+            <li class="technology-recommendation media col-md-12">
+              <div class="media-content">
+                <p>{{comment.comment}}</p>
+                <div class="technology-recommendation-meta">
+                  <div class="media-image technology-comment-image ">
+                    <a ng-href='#/people/{{comment.author.login}}'>
+                      <img class="technology-recommendation-meta-image" ng-src="{{comment.author.photo}}" alt="">
+                    </a>
+                  </div>
+                  <div class="media-content">
+                    <strong>
+                      <a ng-href='#/people/{{comment.author.login}}'>{{comment.author.name}}</a>
+                    </strong>
+                    <button type="button" ng-if="loggedUserInformation.email == comment.author.email" ng-click="technology.deleteComment(comment)" class="pull-right btn btn-danger btn-xs" title="Deletar comentário"><span class="glyphicon glyphicon-trash"></span></button>
+                    <br>
+                    em {{comment.creation | date:"dd/MM/yyyy 'às' H:mm"}}
+                  </div>
+                </div>
+              </div>
+              <hr>
+            </li>
+          </div>
+        </ol>
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3 text-center">
+            <button class="btn btn-link btn-sm btn-block"><span class="glyphicon glyphicon-plus"></span> Ver mais comentários</button>
           </div>
         </div>
       </div>
