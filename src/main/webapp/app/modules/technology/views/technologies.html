@@ -61,55 +61,55 @@
             </div>
             <h3 class="card-title"><a href="#/proposals/{{ technology.id }}">{{ technology.name }}</a></h3>
             <span>{{ technology.client }}</span>
-            </br>
-            <div class="tower-box">
-              <span class="label label-default technology-tower">{{ technology.tower }}</span>
-            </div>
-            </br>
-            <div class="offers-box">
-                <span class="label label-default technology-offer"  ng-repeat="offer in technology.offers">{{ offer }}</span>
-            </div>
-            </br>
-            <div class="technologies-box">
-                <span class="label label-default technology-techology" ng-repeat="tech in technologies.split(technology.technologies)">{{ tech }}</span>
-            </div>
+          </br>
+          <div class="tower-box">
+            <span class="label label-default technology-tower">{{ technology.tower }}</span>
           </div>
-          <div class="card-content card-section">
-            <div class="technology-description">
-              <p>{{ technology.shortDescription }}</p>
-            </div>
+        </br>
+        <div class="offers-box">
+          <span class="label label-default technology-offer"  ng-repeat="offer in technology.offers">{{ offer }}</span>
+        </div>
+      </br>
+      <div class="technologies-box">
+        <span class="label label-default technology-techology" ng-repeat="tech in technologies.split(technology.technologies)">{{ tech }}</span>
+      </div>
+    </div>
+    <div class="card-content card-section">
+      <div class="technology-description">
+        <p>{{ technology.shortDescription }}</p>
+      </div>
+    </div>
+    <div class="card-actions card-section" ng-if="isUserLogged">
+      <div class="pull-left">
+        <button type="button" ng-click="technologies.followTechnology(technology.id, $event)" ng-class="technologies.setFollowedClass(technology.followedByUser)"><span class="glyphicon glyphicon-star-empty"></span> Seguir</button>
+      </div>
+      <div class="pull-right">
+        <a ng-href="{{technology.pipedriveLink}}" target="_blank" ng-if="technology.pipedriveLink"  class="btn primary  btn-xs"><img src="assets/images/pipedrive.png" title="Link to pipedrive" class="pull-left"/></a>
+        <a ng-href="{{technology.website}}" target="_blank" ng-if="technology.website" class="btn primary  btn-xs"><img src="assets/images/googledrive.png" title="Link to google drive" class="pull-left"/></a>
+        <a ng-href="#/proposals/{{ technology.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.name }}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
+        <button type="button" ng-if="loggedUserInformation.admin" ng-click="technologies.deleteTechnology(technology.id)" class="btn btn-danger btn-xs" title="Deletar {{ technology.name }}"><span class="glyphicon glyphicon-trash"></span></button>
+      </div>
+    </div>
+    <div class="card-meta card-section">
+      <div class="row">
+        <div class="col-md-10">
+          <div class="titleThumbnail">
+            <span class="glyphicon glyphicon-user"></span> {{ technology.endorsersCounter }}
+            <span class="glyphicon glyphicon-list-alt"></span> {{ technology.commentariesCounter }}
           </div>
-          <div class="card-actions card-section" ng-if="isUserLogged">
-            <div class="pull-left">
-              <button type="button" ng-click="technologies.followTechnology(technology.id, $event)" ng-class="technologies.setFollowedClass(technology.followedByUser)"><span class="glyphicon glyphicon-star-empty"></span> Seguir</button>
-            </div>
-            <div class="pull-right">
-              <a ng-href="{{technology.pipedriveLink}}" target="_blank" ng-if="technology.pipedriveLink"  class="btn primary  btn-xs"><img src="assets/images/pipedrive.png" title="Link to pipedrive" class="pull-left"/></a>
-              <a ng-href="{{technology.website}}" target="_blank" ng-if="technology.website" class="btn primary  btn-xs"><img src="assets/images/googledrive.png" title="Link to google drive" class="pull-left"/></a>
-              <a ng-href="#/proposals/{{ technology.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.name }}"><span class="glyphicon glyphicon-pencil"></span> Editar</a>
-              <button type="button" ng-if="loggedUserInformation.admin" ng-click="technologies.deleteTechnology(technology.id)" class="btn btn-danger btn-xs" title="Deletar {{ technology.name }}"><span class="glyphicon glyphicon-trash"></span></button>
-            </div>
-          </div>
-          <div class="card-meta card-section">
-            <div class="row">
-              <div class="col-md-10">
-                <div class="titleThumbnail">
-                  <span class="glyphicon glyphicon-user"></span> {{ technology.endorsersCounter }}
-                  <span class="glyphicon glyphicon-list-alt"></span> {{ technology.commentariesCounter }}
-                </div>
-                <small class="technology-last-activity">
-                  <span class="lastActivityLabel">Data de Criação:</span>
-                  <time>{{ technology.creationDate | date:"dd/MM/yyyy H:mm" }}</time>
-                </small>
-              </div>
-            <div>
-            <img ng-src="assets/images/{{technologies.getImageStatus(technology.status)}}" class="technology-status"  data-toggle="tooltip" data-placement="bottom" title='Status: {{technology.status}}'>
-          </div>
+          <small class="technology-last-activity">
+            <span class="lastActivityLabel">Data de Criação:</span>
+            <time>{{ technology.creationDate | date:"dd/MM/yyyy H:mm" }}</time>
+          </small>
+        </div>
+        <div>
+          <img ng-src="assets/images/{{technologies.getImageStatus(technology.status)}}" class="technology-status"  data-toggle="tooltip" data-placement="bottom" title='Status: {{technology.status}}'>
         </div>
       </div>
     </div>
-    <div class="row" ng-if="!technologies.items.length">
-      Nenhuma proposta encontrada.
-    </div>
   </div>
+  <div class="row" ng-if="!technologies.items.length">
+    Nenhuma proposta encontrada.
+  </div>
+</div>
 </div>

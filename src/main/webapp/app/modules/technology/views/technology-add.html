@@ -70,7 +70,7 @@
                 </div>
                 <div class="form-group col-md-6" ng-show="loggedUserInformation.admin">
                   <label for="technology-status">Selecione o status da proposta</label> </br>
-                  <div class="btn-group" uib-dropdown ng-style="{'background-color': technology.backgroundColor}">
+                  <div class="btn-group" uib-dropdown ng-class="technology.pipedriveLink ? 'selected-pipedrive' : ''">
                     <button id="single-button" type="button" ng-disabled="technology.pipedriveLink" class="btn btn-default" uib-dropdown-toggle>
                       {{ technology.selectedStatus==null ? 'Status Proposta' : technology.selectedStatus }}
                       <span class="caret"></span>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="form-group col-md-6" >
                   <label for="technology-status">Selecione a torre</label> </br>
-                  <div class="btn-group" uib-dropdown ng-style="{'background-color': technology.backgroundColor}">
+                  <div class="btn-group" uib-dropdown ng-class="technology.pipedriveLink ? 'selected-pipedrive' : ''">
                     <button id="single-button" type="button" ng-disabled="technology.pipedriveLink" class="btn btn-default" uib-dropdown-toggle>
                       {{ technology.selectedTower==null ? 'Selecione a Torre' : technology.selectedTower }}
                       <span class="caret"></span>

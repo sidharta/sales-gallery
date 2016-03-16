@@ -1,4 +1,4 @@
-$technology-spacing: 20px;
+$technology-spacing: 10px;
 
 .technology-header {
   overflow: hidden;
@@ -6,13 +6,21 @@ $technology-spacing: 20px;
 
   .technology-image {
     float: left;
-    margin: 0 $technology-spacing 0 0;
+    margin: 0px 20px 0px 20px;
   }
 }
 
 .typeahead-input ul{
   height:300px;
   overflow:auto;
+}
+
+.technology-status-margin{
+  margin-bottom: 32px;
+}
+
+.technolgoy-description-item{
+  margin-left: 10px;
 }
 
 .technology-image {
@@ -22,6 +30,7 @@ $technology-spacing: 20px;
   margin: 0 auto ($technology-spacing / 2);
   display: block;
   background-color: #fff;
+  margin: 0 auto 10px;
 
   &,
   & img {
@@ -136,6 +145,24 @@ $technology-spacing: 20px;
   & img {
     width: 50px;
     height: 50px;
+  }
+}
+
+.selected-pipedrive{
+  background-color : #ccc;
+}
+
+.technology-comment-image {
+  border: 1px solid #ddd;
+  overflow: hidden;
+  display: block;
+  border-radius: 100%;
+  background-color: #fff;
+
+  &,
+  & img {
+    width: 30px;
+    height: 30px;
   }
 }
 
