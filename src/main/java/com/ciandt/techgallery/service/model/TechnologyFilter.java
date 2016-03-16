@@ -1,7 +1,8 @@
 package com.ciandt.techgallery.service.model;
 
+import java.util.List;
+
 import com.ciandt.techgallery.service.enums.DateFilterEnum;
-import com.ciandt.techgallery.service.enums.OfferEnums;
 
 /**
  * Response with all technology entities.
@@ -30,7 +31,10 @@ public class TechnologyFilter implements Response {
   private String customerNameContains;
 
   /** string for search in offer. */
-  private String offerIs;
+  private List<String> offersIs;
+  
+  /** string for search in tower. */
+  private String towerIs;
 
   /** string for search in technologies. */
   private String technologiesContains;
@@ -42,12 +46,12 @@ public class TechnologyFilter implements Response {
     this.customerNameContains = value;
   }
 
-  public String getOfferIs() {
-    return offerIs;
+  public List<String> getOffersIs() {
+    return offersIs;
   }
 
-  public void setOfferIs(String value) {
-    this.offerIs = value;
+  public void setOffersIs(List<String> value) {
+    this.offersIs = value;
   }
 
   public String getTechnologiesContains() {
@@ -113,7 +117,7 @@ public class TechnologyFilter implements Response {
    *          for sort the result
    */
   public TechnologyFilter(String titleContains, String shortDescriptionContains, String statusIs,
-      Integer dateFilter, String orderOptionIs, String customerNameContains, String offerIs, String technologiesContains) {
+      Integer dateFilter, String orderOptionIs, String customerNameContains, List<String> offersIs, String towerIs, String technologiesContains) {
     this.titleContains = titleContains;
     this.shortDescriptionContains = shortDescriptionContains;
     this.statusIs = statusIs;
@@ -122,7 +126,14 @@ public class TechnologyFilter implements Response {
       this.dateFilter = DateFilterEnum.values()[dateFilter];
     }
     this.customerNameContains = customerNameContains;
-    this.offerIs = offerIs;
+    this.offersIs = offersIs;
+    this.towerIs = towerIs;
     this.technologiesContains = technologiesContains;
   }
+public String getTowerIs() {
+	return towerIs;
+}
+public void setTowerIs(String towerIs) {
+	this.towerIs = towerIs;
+}
 }

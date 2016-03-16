@@ -88,7 +88,7 @@ public class TechnologyCommentEndpoint {
    */
   @ApiMethod(name = "deleteComment", path = "technology-comment-delete", httpMethod = "post")
   public TechnologyComment deleteComment(@Named("commentId") Long commentId, User user)
-      throws InternalServerErrorException, BadRequestException, NotFoundException, OAuthRequestException {
+      throws InternalServerErrorException, BadRequestException, NotFoundException, OAuthRequestException {	  
     return service.deleteComment(commentId, user);
   }
 }

@@ -8,13 +8,17 @@
             <label for="technology-filter" tabindex="0" tooltip-placement="bottom" uib-tooltip="Filtrar por"><span class="glyphicon glyphicon-filter"></span></label>
             <select ng-disabled="technologies.loading" ng-model="technologies.statusFilter" ng-change="technologies.updateFilters()" class="form-control" id="technology-filter">
               <option value="">Todos</option>
-              <option value="Proposta">Proposta</option>
-              <option value="Perdida">Perdida</option>
-              <option value="Ganha">Ganha</option>
+              <option value="Proposta">Open</option>
+              <option value="Perdida">Lost</option>
+              <option value="Ganha">Won</option>
             </select>
             <select ng-disabled="technologies.loading" id="technology-filter" ng-model="technologies.offerFilter" ng-change="technologies.updateFilters()" class="form-control">
               <option value="">Todos</option>
               <option ng-repeat="offer in technologies.offers" value="{{offer}}">{{offer}}</option>
+            </select>
+            <select ng-disabled="technologies.loading" id="technology-filter" ng-model="technologies.towerFilter" ng-change="technologies.updateFilters()" class="form-control">
+              <option value="">Todos</option>
+              <option ng-repeat="tower in technologies.towers" value="{{tower}}">{{tower}}</option>
             </select>
           </div>
           <div class="form-group">
@@ -57,11 +61,17 @@
             </div>
             <h3 class="card-title"><a href="#/proposals/{{ technology.id }}">{{ technology.name }}</a></h3>
             <span>{{ technology.client }}</span>
-            <div>
-                <span class="label label-default technology-client">{{ technology.offer }}</span>
+            </br>
+            <div class="tower-box">
+              <span class="label label-default technology-tower">{{ technology.tower }}</span>
             </div>
+            </br>
+            <div class="offers-box">
+                <span class="label label-default technology-offer"  ng-repeat="offer in technology.offers">{{ offer }}</span>
+            </div>
+            </br>
             <div class="technologies-box">
-                <span class="label label-default technology-recommendation" ng-repeat="tech in technologies.split(technology.technologies)">{{ tech }}</span>
+                <span class="label label-default technology-techology" ng-repeat="tech in technologies.split(technology.technologies)">{{ tech }}</span>
             </div>
           </div>
           <div class="card-content card-section">

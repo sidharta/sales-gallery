@@ -11,10 +11,10 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
    * @type {Boolean}
    */
   this.loading = false;
-  context.loadedByPipedrive = false;
   context.backgroundColor = '#FFF';
 
-  this.regexPipedrive = "^(http(s)?:\\/\\/(citsoftware.pipedrive.com\\/deal\\/)*\\d+)";
+
+  this.regexPipedrive = "^(http(s)?:\\/\\/(\\w+.pipedrive.com\\/deal\\/)*\\d+)";
   this.regexGoogledrive = "(http(s)?:\\/\\/(drive.google.com\\/open\\?id=)\\S+)"
 
 
@@ -36,6 +36,10 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
 
   TechnologyService.getStatus().then(function(data){
     context.dropDownStatus = data;
+  });
+
+  TechnologyService.getTowers().then(function(data){
+    context.dropDownTowers = data;
   });
 
   TechnologyService.getOffers().then(function(data){
@@ -100,7 +104,8 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
       document.getElementById('list').innerHTML = ['<img src="', context.image,'" title="', context.name, '" />'].join('');
     }
     context.selectedStatus = technology.status;
-    context.selectedOffer = technology.offer;
+    context.selectedTower = technology.tower;
+    context.offers = technology.offers;
     context.creationDate = technology.creationDate;
     context.pipedriveLink = technology.pipedriveLink;
     context.hasPipedriveLink = !!context.pipedriveLink;
@@ -110,9 +115,9 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.selectedStatus = selected;
   };
 
-  this.selectOffer = function(selected){
-    context.selectedOffer = selected;
-  };
+  this.selectTower = function(selected){
+    context.selectedTower = selected;
+  }
 
   $scope.handleFileSelect = function(file) {
       var files = file.files;
@@ -155,36 +160,41 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   }
 
   this.onLostFocus = function(link){
-      if (link == undefined || link == '') {
-        context.loadedByPipedrive = false;
-        context.backgroundColor = '#FFF';
-        context.name = '';
-        context.client = '';
-        context.ownerEmail = '';
-        context.ownerName = '';
-        context.pipedriveLink = '';
-        context.selectedStatus = null;
-        context.selectedOffer = null;
-        return;
-      }
+    var self = this;
+
+    if (link == undefined || link == '') {
+      self.clearPipedrive();
+      return;
+    }
+
     var s = link.split('/');
     var id = s[4];
 
-
     TechnologyService.getPipedriveDeal(id).then(function(data){
-      context.loadedByPipedrive = true;
-      context.backgroundColor = '#EEE';
-
-      context.name = data.name;
-      context.selectedStatus  = data.status;
-      context.selectedOffer = data.offer;
-      context.client = data.client;
-      context.ownerEmail = data.ownerEmail;
-      context.ownerName = data.ownerName
-
-
+      if( data.name ) {
+        context.backgroundColor = '#EEE';
+        context.name = data.name;
+        context.selectedStatus  = data.status;
+        context.selectedTower = data.tower;
+        context.offers = data.offers;
+        context.client = data.client;
+        context.ownerEmail = data.ownerEmail;
+        context.ownerName = data.ownerName
+      } else {
+        self.clearPipedrive();
+      }
     });
 
-
   }
+  this.clearPipedrive = function() {
+    context.backgroundColor = '#FFF';
+    context.name = '';
+    context.client = '';
+    context.ownerEmail = '';
+    context.ownerName = '';
+    context.pipedriveLink = '';
+    context.selectedStatus = null;
+    context.selectedTower = null;
+    context.offers = null;
+  };
 }

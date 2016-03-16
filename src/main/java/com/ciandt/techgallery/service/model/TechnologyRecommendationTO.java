@@ -12,64 +12,64 @@ import com.ciandt.techgallery.persistence.model.TechnologyComment;
  */
 public class TechnologyRecommendationTO implements Response {
 
-  private Long id;
+	private Long id;
 
-  private Boolean score;
+	private Boolean score;
 
-  private TechnologyComment comment;
+	private TechnologyComment comment;
 
-  private Boolean active;
+	private Boolean active;
 
-  private TechGalleryUser recommender;
+	private TechGalleryUser recommender;
 
-  private Technology technology;
+	private Technology technology;
 
-  public Boolean getScore() {
-    return score;
-  }
+	public Boolean getScore() {
+		return score;
+	}
 
-  public void setScore(Boolean score) {
-    this.score = score;
-  }
+	public void setScore(Boolean score) {
+		this.score = score;
+	}
 
-  public TechnologyComment getComment() {
-    return comment;
-  }
+	public TechnologyComment getComment() {
+		return comment;
+	}
 
-  public void setComment(TechnologyComment comment) {
-    this.comment = comment;
-  }
+	public void setComment(TechnologyComment comment) {
+		this.comment = comment;
+	}
 
-  public Boolean getActive() {
-    return active;
-  }
+	public Boolean getActive() {
+		return active;
+	}
 
-  public void setActive(Boolean active) {
-    this.active = active;
-  }
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
-  public TechGalleryUser getRecommender() {
-    return recommender;
-  }
+	public TechGalleryUser getRecommender() {
+		return recommender;
+	}
 
-  public void setRecommender(TechGalleryUser recommender) {
-    this.recommender = recommender;
-  }
+	public void setRecommender(TechGalleryUser recommender) {
+		this.recommender = recommender;
+	}
 
-  public Technology getTechnology() {
-    return technology;
-  }
+	public Technology getTechnology() {
+		return technology;
+	}
 
-  public void setTechnology(Technology technology) {
-    this.technology = technology;
-  }
+	public void setTechnology(Technology technology) {
+		this.technology = technology;
+	}
 
-  public Long getId() {
-    return id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 }

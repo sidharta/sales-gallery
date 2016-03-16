@@ -1,7 +1,11 @@
 package com.ciandt.techgallery.utils.pipedrive;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import com.ciandt.techgallery.service.model.pipedrive.webhook.Deal;
@@ -16,6 +20,13 @@ public class PipedriveUtil {
 	public static final int STAGE_PROPOSAL = 6;
 	public static final int STAGE_OPPORTUNITY = 5;
 	public static final String PROPERTIES_FILE = "pipedrive.properties";
+	
+	@SuppressWarnings("serial")
+	private static final Map<String, String> PRODUCT_MAP = new HashMap<String, String>(){{
+		put("6", "Google Cloud");
+		put("7", "Legacy Optimization");
+		put("8", "Google Apps");
+	}};
 
 	public static Properties getPropertiesFile() throws IOException {
 		Properties properties = new Properties();
@@ -47,8 +58,11 @@ public class PipedriveUtil {
 	}
 
 	public static boolean hasPropertiesChanges(Deal current, Deal previous) {
-		return !current.getOrgName().equals(previous.getOrgName()) || !current.getTitle().equals(previous.getTitle())
-				|| !current.getStatus().equals(previous.getStatus());
+		return !current.getOrgName().equals(previous.getOrgName()) || 
+				!current.getTitle().equals(previous.getTitle()) || 
+				!current.getStatus().equals(previous.getStatus()) ||
+				!current.getTower().equals(previous.getTower()) ||
+				!current.getProducts().equals(previous.getProducts());
 	}
 
 	public static boolean isFromStage(Deal current, Deal previous) {
@@ -65,6 +79,15 @@ public class PipedriveUtil {
 
 	public static boolean isFromTower(Deal current) {
 		return current.getTower().equals(Tower.ResourcesAndLogistics);
+	}
+
+	public static List<String> getProducts(String products) {
+		List<String> productsList = new ArrayList<>();
+		for (String productId : products.split(",")) {
+			productsList.add(PRODUCT_MAP.get(productId));
+		}
+		
+		return productsList;
 	}
 
 }

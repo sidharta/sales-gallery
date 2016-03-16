@@ -14,8 +14,8 @@ public class Deal {
 	@SerializedName("2584f6868b4876c0a1784795075d865ed3be0abe")
 	private Tower tower;
 	
-	@SerializedName("ad046fd66ed1e5a0c5052ccaa85b9909a3f9c3cd")
-	private Product product;
+	@SerializedName("15303ba9a1ebf014e09d61eaabab35a9ccf911d2")
+	private String products;
 
 	public Long getId() {
 		return id;
@@ -73,11 +73,11 @@ public class Deal {
 		this.status = status;
 	}
 
-	public Product getProduct() {
-		return product;
+	public String getProducts() {
+		return products;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setProducts(String products) {
+		this.products = products;
 	}
 }

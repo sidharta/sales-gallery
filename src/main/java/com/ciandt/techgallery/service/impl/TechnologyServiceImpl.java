@@ -20,7 +20,6 @@ import com.ciandt.techgallery.persistence.model.TechGalleryUser;
 import com.ciandt.techgallery.persistence.model.Technology;
 import com.ciandt.techgallery.service.TechnologyService;
 import com.ciandt.techgallery.service.UserServiceTG;
-import com.ciandt.techgallery.service.enums.OfferEnums;
 import com.ciandt.techgallery.service.enums.StatusEnums;
 import com.ciandt.techgallery.service.enums.TechnologyOrderOptionEnum;
 import com.ciandt.techgallery.service.enums.ValidationMessageEnums;
@@ -151,7 +150,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_NAME_CANNOT_BLANK.message());
 		} else if (StringUtils.isBlank(technology.getClient())) {
 			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_CLIENT_CANNOT_BLANK.message());
-		} else if (StringUtils.isBlank(technology.getOffer())) {
+		} else if (technology.getOffers() == null || technology.getOffers().isEmpty()) {
 			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_OFFER_CANNOT_BLANK.message());
 		} else if (StringUtils.isBlank(technology.getShortDescription())) {
 			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_SHORT_DESCRIPTION_BLANK.message());
@@ -224,7 +223,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 		completeList = filterByLastActivityDate(techFilter, completeList);
 
 		List<Technology> filteredList = new ArrayList<>();
-		if (StringUtils.isBlank(techFilter.getTitleContains()) && techFilter.getStatusIs() == null && techFilter.getOfferIs() == null) {
+		if (StringUtils.isBlank(techFilter.getTitleContains()) && techFilter.getStatusIs() == null && techFilter.getOffersIs() == null && StringUtils.isBlank(techFilter.getTowerIs())) {
 			filteredList.addAll(completeList);
 		} else {
 			verifyFilters(techFilter, completeList, filteredList);
@@ -294,13 +293,21 @@ public class TechnologyServiceImpl implements TechnologyService {
 					} else {
 						continue;
 					}
-				} else if (techFilter.getOfferIs() != null) {
+				} else if (techFilter.getOffersIs() != null) {
 					if (verifyOfferFilter(techFilter, technology)) {
 						filteredList.add(technology);
 					} else {
 						continue;
 					}
-				} else {
+				} else if (StringUtils.isNotBlank(techFilter.getTowerIs())){
+					if (verifyTowerFilter(techFilter, technology)){
+						filteredList.add(technology);
+					}else{
+						continue;
+					}
+				}
+				
+				else {
 					filteredList.add(technology);
 					continue;
 				}
@@ -308,6 +315,9 @@ public class TechnologyServiceImpl implements TechnologyService {
 				filteredList.add(technology);
 				continue;
 			}else if (verifyOfferFilter(techFilter, technology) && techFilter.getTitleContains() == null){
+				filteredList.add(technology);
+				continue;
+			}else if (verifyTowerFilter(techFilter, technology) && techFilter.getTitleContains() == null){
 				filteredList.add(technology);
 				continue;
 			}
@@ -325,15 +335,31 @@ public class TechnologyServiceImpl implements TechnologyService {
 		}
 		return false;
 	}
+	
+	private boolean verifyTowerFilter(TechnologyFilter techFilter, Technology technology) {
+		if ((technology.getTower() == null || technology.getTower().isEmpty()) && (StringUtils.isBlank(techFilter.getTowerIs()))) {
+			return true;
+		} else if (technology.getTower() != null && StringUtils.isNotBlank(techFilter.getTowerIs())){
+			if (technology.getTower().toLowerCase().equals(techFilter.getTowerIs().toLowerCase()) || 
+					techFilter.getTowerIs().toLowerCase().equals(StatusEnums.ANY.message().toLowerCase())){
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private boolean verifyOfferFilter(TechnologyFilter techFilter, Technology technology) {
-		if (technology.getOffer() == null && techFilter.getOfferIs() == "") {
+		if ((technology.getOffers() == null || technology.getOffers().isEmpty()) && (techFilter.getOffersIs() == null || techFilter.getOffersIs().isEmpty())) {
 			return true;
-		} else if (technology.getOffer() != null && techFilter.getOfferIs() != null
-				&& (technology.getOffer().toLowerCase().equals(techFilter.getOfferIs().toLowerCase())
-				   || techFilter.getOfferIs().toLowerCase()
-							.equals("Todos"))) {
-			return true;
+		} else if (technology.getOffers() != null && techFilter.getOffersIs() != null){
+			for(String offer : technology.getOffers()){
+				for(String offerIs : techFilter.getOffersIs()){
+					if (offer.toLowerCase().equals(offerIs.toLowerCase()) || offerIs.toLowerCase().equals(StatusEnums.ANY.message().toLowerCase())){
+						return true;
+					}
+				}
+			}
+			
 		}
 		return false;
 	}
@@ -346,9 +372,27 @@ public class TechnologyServiceImpl implements TechnologyService {
 				|| checkCustomerName(techFilter, technology)
 				|| checkDescription(techFilter, technology)
 				|| checkShortDescription(techFilter, technology)
+				|| checkOffer(techFilter, technology)
+				|| checkTower(techFilter, technology)
 				|| checkTechnologies(techFilter, technology)) {
 			return true;
 		}
+		return false;
+	}
+	
+	private boolean checkTower(TechnologyFilter techFilter, Technology technology){
+		return !StringUtils.isEmpty(technology.getTower()) && technology.getTower().equals(techFilter.getTowerIs());
+	}
+	
+	private boolean checkOffer(TechnologyFilter techFilter, Technology technology){
+		if (technology.getOffers() == null)	 return false;		
+		 for (String offer : technology.getOffers()){
+			 for (String offerIs : techFilter.getOffersIs()){
+				 if (offer.equals(offerIs)){
+					 return true;
+				 }
+			 }
+		 }
 		return false;
 	}
 

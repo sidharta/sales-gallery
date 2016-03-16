@@ -1,8 +1,8 @@
 package com.ciandt.techgallery.service.model;
 
-import com.ciandt.techgallery.persistence.model.Technology;
-
 import java.util.List;
+
+import com.ciandt.techgallery.persistence.model.Technology;
 
 /**
  * Response with all technology entities.

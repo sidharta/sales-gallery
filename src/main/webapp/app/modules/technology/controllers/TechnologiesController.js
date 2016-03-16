@@ -23,12 +23,9 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
     $scope.$apply();
   })
 
-  this.split = function(string) {
-    var array = [];
-    if (string != undefined)
-       array = string.split(',');
-    return array;
-  }
+    this.split = function(string) {
+      return TechnologyService.split(string);
+    }
 
   /**
    * List of technologies
@@ -53,6 +50,7 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
 
 
   this.statusFilter = null;
+  this.towerFilter = null;
   this.orderFilter = null;
   this.lastActivityDateFilter = null;
 
@@ -61,13 +59,16 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
     if(context.statusFilter === ''){
       context.statusFilter = null;
     }
+    if (context.towerFilter === ''){
+      context.towerFilter = null;
+    }
     if(context.lastActivityDateFilter === ''){
       context.lastActivityDateFilter = null;
     }
     if(context.offerFilter === ''){
       context.offerFilter = null;
     }
-    TechnologyService.setContentFilters(context.statusFilter, context.orderFilter, context.lastActivityDateFilter, context.offerFilter);
+    TechnologyService.setContentFilters(context.statusFilter, context.orderFilter, context.lastActivityDateFilter, context.offerFilter, context.towerFilter);
    }
 
   /**
@@ -76,6 +77,7 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
    */
   this.resetFilters = function () {
     context.statusFilter = null;
+    context.towerFilter = null;
     context.orderFilter = null;
     context.offerFilter = null;
     context.lastActivityDateFilter = null;
@@ -125,6 +127,10 @@ module.exports = function ($scope, $rootScope, AppService, TechnologyService, Us
 
    TechnologyService.getOffers().then(function(data){
      context.offers = data;
+   });
+
+   TechnologyService.getTowers().then(function(data){
+     context.towers = data;
    });
 
    this.getImageStatus = function(status){

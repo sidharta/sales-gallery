@@ -31,9 +31,9 @@ public class PipedriveWebhookServlet extends HttpServlet {
 		if (isValid(req)) {
 			String jsonString = convertStreamToString(req.getInputStream());
 			logger.info(jsonString);
-			
+
 			WebhookResponse webhookResponse = PipedriveUtil.getJsonFromWebhook(jsonString);
-			
+
 			if (PipedriveUtil.shouldProcess(webhookResponse)) {
 				try {
 					PipedriveServiceImpl.getInstance().saveFromWebhook(webhookResponse.getCurrent());
@@ -47,7 +47,7 @@ public class PipedriveWebhookServlet extends HttpServlet {
 					resp.sendError(500);
 				}
 			}
-			
+
 			resp.getWriter().append(jsonString);
 		} else {
 			resp.sendError(403);
@@ -60,13 +60,12 @@ public class PipedriveWebhookServlet extends HttpServlet {
 			String base64Credentials = authorization.substring(BASIC.length()).trim();
 			String credentials = new String(Base64.decodeBase64(base64Credentials), Charset.forName(UTF_8));
 			final String[] values = credentials.split(":", 2);
-			
+
 			return PipedriveUtil.checkWebhookCredentials(values);
 		}
 
 		return false;
 	}
-
 
 	@SuppressWarnings("resource")
 	static String convertStreamToString(InputStream is) {

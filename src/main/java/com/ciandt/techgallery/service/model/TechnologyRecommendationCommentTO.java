@@ -6,31 +6,31 @@ import com.ciandt.techgallery.persistence.model.TechnologyRecommendation;
 
 public class TechnologyRecommendationCommentTO implements Response {
 
-  private TechnologyRecommendation recommendation;
-  private TechnologyComment comment;
-  private Technology technology;
+	private TechnologyRecommendation recommendation;
+	private TechnologyComment comment;
+	private Technology technology;
 
-  public TechnologyRecommendation getRecommendation() {
-    return recommendation;
-  }
+	public TechnologyRecommendation getRecommendation() {
+		return recommendation;
+	}
 
-  public void setRecommendation(TechnologyRecommendation recommendation) {
-    this.recommendation = recommendation;
-  }
+	public void setRecommendation(TechnologyRecommendation recommendation) {
+		this.recommendation = recommendation;
+	}
 
-  public TechnologyComment getComment() {
-    return comment;
-  }
+	public TechnologyComment getComment() {
+		return comment;
+	}
 
-  public void setComment(TechnologyComment comment) {
-    this.comment = comment;
-  }
+	public void setComment(TechnologyComment comment) {
+		this.comment = comment;
+	}
 
-  public Technology getTechnology() {
-    return technology;
-  }
+	public Technology getTechnology() {
+		return technology;
+	}
 
-  public void setTechnology(Technology technology) {
-    this.technology = technology;
-  }
+	public void setTechnology(Technology technology) {
+		this.technology = technology;
+	}
 }
