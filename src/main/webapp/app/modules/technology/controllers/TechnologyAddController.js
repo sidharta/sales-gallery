@@ -180,6 +180,9 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
         context.client = data.client;
         context.ownerEmail = data.ownerEmail;
         context.ownerName = data.ownerName
+      } else if (data.error){
+        AppService.setAlert(data.message, 'error');
+        self.clearPipedrive();
       } else {
         self.clearPipedrive();
       }

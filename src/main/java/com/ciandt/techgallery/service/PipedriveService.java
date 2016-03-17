@@ -22,7 +22,7 @@ public interface PipedriveService {
 	 * @throws InternalServerErrorException
 	 *             in case something goes wrong
 	 */
-	DealTO getPipedriveDeal(String id, User user) throws Exception;
+	DealTO getPipedriveDeal(String id, User user) throws IOException, NotFoundException, InternalServerErrorException, BadRequestException;
 
 	/**
 	 * Persist deal from webhook.
