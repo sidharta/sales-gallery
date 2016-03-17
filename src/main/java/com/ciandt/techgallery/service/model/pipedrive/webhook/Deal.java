@@ -15,7 +15,7 @@ public class Deal {
 	@SerializedName("7b4743f02e683528a10ec09ed249726b5adcf6ad")
 	private TowerEnum tower;
 	
-	@SerializedName("15303ba9a1ebf014e09d61eaabab35a9ccf911d2")
+	@SerializedName("e16df82dc89790231a2169c6ee3d4b79a2230036")
 	private String products;
 
 	public Long getId() {
