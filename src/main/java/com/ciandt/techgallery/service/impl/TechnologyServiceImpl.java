@@ -150,8 +150,6 @@ public class TechnologyServiceImpl implements TechnologyService {
 			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_NAME_CANNOT_BLANK.message());
 		} else if (StringUtils.isBlank(technology.getClient())) {
 			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_CLIENT_CANNOT_BLANK.message());
-		} else if (technology.getOffers() == null || technology.getOffers().isEmpty()) {
-			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_OFFER_CANNOT_BLANK.message());
 		} else if (StringUtils.isBlank(technology.getShortDescription())) {
 			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_SHORT_DESCRIPTION_BLANK.message());
 		} else if (StringUtils.isBlank(technology.getDescription())) {
