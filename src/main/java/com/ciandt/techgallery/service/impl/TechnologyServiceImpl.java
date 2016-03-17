@@ -372,8 +372,8 @@ public class TechnologyServiceImpl implements TechnologyService {
 				|| checkCustomerName(techFilter, technology)
 				|| checkDescription(techFilter, technology)
 				|| checkShortDescription(techFilter, technology)
-				|| checkOffer(techFilter, technology)
 				|| checkTower(techFilter, technology)
+				|| checkOffer(techFilter, technology)
 				|| checkTechnologies(techFilter, technology)) {
 			return true;
 		}
@@ -381,20 +381,20 @@ public class TechnologyServiceImpl implements TechnologyService {
 	}
 	
 	private boolean checkTower(TechnologyFilter techFilter, Technology technology){
-		return !StringUtils.isEmpty(technology.getTower()) && technology.getTower().equals(techFilter.getTowerIs());
+		return !StringUtils.isEmpty(technology.getTower()) && technology.getTower().toLowerCase().contains(techFilter.getTitleContains().toLowerCase());
 	}
-	
+		
 	private boolean checkOffer(TechnologyFilter techFilter, Technology technology){
 		if (technology.getOffers() == null)	 return false;		
-		 for (String offer : technology.getOffers()){
-			 for (String offerIs : techFilter.getOffersIs()){
-				 if (offer.equals(offerIs)){
-					 return true;
-				 }
+		 for (String offer : technology.getOffers()){	 
+			if (offer.toLowerCase().contains(techFilter.getTitleContains().toLowerCase())) {
+				return true;
 			 }
+			 
 		 }
 		return false;
 	}
+	
 
 	private boolean checkTechnologies(TechnologyFilter techFilter, Technology technology) {
 		return technology.getTechnologies() != null && technology.getTechnologies().toLowerCase()
