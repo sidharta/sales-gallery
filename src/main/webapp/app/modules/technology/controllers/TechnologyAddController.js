@@ -173,13 +173,16 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     TechnologyService.getPipedriveDeal(id).then(function(data){
       if( data.name ) {
         context.backgroundColor = '#EEE';
-        context.name = data.name;
+        context.name = data.name;s
         context.selectedStatus  = data.status;
         context.selectedTower = data.tower;
         context.offers = data.offers;
         context.client = data.client;
         context.ownerEmail = data.ownerEmail;
         context.ownerName = data.ownerName
+      } else if (data.error){
+        AppService.setAlert(data.message, 'error');
+        self.clearPipedrive();
       } else {
         self.clearPipedrive();
       }

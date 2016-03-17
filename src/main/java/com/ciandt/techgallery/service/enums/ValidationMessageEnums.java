@@ -42,7 +42,8 @@ public enum ValidationMessageEnums {
     // Message for Post
   NOT_PERMITTED_BY_USER("The user choosed to not post on your Google+."),
   //pipedrive
-  PIPEDRIVE_API_KEY_NOT_FOUND("Pipedrive API key not found");
+  PIPEDRIVE_API_KEY_NOT_FOUND("Pipedrive API key not found"),
+  PIPEDRIVE_DEAL_NOT_FOUND("Deal not found in Pipedrive");
  	
 
   private String message;

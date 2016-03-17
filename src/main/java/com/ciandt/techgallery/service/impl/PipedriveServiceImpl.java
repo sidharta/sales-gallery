@@ -27,6 +27,9 @@ import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.HttpResponse;
+import com.google.api.client.http.HttpResponseException;
+import com.google.api.client.http.HttpStatusCodes;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -47,7 +50,7 @@ public class PipedriveServiceImpl implements PipedriveService {
 
 	static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	static final JsonFactory JSON_FACTORY = new JacksonFactory();
-	
+
 	private TechnologyService technologyService = TechnologyServiceImpl.getInstance();
 
 	private PipedriveServiceImpl() {
@@ -77,7 +80,8 @@ public class PipedriveServiceImpl implements PipedriveService {
 	}
 
 	@Override
-	public DealTO getPipedriveDeal(String id, User user) throws Exception {
+	public DealTO getPipedriveDeal(String id, User user)
+			throws IOException, NotFoundException, InternalServerErrorException, BadRequestException {
 		validateUser(user);
 
 		HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
@@ -90,8 +94,13 @@ public class PipedriveServiceImpl implements PipedriveService {
 		HttpRequest request = requestFactory.buildGetRequest(url);
 		request.getHeaders().setContentType("application/json");
 
-		String json = request.execute().parseAsString();
-		return parseJsonToDeal(json);
+		try {
+			HttpResponse response = request.execute();
+			String json = response.parseAsString();
+			return parseJsonToDeal(json);
+		} catch (HttpResponseException e) {
+			throw new NotFoundException(ValidationMessageEnums.PIPEDRIVE_DEAL_NOT_FOUND.message());
+		}
 	}
 
 	private DealTO parseJsonToDeal(String json) {
@@ -111,16 +120,16 @@ public class PipedriveServiceImpl implements PipedriveService {
 		deal.setClient(org_id.getString("name"));
 
 		String offerIds = data.getString(PIPEDRIVE_PRODUCT_KEY);
-		if (StringUtils.isNotBlank(offerIds)){
+		if (StringUtils.isNotBlank(offerIds)) {
 			List<String> offerItems = Arrays.asList(offerIds.split(","));
 			deal.setOffers(getOfferNames(offerItems));
 		}
-		
+
 		String towerId = data.getString(PIPEDRIVE_TOWER_KEY);
-		if (StringUtils.isNotBlank(towerId)){
+		if (StringUtils.isNotBlank(towerId)) {
 			deal.setTower(getTowerName(towerId));
 		}
-		
+
 		return deal;
 	}
 
@@ -135,10 +144,10 @@ public class PipedriveServiceImpl implements PipedriveService {
 		technology.setShortDescription(deal.getTitle());
 		technology.setDescription(deal.getTitle());
 		technology.setTower(deal.getTower().getName());
-		
+
 		technologyService.addOrUpdateTechnology(technology, null);
 	}
-	
+
 	@Override
 	public List<String> getOffers(User user)
 			throws NotFoundException, BadRequestException, InternalServerErrorException {
@@ -151,17 +160,16 @@ public class PipedriveServiceImpl implements PipedriveService {
 		return offers;
 	}
 
-	
-	private String getTowerName(String id){
+	private String getTowerName(String id) {
 		final List<TowerEnum> enumValues = Arrays.asList(TowerEnum.values());
-		for(final TowerEnum enumEntry :enumValues){
+		for (final TowerEnum enumEntry : enumValues) {
 			if (enumEntry.getId() == Integer.valueOf(id)) {
 				return enumEntry.getName();
 			}
 		}
 		return "";
 	}
-	
+
 	private List<String> getOfferNames(List<String> ids) {
 		List<String> result = new LinkedList<>();
 		final List<OfferEnums> enumValues = Arrays.asList(OfferEnums.values());
