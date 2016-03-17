@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.ciandt.techgallery.persistence.model.TechGalleryUser;
@@ -42,6 +43,7 @@ public class PipedriveServiceImpl implements PipedriveService {
 	private static PipedriveServiceImpl instance;
 
 	private static String PIPEDRIVE_DEAL_URL_BASE = "https://api.pipedrive.com/v1/deals/";
+	private static String PIPEDRIVE_DEAL_URL_PREFIX = "https://citsoftware.pipedrive.com/deal/";
 	private static String PIPEDRIVE_PRODUCT_KEY = "e16df82dc89790231a2169c6ee3d4b79a2230036";
 	private static String PIPEDRIVE_TOWER_KEY = "7b4743f02e683528a10ec09ed249726b5adcf6ad";
 
@@ -80,6 +82,10 @@ public class PipedriveServiceImpl implements PipedriveService {
 	public DealTO getPipedriveDeal(String id, User user) throws Exception {
 		validateUser(user);
 
+		return getPipedriveDeal(id);
+	}
+
+	private DealTO getPipedriveDeal(String id) throws InternalServerErrorException, IOException {
 		HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
 			@Override
 			public void initialize(HttpRequest request) {
@@ -110,11 +116,15 @@ public class PipedriveServiceImpl implements PipedriveService {
 		JSONObject org_id = data.getJSONObject("org_id");
 		deal.setClient(org_id.getString("name"));
 
-		String offerIds = data.getString(PIPEDRIVE_PRODUCT_KEY);
-		if (StringUtils.isNotBlank(offerIds)){
-			List<String> offerItems = Arrays.asList(offerIds.split(","));
-			deal.setOffers(getOfferNames(offerItems));
-		}
+		try {
+			String offerIds = data.getString(PIPEDRIVE_PRODUCT_KEY);
+			if (StringUtils.isNotBlank(offerIds)){
+				List<String> offerItems = Arrays.asList(offerIds.split(","));
+				deal.setOffers(getOfferNames(offerItems));
+			}
+		} catch (JSONException e) {
+			// Product is null
+		}	
 		
 		String towerId = data.getString(PIPEDRIVE_TOWER_KEY);
 		if (StringUtils.isNotBlank(towerId)){
@@ -135,6 +145,17 @@ public class PipedriveServiceImpl implements PipedriveService {
 		technology.setShortDescription(deal.getTitle());
 		technology.setDescription(deal.getTitle());
 		technology.setTower(deal.getTower().getName());
+		
+		try {
+			DealTO dealTO = getPipedriveDeal(deal.getId().toString());
+			technology.setOwnerEmail(dealTO.getOwnerEmail());
+			technology.setOwnerName(dealTO.getOwnerName());
+			technology.setPipedriveLink(PIPEDRIVE_DEAL_URL_PREFIX + deal.getId());
+		} catch (InternalServerErrorException e) {
+			e.printStackTrace();
+		}
+		
+		
 		
 		technologyService.addOrUpdateTechnology(technology, null);
 	}
