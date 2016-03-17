@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.lang.StringUtils;
 import org.json.JSONObject;
 
 import com.ciandt.techgallery.persistence.model.TechGalleryUser;
@@ -110,12 +111,16 @@ public class PipedriveServiceImpl implements PipedriveService {
 		deal.setClient(org_id.getString("name"));
 
 		String offerIds = data.getString(PIPEDRIVE_PRODUCT_KEY);
-		List<String> offerItems = Arrays.asList(offerIds.split(","));
-		deal.setOffers(getOfferNames(offerItems));
+		if (StringUtils.isNotBlank(offerIds)){
+			List<String> offerItems = Arrays.asList(offerIds.split(","));
+			deal.setOffers(getOfferNames(offerItems));
+		}
 		
 		String towerId = data.getString(PIPEDRIVE_TOWER_KEY);
-		deal.setTower(getTowerName(towerId));
-
+		if (StringUtils.isNotBlank(towerId)){
+			deal.setTower(getTowerName(towerId));
+		}
+		
 		return deal;
 	}
 
