@@ -124,6 +124,10 @@ public class TechnologyServiceImpl implements TechnologyService {
 		if(!isUptate){
 			technology.setCreationDate(new Date());
 		}
+		
+		if (StringUtils.isNotBlank(technology.getPipedriveLink())){
+			technology.setPipedriveLink(StringUtils.replace(technology.getPipedriveLink(), "/deal/", "/deal/view/"));
+		}
 
 		technology.setLastActivity(new Date());
 		technology.setImage(imageLink);
