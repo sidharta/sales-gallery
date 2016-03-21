@@ -13,6 +13,9 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   this.loading = false;
   context.backgroundColor = '#FFF';
 
+  context.technologies =[];
+  context.allTechnologies = [];
+
 
   this.regexPipedrive = "^(http(s)?:\\/\\/(\\w+.pipedrive.com\\/deal\\/)*\\d+)";
   this.regexGoogledrive = "(http(s)?:\\/\\/(drive.google.com\\/open\\?id=)\\S+)"
@@ -45,6 +48,10 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   TechnologyService.getOffers().then(function(data){
     context.dropDownOffer = data;
   });
+
+  TechnologyService.findTechnologyName().then(function(data){
+    context.allTechnologies = data.items;
+  })
 
   this.addOrUpdateTechnology = function(form){
     var isEdit = (context.id !== undefined);

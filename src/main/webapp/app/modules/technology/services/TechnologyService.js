@@ -421,6 +421,15 @@ module.exports = function($q, $timeout, $rootScope) {
     return deferred.promise;
   }
 
+  this.findTechnologyName = function(name){
+    var deferred = $q.defer();
+    var req = {name: name};
+    gapi.client.rest.findTechnologyName(req).execute(function(data){
+      deferred.resolve(data);
+    });
+    return deferred.promise;
+  }
+
   this.split = function(string) {
     var array = [];
     if (string != undefined)

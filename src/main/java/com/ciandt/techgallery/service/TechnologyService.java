@@ -8,6 +8,7 @@ import com.google.appengine.api.users.User;
 
 import com.ciandt.techgallery.persistence.model.Technology;
 import com.ciandt.techgallery.service.model.Response;
+import com.ciandt.techgallery.service.model.TechModelTo;
 import com.ciandt.techgallery.service.model.TechnologyFilter;
 
 import java.io.IOException;
@@ -106,4 +107,18 @@ public interface TechnologyService {
   Technology deleteTechnology(final String technologyId, User user)
       throws InternalServerErrorException, BadRequestException, NotFoundException,
       OAuthRequestException;
+  
+  /**
+   * Service for getting all technologies by name.
+   *
+   * @param name name of technology.
+   * @return technologies info or message error.
+   * @throws InternalServerErrorException in case something goes wrong
+   * @throws NotFoundException in case the information are not founded
+   * @throws BadRequestException in case a request with problem were made.
+   */
+  List<TechModelTo> findTechnologiesByName(final String name, User user)
+      throws InternalServerErrorException, NotFoundException, BadRequestException;
+  
+  
 }

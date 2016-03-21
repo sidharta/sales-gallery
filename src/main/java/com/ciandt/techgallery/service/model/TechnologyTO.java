@@ -36,7 +36,7 @@ public class TechnologyTO implements Response {
 	/** Proposal ownerName. */
 	private String ownerName;
 	/** Proposal technologies. */
-	private String technologies;
+	private List<String> technologies;
 	/** technology company status. */
 	private String status;
 	/** technology commentaries. */
@@ -158,11 +158,11 @@ public class TechnologyTO implements Response {
 		this.ownerEmail = ownerEmail;
 	}
 
-	public String getTechnologies() {
+	public List<String> getTechnologies() {
 		return technologies;
 	}
 
-	public void setTechnologies(String technologies) {
+	public void setTechnologies(List<String> technologies) {
 		this.technologies = technologies;
 	}
 

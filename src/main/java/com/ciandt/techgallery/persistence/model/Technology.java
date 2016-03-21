@@ -90,7 +90,7 @@ public class Technology extends BaseEntity<String> {
 	private String ownerName;
 
 	@Unindex
-	private String technologies;
+	private List<String> technologies;
 
 	/** company recommendation info. */
 	@Unindex
@@ -162,11 +162,11 @@ public class Technology extends BaseEntity<String> {
 		this.ownerEmail = ownerEmail;
 	}
 
-	public String getTechnologies() {
+	public List<String> getTechnologies() {
 		return technologies;
 	}
 
-	public void setTechnologies(String value) {
+	public void setTechnologies(List<String> value) {
 		this.technologies = value;
 	}
 
