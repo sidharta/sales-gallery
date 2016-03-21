@@ -3,18 +3,20 @@ module.exports = function() {
     restrict: 'E',
     scope: {
       tags: '=',
-      autocomplete: '=autocomplete'
+      autocomplete: '=autocomplete',
+      disable: '='
     },
     template:
     '<div class="tags">' +
-    '<div ng-repeat="(idx, tag) in tags" class="tag label technology-techology">{{tag}} <a class="close"  href ng-click="remove(idx)">×</a></div>' +
+    '<div ng-repeat="(idx, tag) in tags" class="tag label technology-chips">{{tag}} <button class="bnt-chip" ng-disabled={{disable}} ng-click="remove(idx)">x</button>  </div>' +
     '</div>' +
-    '<div class="input-group"><input type="text" class="form-control" placeholder="Ex: Google GAE, Android, AngularJs..." ng-model="newValue" /> ' +
+    '<div class="input-group"><input type="text" ng-disabled={{disable}} class="form-control" placeholder="Adicione alguma" ng-model="newValue" /> ' +
     '</div>' ,
 
-    link: function ( $scope, $element ) {
+    link: function ( $scope, $element, $attr ) {
       var $ = require('jquery');
       require('jquery-ui/autocomplete');
+
 
       var input = angular.element($element).find('input');
 
@@ -40,8 +42,8 @@ module.exports = function() {
               _results = [];
               for (_i = 0, _len = _ref.length; _i < _len; _i++) {
                 item = _ref[_i];
-                if (item.name.toLowerCase().indexOf(request.term.toLowerCase()) !== -1) {
-                  _results.push(item.name);
+                if (item.toLowerCase().indexOf(request.term.toLowerCase()) !== -1) {
+                  _results.push(item);
                 }
               }
               return _results;

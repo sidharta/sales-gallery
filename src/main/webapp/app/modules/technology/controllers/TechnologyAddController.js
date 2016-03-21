@@ -16,6 +16,9 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   context.technologies =[];
   context.allTechnologies = [];
 
+  context.offers = [];
+  context.allOffers = [];
+
 
   this.regexPipedrive = "^(http(s)?:\\/\\/(\\w+.pipedrive.com\\/deal\\/)*\\d+)";
   this.regexGoogledrive = "(http(s)?:\\/\\/(drive.google.com\\/open\\?id=)\\S+)"
@@ -46,7 +49,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
   });
 
   TechnologyService.getOffers().then(function(data){
-    context.dropDownOffer = data;
+    context.allOffers = data;
   });
 
   TechnologyService.findTechnologyName().then(function(data){

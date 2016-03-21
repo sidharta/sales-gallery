@@ -21,7 +21,6 @@ import com.ciandt.techgallery.service.impl.TechnologyFollowersServiceImpl;
 import com.ciandt.techgallery.service.impl.TechnologyServiceImpl;
 import com.ciandt.techgallery.service.impl.UserServiceTGImpl;
 import com.ciandt.techgallery.service.model.Response;
-import com.ciandt.techgallery.service.model.TechModelTo;
 import com.ciandt.techgallery.service.model.TechnologyFilter;
 import com.ciandt.techgallery.transaction.ServiceFactory;
 
@@ -176,7 +175,7 @@ public class TechnologyEndpoint {
    * @throws ServiceException in case of exception in service
    */
   @ApiMethod(name = "findTechnologyName", path = "technology/name", httpMethod = "get")
-  public List<TechModelTo> findTechnologyName(User user,
+  public List<String> findTechnologyName(User user,
       @Named("name") @Nullable String name) throws ServiceException {
 	  return service.findTechnologiesByName(name, user);
   }

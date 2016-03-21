@@ -27,8 +27,7 @@ angular
     require('./modules/auth'),
     require('./modules/utils'),
     require('./modules/technology'),
-    require('./modules/user'),
-    require('ui-select')
+    require('./modules/user')
   ])
   .config(require('./routes'))
   .constant('API', {

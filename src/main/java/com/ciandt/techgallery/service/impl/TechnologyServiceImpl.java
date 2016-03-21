@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -536,7 +537,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 	}
 
 	@Override
-	public List<TechModelTo> findTechnologiesByName(String name, User user)
+	public List<String> findTechnologiesByName(String name, User user)
 			throws InternalServerErrorException, NotFoundException, BadRequestException {
 
 		InputStream resourceStream = TechnologyServiceImpl.class.getClassLoader()
@@ -545,17 +546,14 @@ public class TechnologyServiceImpl implements TechnologyService {
 		String json = convertStreamToString(resourceStream);
 		Type listType = new TypeToken<List<TechModelTo>>() {}.getType();
 		List<TechModelTo> techList = new Gson().fromJson(json, listType);
-		List<TechModelTo> resultList = new ArrayList<>();
+		List<String> resultList = new ArrayList<>();
 		
-		if (StringUtils.isBlank(name)){
-			return techList;
-		}
 		
 		for (TechModelTo techModelTo : techList){
-			if (techModelTo.getName().toLowerCase().contains(name)){
-				resultList.add(techModelTo);
-			}
+			resultList.add(techModelTo.getName());
 		}
+		
+		Collections.sort(resultList);
 			
 		return resultList;
 	}

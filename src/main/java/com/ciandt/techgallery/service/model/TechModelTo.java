@@ -2,16 +2,19 @@ package com.ciandt.techgallery.service.model;
 
 public class TechModelTo {
 
-	private String id;
 	private String name;
+	private String id;
+	
+	public TechModelTo(){
+		
+	}
+	
 
-	public TechModelTo() {
-		super();
+	public String getName() {
+		return name;
 	}
 
-	public TechModelTo(String id, String name) {
-		super();
-		this.id = id;
+	public void setName(String name) {
 		this.name = name;
 	}
 
@@ -22,13 +25,6 @@ public class TechModelTo {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	
+	
 }

@@ -218,6 +218,17 @@ $technology-spacing: 10px;
     margin-bottom: 0;
   }
 }
+
+.technology-chips {
+  background-color: #E4E4E4 !important;
+  margin: 6px 4px 0px 0px;
+  list-style: none;
+  color: #333;
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
 .technology-recommendation-value {
   width: 40px;
   text-align: center;
@@ -352,4 +363,15 @@ $technology-spacing: 10px;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   background-image: none;
+}
+
+.bnt-chip{
+  color: #333;
+  border-radius: 0;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.bnt-chip[disabled] {
+    cursor: not-allowed;
 }

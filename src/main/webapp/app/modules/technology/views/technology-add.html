@@ -87,13 +87,8 @@
               </div>
               <div class="row">
                 <div class="form-group col-md-6" >
-                  <label for="technology-offer">Selecione a oferta</label> </br>
-                  <ui-select multiple  ng-model="technology.offers" theme="select2" style="width:440px;"  ng-disabled="technology.pipedriveLink">
-                    <ui-select-match placeholder="Selecione ofertas...">{{$item}}</ui-select-match>
-                    <ui-select-choices repeat="item in technology.dropDownOffer | filter:$select.search">
-                      {{item}}
-                    </ui-select-choices>
-                  </ui-select>
+                  <label for="technology-offer">Selecione a oferta</label>
+                  <tag-manager tags="technology.offers" autocomplete="technology.allOffers" disable="technology.pipedriveLink? true: false"></tag-manager>
                 </div>
                 <div class="form-group col-md-6" >
                   <label for="technology-status">Selecione a torre</label> </br>
@@ -134,7 +129,7 @@
                 </div>
                 <div class=" col-md-12">
                   <label for="technology-technologies">Principais tecnologias envolvidas</label>
-                  <tag-manager tags="technology.technologies" autocomplete="technology.allTechnologies"</tag-manager>
+                  <tag-manager tags="technology.technologies" autocomplete="technology.allTechnologies" disable=false></tag-manager>
                 </div>
                 <div class="form-inline col-md-12 text-right">
                   <div class="checkbox" ng-if="!technology.id.length">

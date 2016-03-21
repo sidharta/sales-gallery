@@ -117,7 +117,7 @@ public interface TechnologyService {
    * @throws NotFoundException in case the information are not founded
    * @throws BadRequestException in case a request with problem were made.
    */
-  List<TechModelTo> findTechnologiesByName(final String name, User user)
+  List<String> findTechnologiesByName(final String name, User user)
       throws InternalServerErrorException, NotFoundException, BadRequestException;
   
   
