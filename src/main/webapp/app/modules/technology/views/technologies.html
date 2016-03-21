@@ -8,9 +8,9 @@
             <label for="technology-filter" tabindex="0" tooltip-placement="bottom" uib-tooltip="Filtrar por"><span class="glyphicon glyphicon-filter"></span></label>
             <select ng-disabled="technologies.loading" ng-model="technologies.statusFilter" ng-change="technologies.updateFilters()" class="form-control" id="technology-filter">
               <option value="">Todos</option>
-              <option value="Proposta">Open</option>
-              <option value="Perdida">Lost</option>
-              <option value="Ganha">Won</option>
+              <option value="open">Open</option>
+              <option value="lost'">Lost</option>
+              <option value="won">Won</option>
             </select>
             <select ng-disabled="technologies.loading" id="technology-filter" ng-model="technologies.offerFilter" ng-change="technologies.updateFilters()" class="form-control">
               <option value="">Todos</option>
