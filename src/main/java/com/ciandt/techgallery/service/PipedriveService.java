@@ -43,7 +43,7 @@ public interface PipedriveService {
 	 * @throws InternalServerErrorException
 	 *             in case something goes wrong
 	 */
-	List<String> getOffers(User user) throws NotFoundException, BadRequestException, InternalServerErrorException;
+	List<String> getOffers(User user)	throws NotFoundException, BadRequestException, InternalServerErrorException, IOException;
 
 	/**
 	 * Service for getting a list of possibles towers.
@@ -54,5 +54,5 @@ public interface PipedriveService {
 	 * @throws InternalServerErrorException
 	 *             in case something goes wrong
 	 */
-	List<String> getTowers(User user) throws NotFoundException, BadRequestException, InternalServerErrorException;
+	List<String> getTowers(User user) throws NotFoundException, BadRequestException, InternalServerErrorException, IOException;
 }

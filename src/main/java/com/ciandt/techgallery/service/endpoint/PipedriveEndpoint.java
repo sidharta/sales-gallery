@@ -1,5 +1,6 @@
 package com.ciandt.techgallery.service.endpoint;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.ciandt.techgallery.Constants;
@@ -34,13 +35,13 @@ public class PipedriveEndpoint {
 
 	@ApiMethod(name = "getOffers", path = "pipedrive/offers", httpMethod = "GET")
 	public List<String> getOffers(User user)
-			throws InternalServerErrorException, NotFoundException, BadRequestException {
+			throws InternalServerErrorException, NotFoundException, BadRequestException, IOException {
 		return service.getOffers(user);
 	}
 
 	@ApiMethod(name = "getTowers", path = "pipedrive/towers", httpMethod = "GET")
 	public List<String> getTowers(User user)
-			throws InternalServerErrorException, NotFoundException, BadRequestException {
+			throws InternalServerErrorException, NotFoundException, BadRequestException, IOException {
 		return service.getTowers(user);
 	}
 

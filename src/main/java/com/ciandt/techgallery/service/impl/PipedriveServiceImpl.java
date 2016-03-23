@@ -4,12 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,9 +18,8 @@ import com.ciandt.techgallery.persistence.model.TechGalleryUser;
 import com.ciandt.techgallery.persistence.model.Technology;
 import com.ciandt.techgallery.service.PipedriveService;
 import com.ciandt.techgallery.service.TechnologyService;
-import com.ciandt.techgallery.service.enums.OfferEnums;
-import com.ciandt.techgallery.service.enums.TowerEnum;
 import com.ciandt.techgallery.service.enums.ValidationMessageEnums;
+import com.ciandt.techgallery.service.model.pipedrive.DealFieldTO;
 import com.ciandt.techgallery.service.model.pipedrive.DealTO;
 import com.ciandt.techgallery.service.model.pipedrive.webhook.Deal;
 import com.ciandt.techgallery.utils.TechGalleryUtil;
@@ -45,9 +45,13 @@ public class PipedriveServiceImpl implements PipedriveService {
 	private static PipedriveServiceImpl instance;
 
 	private static String PIPEDRIVE_DEAL_URL_BASE = "https://api.pipedrive.com/v1/deals/";
+	private static String PIPEDRIVE_DEAL_FIELD_URL_BASE = "https://api.pipedrive.com/v1/dealFields/";
 	private static String PIPEDRIVE_DEAL_URL_PREFIX = "https://citsoftware.pipedrive.com/deal/";
 	private static String PIPEDRIVE_PRODUCT_KEY = "e16df82dc89790231a2169c6ee3d4b79a2230036";
 	private static String PIPEDRIVE_TOWER_KEY = "7b4743f02e683528a10ec09ed249726b5adcf6ad";
+	
+	private static String PIPEDRIVE_DEAL_FIELD_TOWER_ID = "12459";
+	private static String PIPEDRIVE_DEAL_FIELD_PRODUCT_ID = "12461";
 
 	static final HttpTransport HTTP_TRANSPORT = new NetHttpTransport();
 	static final JsonFactory JSON_FACTORY = new JacksonFactory();
@@ -88,7 +92,7 @@ public class PipedriveServiceImpl implements PipedriveService {
 		return getPipedriveDeal(id);
 	}
 
-	private DealTO getPipedriveDeal(String id) throws InternalServerErrorException, IOException, NotFoundException {
+	private DealTO getPipedriveDeal(String id) throws InternalServerErrorException, IOException, NotFoundException, BadRequestException {
 		HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
 			@Override
 			public void initialize(HttpRequest request) {
@@ -108,7 +112,7 @@ public class PipedriveServiceImpl implements PipedriveService {
 		}
 	}
 
-	private DealTO parseJsonToDeal(String json) {
+	private DealTO parseJsonToDeal(String json) throws NotFoundException, BadRequestException, InternalServerErrorException, IOException {
 		JSONObject dealObject = new JSONObject(json);
 
 		JSONObject data = dealObject.getJSONObject("data");
@@ -127,7 +131,7 @@ public class PipedriveServiceImpl implements PipedriveService {
 		try {
 			String offerIds = data.getString(PIPEDRIVE_PRODUCT_KEY);
 			if (StringUtils.isNotBlank(offerIds)){
-				List<String> offerItems = Arrays.asList(offerIds.split(","));
+				List<String> offerItems = this.dealFieldToList(this.getOffers());
 				deal.setOffers(getOfferNames(offerItems));
 			}
 		} catch (JSONException e) {
@@ -140,6 +144,16 @@ public class PipedriveServiceImpl implements PipedriveService {
 		}
 
 		return deal;
+	}
+	
+	private List<String> dealFieldToList(HashMap<String, DealFieldTO> map) throws NotFoundException, BadRequestException, InternalServerErrorException, IOException{
+		
+		List<DealFieldTO> list = new ArrayList<DealFieldTO>(map.values());
+		List<String> result = new ArrayList<>();
+		for (DealFieldTO dealFieldTO : list) {
+			result.add(dealFieldTO.getLabel());
+		}
+		return result;
 	}
 
 	@Override
@@ -167,41 +181,78 @@ public class PipedriveServiceImpl implements PipedriveService {
 		
 		technologyService.addOrUpdateTechnology(technology, null);
 	}
+	
+	private HashMap<String, DealFieldTO> getOffers() throws NotFoundException, BadRequestException, InternalServerErrorException, IOException {
+		HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
+			@Override
+			public void initialize(HttpRequest request) {
+				request.setParser(new JsonObjectParser(JSON_FACTORY));
+			}
+		});
+		GenericUrl url = new GenericUrl(PIPEDRIVE_DEAL_FIELD_URL_BASE + PIPEDRIVE_DEAL_FIELD_PRODUCT_ID + "?api_token=" + loadApikey());
+		HttpRequest request = requestFactory.buildGetRequest(url);
+		request.getHeaders().setContentType("application/json");
+
+		try {
+			HttpResponse response = request.execute();
+			String json = response.parseAsString();
+			return parseJsonToDealField(json);
+		} catch (HttpResponseException e) {
+			throw new NotFoundException(ValidationMessageEnums.PIPEDRIVE_DEAL_NOT_FOUND.message());
+		}
+	}
 
 	@Override
 	public List<String> getOffers(User user)
-			throws NotFoundException, BadRequestException, InternalServerErrorException {
+			throws NotFoundException, BadRequestException, InternalServerErrorException, IOException {
 		validateUser(user);
-		final List<OfferEnums> enumValues = Arrays.asList(OfferEnums.values());
-		final List<String> offers = new ArrayList<>();
-		for (final OfferEnums enumEntry : enumValues) {
-			offers.add(enumEntry.getName());
+		return this.dealFieldToList(getOffers());
+	}
+	
+	private HashMap<String, DealFieldTO> parseJsonToDealField(String json){
+		
+		HashMap<String, DealFieldTO> items = new HashMap<>();
+		JSONObject dealObject = new JSONObject(json);
+
+		JSONObject data = dealObject.getJSONObject("data");
+		
+		JSONArray options = data.getJSONArray("options");
+		
+		for (int i=0; i< options.length(); i++){
+			 JSONObject obj = options.getJSONObject(i);
+			 String label = obj.getString("label");
+			 String id = Integer.toString(obj.getInt("id"));
+			 if (StringUtils.isNotBlank(label) && StringUtils.isNotBlank(id)){
+				 DealFieldTO dealFieldTO = new DealFieldTO();
+				 dealFieldTO.setId(id);
+				 dealFieldTO.setLabel(label);
+				 items.put(id, dealFieldTO);
+			 }
 		}
-		return offers;
+		return items;
 	}
 
-	private String getTowerName(String id) {
-		final List<TowerEnum> enumValues = Arrays.asList(TowerEnum.values());
-		for (final TowerEnum enumEntry : enumValues) {
-			if (enumEntry.getId() == Integer.valueOf(id)) {
-				return enumEntry.getName();
-			}
+	private String getTowerName(String id) throws InternalServerErrorException, NotFoundException, IOException {
+		HashMap<String, DealFieldTO> items = this.getTowers();
+		DealFieldTO dealFieldTO =  items.get(id);
+		if (dealFieldTO != null){
+			return dealFieldTO.getLabel();
 		}
 		return "";
 	}
 
-	private List<String> getOfferNames(List<String> ids) {
+	private List<String> getOfferNames(List<String> ids) throws NotFoundException, BadRequestException, InternalServerErrorException, IOException {
+		HashMap<String, DealFieldTO> items = this.getOffers();
+		
 		List<String> result = new LinkedList<>();
-		final List<OfferEnums> enumValues = Arrays.asList(OfferEnums.values());
-		for (final OfferEnums enumEntry : enumValues) {
-			for (final String id : ids) {
-				if (enumEntry.getId() == Integer.valueOf(id)) {
-					result.add(enumEntry.getName());
-				}
+		for (final String id : ids) {
+			DealFieldTO dealFieldTO =  items.get(id);
+			if (dealFieldTO != null){
+				result.add(dealFieldTO.getLabel());
 			}
 		}
 		return result;
-	}
+    }
 
 	/**
 	 * Validate the user logged in.
@@ -228,15 +279,29 @@ public class PipedriveServiceImpl implements PipedriveService {
 	}
 
 	@Override
-	public List<String> getTowers(User user)
-			throws NotFoundException, BadRequestException, InternalServerErrorException {
+	public List<String> getTowers(User user) throws BadRequestException, NotFoundException, InternalServerErrorException, IOException{
 		validateUser(user);
-		final List<TowerEnum> enumValues = Arrays.asList(TowerEnum.values());
-		final List<String> towers = new ArrayList<>();
-		for (final TowerEnum enumEntry : enumValues) {
-			towers.add(enumEntry.getName());
+		return this.dealFieldToList(this.getTowers());
+	}
+	
+	private HashMap<String, DealFieldTO> getTowers() throws InternalServerErrorException, IOException, NotFoundException{
+		HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
+			@Override
+			public void initialize(HttpRequest request) {
+				request.setParser(new JsonObjectParser(JSON_FACTORY));
+			}
+		});
+		GenericUrl url = new GenericUrl(PIPEDRIVE_DEAL_FIELD_URL_BASE + PIPEDRIVE_DEAL_FIELD_TOWER_ID + "?api_token=" + loadApikey());
+		HttpRequest request = requestFactory.buildGetRequest(url);
+		request.getHeaders().setContentType("application/json");
+
+		try {
+			HttpResponse response = request.execute();
+			String json = response.parseAsString();
+			return parseJsonToDealField(json);
+		} catch (HttpResponseException e) {
+			throw new NotFoundException(ValidationMessageEnums.PIPEDRIVE_DEAL_NOT_FOUND.message());
 		}
-		return towers;
 	}
 
 }
