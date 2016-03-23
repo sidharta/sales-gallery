@@ -1,4 +1,4 @@
-module.exports = function ($rootScope, AppService, TechnologyService, $stateParams, $state, $scope) {
+module.exports = function ($rootScope, AppService, TechnologyService, $stateParams, $state, $scope, $uibModal) {
 
   /**
    * Object context
@@ -129,34 +129,31 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.selectedTower = selected;
   }
 
-  $scope.handleFileSelect = function(file) {
-      var files = file.files;
-      var f = files[0];
-      if (f) {
-        var reader = new FileReader();
-        reader.onload = (function(theFile) {
-          return function(e) {
-            var img = new Image;
-            img.src = reader.result;
-            img.onload = function() {
-              if(f.type != 'image/png' || img.width > 100 || img.height > 100){
-                alert('Esta imagem tem um tamanho ou tipo errado, escolha uma imagem com o tamanho 100x100 e tipo PNG.');
-                document.getElementById('technology-image').value = null;
-                document.getElementById('list').innerHTML = ['<img src="/assets/images/no_image.png" title="Insira uma imagem" width="100" />'].join('');
-              }else{
-                var image = e.target.result;
-                context.image = image.replace('data:image/png;base64,', '');
-                document.getElementById('list').innerHTML = ['<img src="', e.target.result,'" title="', theFile.name, '" width="100" />'].join('');
+  context.imagePreview = 'assets/images/no_image.png';
+
+  $scope.handleFileSelect = function(evt) {
+    var file = evt.currentTarget.files[0];
+    var reader = new FileReader();
+    reader.onload = function (evt) {
+        $scope.$apply(function($scope){
+            var modalInstance = $uibModal.open({
+              templateUrl: 'crop-modal.html',
+              controller: 'CropModalController',
+              resolve: {
+                image: function() {
+                  return evt.target.result;
+                }
               }
-            };
-          };
-        })(f);
-        reader.readAsDataURL(f);
-      }
-      else {
-        document.getElementById('list').innerHTML = ['<img src="/assets/images/no_image.png" title="Insira uma imagem" width="100" />'].join('');
-      };
-  }
+            });
+            
+            modalInstance.result.then(function(croppedImage) {
+              context.image = croppedImage.replace('data:image/png;base64,', '');
+              context.imagePreview = croppedImage;
+            });
+        });
+    };
+    reader.readAsDataURL(file);
+  };
 
   function setClassElement(id){
     var elementClassIncrease = 'btn GPlusDefault';

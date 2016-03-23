@@ -31,6 +31,7 @@
     "angular-sanitize": "^1.4.7",
     "angular-ui-router": "^0.2.15",
     "jquery": "^2.2.2",
-    "jquery-ui": "^1.10.5"
+    "jquery-ui": "^1.10.5",
+    "ng-img-crop-alias": "^0.3.2"
   }
 }

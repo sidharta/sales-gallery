@@ -177,3 +177,8 @@ node
 *.api
 src/main/resources/people_basic_auth.txt
 src/main/resources/pipedrive.properties
+
+
+## VS Code
+.history
+.vscode

@@ -23,14 +23,15 @@
                   <div class="media">
                     <div id="div_image" class="media-left">
                       <output id="list">
-                        <label for="technology-image"><img src="assets/images/no_image.png" title="Insira uma imagem"></label>
+                        <label for="technology-image">
+                            <img title="Insira uma imagem" ng-src="{{technology.imagePreview}}">
+                        </label>
                       </output>
                     </div>
                     <div class="media-body">
                       <label for="technology-image">Imagem</label>
-                      <input type="file" class="form-control" id="technology-image" ng-model="technology.image" onchange="angular.element(this).scope().handleFileSelect(this)">
-                      <span class="help-block">Tamanho: 100x100</span>
-                    </div>
+                      <input type="file" class="form-control" id="technology-image" onchange="angular.element(this).scope().handleFileSelect(event)" onclick="this.value=''">                      
+                    </div>                  
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-class="{'has-error': (addTechnologyForm.pipedriveLink.$invalid && addTechnologyForm.pipedriveLink.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.pipedriveLink.$invalid)}">
@@ -149,3 +150,25 @@
     </div>
   </div>
 </div>
+<script type="text/ng-template" id="crop-modal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Cortar imagem</h3>
+  </div>
+  <div class="modal-body">
+    <style>
+      .cropArea {
+        background: #E4E4E4;
+        overflow: hidden;
+        width: 500px;
+        height: 350px;
+      }
+    </style>
+    <div class="cropArea">
+      <img-crop image="image" result-image="resultImage" area-type="square" result-image-size="100" area-min-size="100"></img-crop>
+    </div>    
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" ng-click="ok()">OK</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+  </div>
+</script>
