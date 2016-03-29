@@ -9,6 +9,8 @@ import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.oauth.OAuthRequestException;
 import com.google.appengine.api.users.User;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.ciandt.techgallery.Constants;
 import com.ciandt.techgallery.persistence.model.Endorsement;
 import com.ciandt.techgallery.service.EndorsementService;
@@ -122,7 +124,8 @@ public class EndorsementEndpoint {
       throws InternalServerErrorException, BadRequestException, NotFoundException,
       OAuthRequestException {	  
 	  EndorsementResponse endorsement = new EndorsementResponse();
-	  endorsement.setEndorsed(endorsed);
+	  String login = StringUtils.split(endorsed, '@')[0];
+	  endorsement.setEndorsed(login);
 	  endorsement.setTechnology(technology);
     return service.deleteEndorsement(endorsement, user);
   }

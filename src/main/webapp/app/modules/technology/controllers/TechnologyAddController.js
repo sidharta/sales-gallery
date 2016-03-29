@@ -92,7 +92,6 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.client = '';
     context.ownerEmail = '';
     context.ownerName = '';
-    context.technologies = '';
     context.pipedriveLink = '';
     document.getElementById('technology-name').value = null;
     document.getElementById('list').innerHTML = ['<img src="/assets/images/no_image.png" title="Insira uma imagem" />'].join('');
@@ -145,7 +144,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
                 }
               }
             });
-            
+
             modalInstance.result.then(function(croppedImage) {
               context.image = croppedImage.replace('data:image/png;base64,', '');
               context.imagePreview = croppedImage;
@@ -184,6 +183,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
         context.selectedStatus  = data.status;
         context.selectedTower = data.tower;
         context.offers = data.offers;
+        context.technologies = data.technologies;
         context.client = data.client;
         context.ownerEmail = data.ownerEmail;
         context.ownerName = data.ownerName
@@ -206,5 +206,6 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.selectedStatus = null;
     context.selectedTower = null;
     context.offers = null;
+    context.technologies = null;
   };
 }
