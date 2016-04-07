@@ -18,6 +18,7 @@ import com.google.common.base.Predicate;
 
 import javax.xml.bind.DatatypeConverter;
 
+import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 
 import com.ciandt.techgallery.persistence.dao.StorageDAO;
@@ -287,7 +288,7 @@ public class TechnologyServiceImpl implements TechnologyService {
 			public boolean apply(Technology t){
 				return techFilter.getOffersIs() == null
 								|| Iterables.isEmpty(techFilter.getOffersIs())
-								|| (t.getOffers() != null && techFilter.getOffersIs().retainAll(t.getOffers()));
+								|| (t.getOffers() != null && Sets.intersection(Sets.newHashSet(techFilter.getOffersIs()), Sets.newHashSet(t.getOffers())).size()>0 );
 			}
 		};
 
