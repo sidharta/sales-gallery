@@ -10,13 +10,12 @@ module.exports = function() {
     '<div class="tags">' +
     '<div ng-repeat="(idx, tag) in tags" class="tag label technology-chips">{{tag}} <button class="bnt-chip" ng-disabled={{disable}} ng-click="remove(idx)">x</button>  </div>' +
     '</div>' +
-    '<div class="input-group"><input type="text" ng-disabled={{disable}} class="form-control" placeholder="Adicione alguma" ng-model="newValue" /> ' +
+    '<div class="input-group"><input type="text" class="form-control" placeholder="Adicione alguma" ng-model="newValue" />' +
     '</div>' ,
 
     link: function ( $scope, $element, $attr ) {
       var $ = require('jquery');
       require('jquery-ui/autocomplete');
-
 
       var input = angular.element($element).find('input');
 
@@ -66,6 +65,10 @@ module.exports = function() {
       // adds the new tag to the array
       $scope.add = function() {
         // if not dupe, add it
+        if(!$scope.tags) {
+          $scope.tags = [];
+        }
+
         if ($scope.tags.indexOf($scope.newValue)==-1){
           $scope.tags.push( $scope.newValue );
         }
