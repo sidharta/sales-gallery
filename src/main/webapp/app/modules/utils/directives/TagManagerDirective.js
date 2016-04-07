@@ -33,6 +33,9 @@ module.exports = function() {
         };
         $($element).find('input').autocomplete({
           minLength: 0,
+          create: function (e) {
+              $(this).prev('.ui-helper-hidden-accessible').remove();
+          },
           source: function(request, response) {
             var item;
             return response((function() {
