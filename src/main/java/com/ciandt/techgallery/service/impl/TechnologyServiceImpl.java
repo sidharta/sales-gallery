@@ -11,6 +11,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.common.base.Predicates;
+import com.google.common.base.Predicate;
+
 import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.lang.StringUtils;
@@ -201,17 +206,6 @@ public class TechnologyServiceImpl implements TechnologyService {
 		}
 	}
 
-	private List<Technology> setDateFilteredList(List<Technology> completeList, Date dateReference) {
-		List<Technology> dateFilteredList = new ArrayList<>();
-		for (Technology technology : completeList) {
-			if (technology.getCreationDate().after(dateReference)
-					|| technology.getCreationDate().equals(dateReference)) {
-				dateFilteredList.add(technology);
-			}
-		}
-		return dateFilteredList;
-	}
-
 	private Date setDateReference(Date currentDate, int toSubtract) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentDate);
@@ -224,20 +218,9 @@ public class TechnologyServiceImpl implements TechnologyService {
 	public Response findTechnologiesByFilter(TechnologyFilter techFilter, User user)
 			throws InternalServerErrorException, NotFoundException, BadRequestException {
 		validateUser(user);
-		if (techFilter.getStatusIs() != null && techFilter.getStatusIs().equals(StatusEnums.UNINFORMED.message())) {
-			techFilter.setStatusIs("");
-		}
 
 		List<Technology> completeList = technologyDAO.findAllActives();
-		completeList = filterByLastActivityDate(techFilter, completeList);
-
-		List<Technology> filteredList = new ArrayList<>();
-		if (StringUtils.isBlank(techFilter.getTitleContains()) && techFilter.getStatusIs() == null
-				&& techFilter.getOffersIs() == null && StringUtils.isBlank(techFilter.getTowerIs())) {
-			filteredList.addAll(completeList);
-		} else {
-			verifyFilters(techFilter, completeList, filteredList);
-		}
+		List<Technology> filteredList = verifyFilters(techFilter, completeList);
 
 		if (filteredList.isEmpty()) {
 			return new TechnologiesResponse();
@@ -254,31 +237,29 @@ public class TechnologyServiceImpl implements TechnologyService {
 		}
 	}
 
-	private List<Technology> filterByLastActivityDate(TechnologyFilter techFilter, List<Technology> completeList) {
-		List<Technology> dateFilteredList = new ArrayList<>();
+	private Date findDateReference(TechnologyFilter techFilter) {
+		Date currentDate = new Date();
+		Date ref = new Date();
+
 		if (techFilter.getDateFilter() != null) {
-			Date currentDate = new Date();
 			switch (techFilter.getDateFilter()) {
-			case LAST_MONTH:
-				Date lastOne = setDateReference(currentDate, -1);
-				dateFilteredList = setDateFilteredList(completeList, lastOne);
-				break;
+				case LAST_MONTH:
+					ref = setDateReference(currentDate, -1);
+					break;
 
-			case LAST_6_MONTHS:
-				Date lastSix = setDateReference(currentDate, -6);
-				dateFilteredList = setDateFilteredList(completeList, lastSix);
-				break;
+				case LAST_6_MONTHS:
+					ref = setDateReference(currentDate, -6);
+					break;
 
-			case LAST_12_MONTHS:
-				Date lastTwelve = setDateReference(currentDate, -12);
-				dateFilteredList = setDateFilteredList(completeList, lastTwelve);
-				break;
-			default:
-				break;
+				case LAST_12_MONTHS:
+					ref = setDateReference(currentDate, -12);
+					break;
+				default:
+					break;
 			}
-			completeList = dateFilteredList;
 		}
-		return completeList;
+
+		return ref;
 	}
 
 	private void verifyTechnologyFollowedByUser(User user, List<Technology> filteredList)
@@ -293,100 +274,54 @@ public class TechnologyServiceImpl implements TechnologyService {
 		}
 	}
 
-	private void verifyFilters(TechnologyFilter techFilter, List<Technology> completeList,
-			List<Technology> filteredList) {
-		for (Technology technology : completeList) {
-			if (verifyTitleAndShortDescriptionFilter(techFilter, technology)) {
-				if (techFilter.getStatusIs() != null) {
-					if (verifyStatusFilter(techFilter, technology)) {
-						filteredList.add(technology);
-					} else {
-						continue;
-					}
-				} else if (techFilter.getOffersIs() != null) {
-					if (verifyOfferFilter(techFilter, technology)) {
-						filteredList.add(technology);
-					} else {
-						continue;
-					}
-				} else if (StringUtils.isNotBlank(techFilter.getTowerIs())) {
-					if (verifyTowerFilter(techFilter, technology)) {
-						filteredList.add(technology);
-					} else {
-						continue;
-					}
-				}
+	private List<Technology> verifyFilters(final TechnologyFilter techFilter, List<Technology> completeList) {
 
-				else {
-					filteredList.add(technology);
-					continue;
-				}
-			} else if (verifyStatusFilter(techFilter, technology) && techFilter.getTitleContains() == null) {
-				filteredList.add(technology);
-				continue;
-			} else if (verifyOfferFilter(techFilter, technology) && techFilter.getTitleContains() == null) {
-				filteredList.add(technology);
-				continue;
-			} else if (verifyTowerFilter(techFilter, technology) && techFilter.getTitleContains() == null) {
-				filteredList.add(technology);
-				continue;
+		Predicate<Technology> filtraStatus = new Predicate<Technology>(){
+			public boolean apply(Technology t){
+				return isFilterNullOrAny(techFilter.getStatusIs())
+								|| (t.getStatus() != null && t.getStatus().toLowerCase().equals(techFilter.getStatusIs().toLowerCase()));
 			}
-		}
-	}
+		};
 
-	private boolean verifyStatusFilter(TechnologyFilter techFilter, Technology technology) {
-		if (technology.getStatus() == null && techFilter.getStatusIs() == "") {
-			return true;
-		} else if (technology.getStatus() != null && techFilter.getStatusIs() != null
-				&& (technology.getStatus().toLowerCase().equals(techFilter.getStatusIs().toLowerCase())
-						|| techFilter.getStatusIs().toLowerCase().equals(StatusEnums.ANY.message().toLowerCase()))) {
-			return true;
-		}
-		return false;
-	}
-
-	private boolean verifyTowerFilter(TechnologyFilter techFilter, Technology technology) {
-		if ((technology.getTower() == null || technology.getTower().isEmpty())
-				&& (StringUtils.isBlank(techFilter.getTowerIs()))) {
-			return true;
-		} else if (technology.getTower() != null && StringUtils.isNotBlank(techFilter.getTowerIs())) {
-			if (technology.getTower().toLowerCase().equals(techFilter.getTowerIs().toLowerCase())
-					|| techFilter.getTowerIs().toLowerCase().equals(StatusEnums.ANY.message().toLowerCase())) {
-				return true;
+		Predicate<Technology> filtraOffer = new Predicate<Technology>(){
+			public boolean apply(Technology t){
+				return techFilter.getOffersIs() == null
+								|| Iterables.isEmpty(techFilter.getOffersIs())
+								|| (t.getOffers() != null && techFilter.getOffersIs().retainAll(t.getOffers()));
 			}
-		}
-		return false;
-	}
+		};
 
-	private boolean verifyOfferFilter(TechnologyFilter techFilter, Technology technology) {
-		if ((technology.getOffers() == null || technology.getOffers().isEmpty())
-				&& (techFilter.getOffersIs() == null || techFilter.getOffersIs().isEmpty())) {
-			return true;
-		} else if (technology.getOffers() != null && techFilter.getOffersIs() != null) {
-			for (String offer : technology.getOffers()) {
-				for (String offerIs : techFilter.getOffersIs()) {
-					if (offer.toLowerCase().equals(offerIs.toLowerCase())
-							|| offerIs.toLowerCase().equals(StatusEnums.ANY.message().toLowerCase())) {
-						return true;
-					}
-				}
+		Predicate<Technology> filtraTower = new Predicate<Technology>(){
+			public boolean apply(Technology t){
+				return isFilterNullOrAny(techFilter.getTowerIs())
+								|| (t.getTower() != null && t.getTower().toLowerCase().equals(techFilter.getTowerIs().toLowerCase()));
 			}
+		};
 
-		}
-		return false;
+		Predicate<Technology> filtraTexto = new Predicate<Technology>(){
+			public boolean apply(Technology t){
+				return isFilterNullOrAny(techFilter.getTitleContains())
+								|| (checkTitle(techFilter, t) || checkCustomerName(techFilter, t)
+										|| checkDescription(techFilter, t) || checkShortDescription(techFilter, t)
+										|| checkTower(techFilter, t) || checkOffer(techFilter, t)
+										|| checkTechnologies(techFilter, t));
+			}
+		};
+
+		final Date dateReference = findDateReference(techFilter);
+
+		Predicate<Technology> filtraData = new Predicate<Technology>(){
+			public boolean apply(Technology t){
+				return techFilter.getDateFilter() == null
+								|| (t.getCreationDate().after(dateReference) || t.getCreationDate().equals(dateReference));
+			}
+		};
+
+		return Lists.newArrayList(Iterables.filter(completeList, Predicates.and(filtraStatus, filtraOffer, filtraTower, filtraTexto, filtraData)));
 	}
 
-	private boolean verifyTitleAndShortDescriptionFilter(TechnologyFilter techFilter, Technology technology) {
-		if (techFilter.getTitleContains() == null) {
-			return false;
-		}
-		if (checkTitle(techFilter, technology) || checkCustomerName(techFilter, technology)
-				|| checkDescription(techFilter, technology) || checkShortDescription(techFilter, technology)
-				|| checkTower(techFilter, technology) || checkOffer(techFilter, technology)
-				|| checkTechnologies(techFilter, technology)) {
-			return true;
-		}
-		return false;
+	private boolean isFilterNullOrAny(String filter){
+		return filter == null || filter.toLowerCase().equals(StatusEnums.ANY.message().toLowerCase());
 	}
 
 	private boolean checkTower(TechnologyFilter techFilter, Technology technology) {
@@ -401,7 +336,6 @@ public class TechnologyServiceImpl implements TechnologyService {
 			if (offer.toLowerCase().contains(techFilter.getTitleContains().toLowerCase())) {
 				return true;
 			}
-
 		}
 		return false;
 	}
@@ -413,7 +347,6 @@ public class TechnologyServiceImpl implements TechnologyService {
 			if (item.toLowerCase().contains(techFilter.getTitleContains().toLowerCase())) {
 				return true;
 			}
-
 		}
 		return false;
 	}
@@ -547,14 +480,14 @@ public class TechnologyServiceImpl implements TechnologyService {
 		Type listType = new TypeToken<List<TechModelTo>>() {}.getType();
 		List<TechModelTo> techList = new Gson().fromJson(json, listType);
 		List<String> resultList = new ArrayList<>();
-		
-		
+
+
 		for (TechModelTo techModelTo : techList){
 			resultList.add(techModelTo.getName());
 		}
-		
+
 		Collections.sort(resultList);
-			
+
 		return resultList;
 	}
 
