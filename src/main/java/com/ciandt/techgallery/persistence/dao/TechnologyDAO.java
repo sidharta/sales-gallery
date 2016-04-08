@@ -33,4 +33,17 @@ public interface TechnologyDAO extends GenericDAO<Technology, String> {
    * @return the technology if is active.
    */
   public Technology findByIdActive(String id);
+  
+  
+  /**
+   * Method to get the technology by Pipedrive id active.
+   *
+   * @author <a href="mailto:edgardc@ciandt.com"> Edgard Cardoso </a>
+   * @since 08/04/2016
+   *
+   * @param id to find the technology.
+   *
+   * @return the technology if is active.
+   */
+  public Technology findByIdPipedriveActive(Long id);
 }

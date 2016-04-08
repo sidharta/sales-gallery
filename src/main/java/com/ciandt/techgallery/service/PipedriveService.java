@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.ciandt.techgallery.service.model.pipedrive.DealTO;
 import com.ciandt.techgallery.service.model.pipedrive.webhook.Deal;
+import com.ciandt.techgallery.service.model.pipedrive.webhook.WebhookResponse;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.InternalServerErrorException;
 import com.google.api.server.spi.response.NotFoundException;
@@ -27,12 +28,12 @@ public interface PipedriveService {
 	/**
 	 * Persist deal from webhook.
 	 * 
-	 * @param deal
+	 * @param webhookResponse
 	 * @throws BadRequestException
 	 * @throws IOException
 	 * @throws GeneralSecurityException
 	 */
-	void saveFromWebhook(Deal deal) throws BadRequestException, IOException, GeneralSecurityException;
+	void saveFromWebhook(WebhookResponse webhookResponse) throws BadRequestException, IOException, GeneralSecurityException;
 
 	/**
 	 * Service for getting a list of possibles offers.

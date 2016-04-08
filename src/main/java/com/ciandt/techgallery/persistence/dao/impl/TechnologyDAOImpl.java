@@ -56,4 +56,15 @@ public class TechnologyDAOImpl extends GenericDAOImpl<Technology, String> implem
     }
     return null;
   }
+
+   @Override
+   public Technology findByIdPipedriveActive(Long id) {
+	   final Objectify objectify = OfyService.ofy();
+	    Technology entity =
+	        objectify.load().type(Technology.class).filter(Technology.ID_PIPEDRIVE, id).first().now();
+
+	    return entity;
+   }
+  
+  
 }

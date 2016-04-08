@@ -31,6 +31,7 @@ public class Technology extends BaseEntity<String> {
 	 * Constants --------------------------------------------
 	 */
 	public static final String ID = "id";
+	public static final String ID_PIPEDRIVE = "idPipedrive";
 	public static final String NAME = "name";
 	public static final String SHORT_DESCRIPTION = "shortDescription";
 	public static final String DESCRIPTION = "description";
@@ -55,6 +56,9 @@ public class Technology extends BaseEntity<String> {
 	 */
 	@Id
 	private String id;
+	
+	@Index
+	private Long idPipedrive;
 
 	@Index
 	private String name;
@@ -168,6 +172,16 @@ public class Technology extends BaseEntity<String> {
 
 	public void setTechnologies(List<String> value) {
 		this.technologies = value;
+	}
+	
+	
+
+	public Long getIdPipedrive() {
+		return idPipedrive;
+	}
+
+	public void setIdPipedrive(Long idPipedrive) {
+		this.idPipedrive = idPipedrive;
 	}
 
 	@Override

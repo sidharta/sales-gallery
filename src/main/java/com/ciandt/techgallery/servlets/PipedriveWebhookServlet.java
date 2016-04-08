@@ -36,7 +36,7 @@ public class PipedriveWebhookServlet extends HttpServlet {
 
 			if (PipedriveUtil.shouldProcess(webhookResponse)) {
 				try {
-					PipedriveServiceImpl.getInstance().saveFromWebhook(webhookResponse.getCurrent());
+					PipedriveServiceImpl.getInstance().saveFromWebhook(webhookResponse);
 				} catch (BadRequestException e) {
 					logger.severe("Bad request");
 					logger.severe(e.getMessage());
@@ -47,7 +47,6 @@ public class PipedriveWebhookServlet extends HttpServlet {
 					resp.sendError(500);
 				}
 			}
-
 			resp.getWriter().append(jsonString);
 		} else {
 			resp.sendError(403);

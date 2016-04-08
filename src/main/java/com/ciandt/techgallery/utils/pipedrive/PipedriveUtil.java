@@ -54,9 +54,10 @@ public class PipedriveUtil {
 						(current.getOrgName() != null && !current.getOrgName().equals(previous.getOrgName())) || 
 						(current.getTitle() != null && !current.getTitle().equals(previous.getTitle())) || 
 						(current.getStatus() != null && !current.getStatus().equals(previous.getStatus())) ||
-						(current.getProducts() != null && !current.getProducts().equals(previous.getProducts())) ||
-						(current.getTower() != null && !current.getTower().equals(previous.getTower()))
-				);
+						(current.getUserId() != null && !current.getUserId().equals(previous.getUserId())) ||
+						(current.getTower() != null && !current.getTower().equals(previous.getTower())) ||
+						(current.getProducts() != null && !current.getProducts().equals(previous.getProducts()))
+				);		
 	}
 
 	public static boolean isFromStage(Deal current, Deal previous) {
@@ -69,6 +70,10 @@ public class PipedriveUtil {
 
 	private static boolean isFromEligibleStage(Deal current) {
 		return current.getStageOrderNr() == STAGE_OPPORTUNITY || current.getStageOrderNr() == STAGE_PROPOSAL;
+	}
+	
+	public static boolean isNewDealTitle(Deal current, Deal previous){
+		return !current.getTitle().equals(previous.getTitle());
 	}
 
 	public static boolean isFromSameStage(Deal current, Deal previous) {

@@ -72,6 +72,9 @@ public interface TechnologyService {
   Technology getTechnologyById(String id, User user)
       throws NotFoundException, BadRequestException, InternalServerErrorException;
 
+  Technology getTechnologyByPipedriveId(Long id)
+	      throws NotFoundException, BadRequestException, InternalServerErrorException;
+  
   List<String> getOrderOptions(User user);
 
   void addCommentariesCounter(Technology technology);

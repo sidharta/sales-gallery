@@ -140,7 +140,10 @@ public class TechnologyServiceImpl implements TechnologyService {
 		}
 
 		if (StringUtils.isNotBlank(technology.getPipedriveLink())) {
-			technology.setPipedriveLink(StringUtils.replace(technology.getPipedriveLink(), "/deal/", "/deal/view/"));
+			if (!StringUtils.contains(technology.getPipedriveLink(), "/view/")){
+				technology.setPipedriveLink(StringUtils.replace(technology.getPipedriveLink(), "/deal/", "/deal/view/"));
+			}
+			
 		}
 
 		technology.setLastActivity(new Date());
@@ -177,10 +180,6 @@ public class TechnologyServiceImpl implements TechnologyService {
 		Technology dbTechnology = technologyDAO.findByName(technology.getName());
 		if (dbTechnology != null && technology.getId() == null) {
 			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_NAME_ALREADY_USED.message());
-		}
-		if (technology.getId() != null && dbTechnology != null
-				&& !dbTechnology.getName().equals(technology.getName())) {
-			throw new BadRequestException(ValidationMessageEnums.TECHNOLOGY_NAME_CANNOT_CHANGE.message());
 		}
 		return dbTechnology;
 	}
@@ -390,6 +389,12 @@ public class TechnologyServiceImpl implements TechnologyService {
 		}
 	}
 
+	@Override
+	public Technology getTechnologyByPipedriveId(Long id)
+			throws NotFoundException, BadRequestException, InternalServerErrorException {
+		return  technologyDAO.findByIdPipedriveActive(id);
+	}
+
 	/**
 	 * Validate the user logged in.
 	 *
@@ -478,7 +483,8 @@ public class TechnologyServiceImpl implements TechnologyService {
 				.getResourceAsStream("technologies.json");
 
 		String json = convertStreamToString(resourceStream);
-		Type listType = new TypeToken<List<TechModelTo>>() {}.getType();
+		Type listType = new TypeToken<List<TechModelTo>>() {
+		}.getType();
 		List<TechModelTo> techList = new Gson().fromJson(json, listType);
 		List<String> resultList = new ArrayList<>();
 

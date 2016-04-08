@@ -22,6 +22,7 @@ import com.ciandt.techgallery.service.enums.ValidationMessageEnums;
 import com.ciandt.techgallery.service.model.pipedrive.DealFieldTO;
 import com.ciandt.techgallery.service.model.pipedrive.DealTO;
 import com.ciandt.techgallery.service.model.pipedrive.webhook.Deal;
+import com.ciandt.techgallery.service.model.pipedrive.webhook.WebhookResponse;
 import com.ciandt.techgallery.utils.TechGalleryUtil;
 import com.ciandt.techgallery.utils.pipedrive.PipedriveUtil;
 import com.google.api.client.http.GenericUrl;
@@ -46,7 +47,7 @@ public class PipedriveServiceImpl implements PipedriveService {
 
 	private static String PIPEDRIVE_DEAL_URL_BASE = "https://api.pipedrive.com/v1/deals/";
 	private static String PIPEDRIVE_DEAL_FIELD_URL_BASE = "https://api.pipedrive.com/v1/dealFields/";
-	private static String PIPEDRIVE_DEAL_URL_PREFIX = "https://citsoftware.pipedrive.com/deal/";
+	private static String PIPEDRIVE_DEAL_URL_PREFIX = "https://citsoftware.pipedrive.com/deal/view/";
 	private static String PIPEDRIVE_PRODUCT_KEY = "e16df82dc89790231a2169c6ee3d4b79a2230036";
 	private static String PIPEDRIVE_TOWER_KEY = "7b4743f02e683528a10ec09ed249726b5adcf6ad";
 	
@@ -157,29 +158,34 @@ public class PipedriveServiceImpl implements PipedriveService {
 	}
 
 	@Override
-	public void saveFromWebhook(Deal deal) throws BadRequestException, IOException, GeneralSecurityException {
-		Technology technology = new Technology();
-		technology.setId(TechGalleryUtil.slugify(deal.getTitle()));
-		technology.setName(deal.getTitle());
-		technology.setClient(deal.getOrgName());
-		technology.setStatus(deal.getStatus());
-		technology.setOffers(PipedriveUtil.getProducts(deal.getProducts()));
-		technology.setShortDescription(deal.getTitle());
-		technology.setDescription(deal.getTitle());
-		technology.setTower(deal.getTower().getName());
-		
+	public void saveFromWebhook(WebhookResponse webhookResponse) throws BadRequestException, IOException, GeneralSecurityException {
 		try {
-			DealTO dealTO = getPipedriveDeal(deal.getId().toString());
+			DealTO dealTO = getPipedriveDeal(webhookResponse.getCurrent().getId().toString());
+			Technology technology = technologyService.getTechnologyByPipedriveId(webhookResponse.getCurrent().getId());
+		
+			if (technology == null){
+				technology = new Technology();
+				technology.setDescription(dealTO.getName());
+				technology.setShortDescription(dealTO.getName());
+				technology.setId(TechGalleryUtil.slugify(dealTO.getName()));
+				technology.setIdPipedrive(webhookResponse.getCurrent().getId());
+			}			
+
+			technology.setName(dealTO.getName());
+			technology.setClient(dealTO.getClient());
+			technology.setStatus(dealTO.getStatus());
+			technology.setOffers(dealTO.getOffers());
+			technology.setTower(dealTO.getTower());
 			technology.setOwnerEmail(dealTO.getOwnerEmail());
 			technology.setOwnerName(dealTO.getOwnerName());
-			technology.setPipedriveLink(PIPEDRIVE_DEAL_URL_PREFIX + deal.getId());
+			technology.setPipedriveLink(PIPEDRIVE_DEAL_URL_PREFIX + webhookResponse.getCurrent().getId());
+			
+			technologyService.addOrUpdateTechnology(technology, null);
 		} catch (InternalServerErrorException e) {
 			e.printStackTrace();
 		} catch (NotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		technologyService.addOrUpdateTechnology(technology, null);
 	}
 	
 	private HashMap<String, DealFieldTO> getOffers() throws NotFoundException, BadRequestException, InternalServerErrorException, IOException {
