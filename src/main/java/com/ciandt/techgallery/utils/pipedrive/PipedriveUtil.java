@@ -54,7 +54,8 @@ public class PipedriveUtil {
 						(current.getOrgName() != null && !current.getOrgName().equals(previous.getOrgName())) || 
 						(current.getTitle() != null && !current.getTitle().equals(previous.getTitle())) || 
 						(current.getStatus() != null && !current.getStatus().equals(previous.getStatus())) ||
-						(current.getProducts() != null && !current.getProducts().equals(previous.getProducts()))
+						(current.getProducts() != null && !current.getProducts().equals(previous.getProducts())) ||
+						(current.getTower() != null && !current.getTower().equals(previous.getTower()))
 				);
 	}
 
