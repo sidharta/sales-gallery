@@ -30,6 +30,7 @@ public class TechnologyTransformer implements Transformer<Technology, Technology
 		product.setCreationDate(baseObject.getCreationDate());
 		product.setImageContent(baseObject.getImageContent());
 		product.setPipedriveLink(baseObject.getPipedriveLink());
+		product.setIdPipedrive(baseObject.getIdPipedrive());
 		return product;
 	}
 
@@ -58,6 +59,7 @@ public class TechnologyTransformer implements Transformer<Technology, Technology
 			product.setCreationDate(baseObject.getCreationDate());
 			product.setImageContent(baseObject.getImageContent());
 			product.setPipedriveLink(baseObject.getPipedriveLink());
+			product.setIdPipedrive(baseObject.getIdPipedrive());
 			return product;
 		} else {
 			return null;

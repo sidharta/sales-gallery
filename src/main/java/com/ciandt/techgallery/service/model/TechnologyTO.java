@@ -47,6 +47,8 @@ public class TechnologyTO implements Response {
 	private String imageContent;
 	/** technology is followed by the logged user. */
 	private boolean followedByUser;
+	
+	private Long idPipedrive;
 
 	private Date lastActivity;
 
@@ -220,5 +222,13 @@ public class TechnologyTO implements Response {
 
 	public void setTower(String tower) {
 		this.tower = tower;
+	}
+
+	public Long getIdPipedrive() {
+		return idPipedrive;
+	}
+
+	public void setIdPipedrive(Long idPipedrive) {
+		this.idPipedrive = idPipedrive;
 	}
 }

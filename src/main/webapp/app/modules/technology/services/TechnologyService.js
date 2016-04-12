@@ -96,7 +96,8 @@ module.exports = function($q, $timeout, $rootScope) {
         website : context.webSite,
         image : context.image,
         creationDate: context.creationDate,
-        pipedriveLink: context.pipedriveLink
+        pipedriveLink: context.pipedriveLink,
+        idPipedrive: context.idPipedrive
       };
       return req;
     }else{
@@ -115,7 +116,8 @@ module.exports = function($q, $timeout, $rootScope) {
         website : context.webSite,
         imageContent : context.image,
         creationDate: context.creationDate,
-        pipedriveLink: context.pipedriveLink
+        pipedriveLink: context.pipedriveLink,
+        idPipedrive: context.idPipedrive
       };
       return req;
     }

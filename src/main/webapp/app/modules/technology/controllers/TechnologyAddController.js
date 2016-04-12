@@ -118,6 +118,7 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
     context.creationDate = technology.creationDate;
     context.pipedriveLink = technology.pipedriveLink;
     context.hasPipedriveLink = !!context.pipedriveLink;
+    context.idPipedrive = technology.idPipedrive;
   }
 
   this.selectStatus = function(selected){
