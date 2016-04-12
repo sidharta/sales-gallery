@@ -33,7 +33,7 @@ $card-spacing: 15px;
   border: none;
   overflow: hidden;
 
-  height: 280px;
+  min-height: 280px;
 }
 .card-title {
   font-size: 20px;
@@ -49,9 +49,14 @@ $card-spacing: 15px;
   padding-top: 0;
   text-overflow: ellipsis;
   overflow: hidden;
-
+/*
   height: 125px;
+*/
 }
 .card-meta {
   background-color: #f9f9f9;
+}
+
+.card-join {
+    min-height: 405px;
 }
