@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -132,8 +133,7 @@ public class PipedriveServiceImpl implements PipedriveService {
 		try {
 			String offerIds = data.getString(PIPEDRIVE_PRODUCT_KEY);
 			if (StringUtils.isNotBlank(offerIds)){
-				List<String> offerItems = this.dealFieldToList(this.getOffers());
-				deal.setOffers(getOfferNames(offerItems));
+				deal.setOffers(getOfferNames(Arrays.asList(offerIds.split(","))));
 			}
 		} catch (JSONException e) {
 			// Product is null
@@ -257,6 +257,7 @@ public class PipedriveServiceImpl implements PipedriveService {
 				result.add(dealFieldTO.getLabel());
 			}
 		}
+		
 		return result;
     }
 
