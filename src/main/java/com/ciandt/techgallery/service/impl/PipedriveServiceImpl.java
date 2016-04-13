@@ -51,7 +51,7 @@ public class PipedriveServiceImpl implements PipedriveService {
 	private static String PIPEDRIVE_DEAL_URL_PREFIX = "https://citsoftware.pipedrive.com/deal/view/";
 	private static String PIPEDRIVE_PRODUCT_KEY = "e16df82dc89790231a2169c6ee3d4b79a2230036";
 	private static String PIPEDRIVE_TOWER_KEY = "7b4743f02e683528a10ec09ed249726b5adcf6ad";
-	
+
 	private static String PIPEDRIVE_DEAL_FIELD_TOWER_ID = "12459";
 	private static String PIPEDRIVE_DEAL_FIELD_PRODUCT_ID = "12461";
 
@@ -94,7 +94,8 @@ public class PipedriveServiceImpl implements PipedriveService {
 		return getPipedriveDeal(id);
 	}
 
-	private DealTO getPipedriveDeal(String id) throws InternalServerErrorException, IOException, NotFoundException, BadRequestException {
+	private DealTO getPipedriveDeal(String id)
+			throws InternalServerErrorException, IOException, NotFoundException, BadRequestException {
 		HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
 			@Override
 			public void initialize(HttpRequest request) {
@@ -114,7 +115,8 @@ public class PipedriveServiceImpl implements PipedriveService {
 		}
 	}
 
-	private DealTO parseJsonToDeal(String json) throws NotFoundException, BadRequestException, InternalServerErrorException, IOException {
+	private DealTO parseJsonToDeal(String json)
+			throws NotFoundException, BadRequestException, InternalServerErrorException, IOException {
 		JSONObject dealObject = new JSONObject(json);
 
 		JSONObject data = dealObject.getJSONObject("data");
@@ -129,26 +131,31 @@ public class PipedriveServiceImpl implements PipedriveService {
 
 		JSONObject org_id = data.getJSONObject("org_id");
 		deal.setClient(org_id.getString("name"));
-
+		
 		try {
 			String offerIds = data.getString(PIPEDRIVE_PRODUCT_KEY);
-			if (StringUtils.isNotBlank(offerIds)){
+			if (StringUtils.isNotBlank(offerIds)) {
 				deal.setOffers(getOfferNames(Arrays.asList(offerIds.split(","))));
 			}
 		} catch (JSONException e) {
 			// Product is null
-		}	
-		
-		String towerId = data.getString(PIPEDRIVE_TOWER_KEY);
-		if (StringUtils.isNotBlank(towerId)) {
-			deal.setTower(getTowerName(towerId));
+		}
+
+		try {
+			String towerId = data.getString(PIPEDRIVE_TOWER_KEY);
+			if (StringUtils.isNotBlank(towerId)) {
+				deal.setTower(getTowerName(towerId));
+			}
+		} catch (JSONException e) {
+			// Tower is null
 		}
 
 		return deal;
 	}
-	
-	private List<String> dealFieldToList(HashMap<String, DealFieldTO> map) throws NotFoundException, BadRequestException, InternalServerErrorException, IOException{
-		
+
+	private List<String> dealFieldToList(HashMap<String, DealFieldTO> map)
+			throws NotFoundException, BadRequestException, InternalServerErrorException, IOException {
+
 		List<DealFieldTO> list = new ArrayList<DealFieldTO>(map.values());
 		List<String> result = new ArrayList<>();
 		for (DealFieldTO dealFieldTO : list) {
@@ -158,18 +165,19 @@ public class PipedriveServiceImpl implements PipedriveService {
 	}
 
 	@Override
-	public void saveFromWebhook(WebhookResponse webhookResponse) throws BadRequestException, IOException, GeneralSecurityException {
+	public void saveFromWebhook(WebhookResponse webhookResponse)
+			throws BadRequestException, IOException, GeneralSecurityException {
 		try {
 			DealTO dealTO = getPipedriveDeal(webhookResponse.getCurrent().getId().toString());
 			Technology technology = technologyService.getTechnologyByPipedriveId(webhookResponse.getCurrent().getId());
-		
-			if (technology == null){
+
+			if (technology == null) {
 				technology = new Technology();
 				technology.setDescription(dealTO.getName());
 				technology.setShortDescription(dealTO.getName());
 				technology.setId(TechGalleryUtil.slugify(dealTO.getName()));
 				technology.setIdPipedrive(webhookResponse.getCurrent().getId());
-			}			
+			}
 
 			technology.setName(dealTO.getName());
 			technology.setClient(dealTO.getClient());
@@ -179,7 +187,7 @@ public class PipedriveServiceImpl implements PipedriveService {
 			technology.setOwnerEmail(dealTO.getOwnerEmail());
 			technology.setOwnerName(dealTO.getOwnerName());
 			technology.setPipedriveLink(PIPEDRIVE_DEAL_URL_PREFIX + webhookResponse.getCurrent().getId());
-			
+
 			technologyService.addOrUpdateTechnology(technology, null);
 		} catch (InternalServerErrorException e) {
 			e.printStackTrace();
@@ -187,15 +195,17 @@ public class PipedriveServiceImpl implements PipedriveService {
 			e.printStackTrace();
 		}
 	}
-	
-	private HashMap<String, DealFieldTO> getOffers() throws NotFoundException, BadRequestException, InternalServerErrorException, IOException {
+
+	private HashMap<String, DealFieldTO> getOffers()
+			throws NotFoundException, BadRequestException, InternalServerErrorException, IOException {
 		HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
 			@Override
 			public void initialize(HttpRequest request) {
 				request.setParser(new JsonObjectParser(JSON_FACTORY));
 			}
 		});
-		GenericUrl url = new GenericUrl(PIPEDRIVE_DEAL_FIELD_URL_BASE + PIPEDRIVE_DEAL_FIELD_PRODUCT_ID + "?api_token=" + loadApikey());
+		GenericUrl url = new GenericUrl(
+				PIPEDRIVE_DEAL_FIELD_URL_BASE + PIPEDRIVE_DEAL_FIELD_PRODUCT_ID + "?api_token=" + loadApikey());
 		HttpRequest request = requestFactory.buildGetRequest(url);
 		request.getHeaders().setContentType("application/json");
 
@@ -214,52 +224,53 @@ public class PipedriveServiceImpl implements PipedriveService {
 		validateUser(user);
 		return this.dealFieldToList(getOffers());
 	}
-	
-	private HashMap<String, DealFieldTO> parseJsonToDealField(String json){
-		
+
+	private HashMap<String, DealFieldTO> parseJsonToDealField(String json) {
+
 		HashMap<String, DealFieldTO> items = new HashMap<>();
 		JSONObject dealObject = new JSONObject(json);
 
 		JSONObject data = dealObject.getJSONObject("data");
-		
+
 		JSONArray options = data.getJSONArray("options");
-		
-		for (int i=0; i< options.length(); i++){
-			 JSONObject obj = options.getJSONObject(i);
-			 String label = obj.getString("label");
-			 String id = Integer.toString(obj.getInt("id"));
-			 if (StringUtils.isNotBlank(label) && StringUtils.isNotBlank(id)){
-				 DealFieldTO dealFieldTO = new DealFieldTO();
-				 dealFieldTO.setId(id);
-				 dealFieldTO.setLabel(label);
-				 items.put(id, dealFieldTO);
-			 }
+
+		for (int i = 0; i < options.length(); i++) {
+			JSONObject obj = options.getJSONObject(i);
+			String label = obj.getString("label");
+			String id = Integer.toString(obj.getInt("id"));
+			if (StringUtils.isNotBlank(label) && StringUtils.isNotBlank(id)) {
+				DealFieldTO dealFieldTO = new DealFieldTO();
+				dealFieldTO.setId(id);
+				dealFieldTO.setLabel(label);
+				items.put(id, dealFieldTO);
+			}
 		}
 		return items;
 	}
 
 	private String getTowerName(String id) throws InternalServerErrorException, NotFoundException, IOException {
 		HashMap<String, DealFieldTO> items = this.getTowers();
-		DealFieldTO dealFieldTO =  items.get(id);
-		if (dealFieldTO != null){
+		DealFieldTO dealFieldTO = items.get(id);
+		if (dealFieldTO != null) {
 			return dealFieldTO.getLabel();
 		}
 		return "";
 	}
 
-	private List<String> getOfferNames(List<String> ids) throws NotFoundException, BadRequestException, InternalServerErrorException, IOException {
+	private List<String> getOfferNames(List<String> ids)
+			throws NotFoundException, BadRequestException, InternalServerErrorException, IOException {
 		HashMap<String, DealFieldTO> items = this.getOffers();
-		
+
 		List<String> result = new LinkedList<>();
 		for (final String id : ids) {
-			DealFieldTO dealFieldTO =  items.get(id);
-			if (dealFieldTO != null){
+			DealFieldTO dealFieldTO = items.get(id);
+			if (dealFieldTO != null) {
 				result.add(dealFieldTO.getLabel());
 			}
 		}
 		
 		return result;
-    }
+	}
 
 	/**
 	 * Validate the user logged in.
@@ -286,19 +297,22 @@ public class PipedriveServiceImpl implements PipedriveService {
 	}
 
 	@Override
-	public List<String> getTowers(User user) throws BadRequestException, NotFoundException, InternalServerErrorException, IOException{
+	public List<String> getTowers(User user)
+			throws BadRequestException, NotFoundException, InternalServerErrorException, IOException {
 		validateUser(user);
 		return this.dealFieldToList(this.getTowers());
 	}
-	
-	private HashMap<String, DealFieldTO> getTowers() throws InternalServerErrorException, IOException, NotFoundException{
+
+	private HashMap<String, DealFieldTO> getTowers()
+			throws InternalServerErrorException, IOException, NotFoundException {
 		HttpRequestFactory requestFactory = HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
 			@Override
 			public void initialize(HttpRequest request) {
 				request.setParser(new JsonObjectParser(JSON_FACTORY));
 			}
 		});
-		GenericUrl url = new GenericUrl(PIPEDRIVE_DEAL_FIELD_URL_BASE + PIPEDRIVE_DEAL_FIELD_TOWER_ID + "?api_token=" + loadApikey());
+		GenericUrl url = new GenericUrl(
+				PIPEDRIVE_DEAL_FIELD_URL_BASE + PIPEDRIVE_DEAL_FIELD_TOWER_ID + "?api_token=" + loadApikey());
 		HttpRequest request = requestFactory.buildGetRequest(url);
 		request.getHeaders().setContentType("application/json");
 
