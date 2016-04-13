@@ -8,7 +8,7 @@ module.exports = function() {
     },
     template:
     '<div class="tags">' +
-    '<div ng-repeat="(idx, tag) in tags" class="tag label technology-chips">{{tag}} <button class="bnt-chip" ng-disabled={{disable}} ng-click="remove(idx)">x</button>  </div>' +
+    '<div ng-repeat="(idx, tag) in tags" class="tag label technology-chips">{{tag}} <button type="button" class="bnt-chip" ng-disabled={{disable}} ng-click="remove(idx)">x</button>  </div>' +
     '</div>' +
     '<div class="input-group"><input type="text" class="form-control" placeholder="Adicione alguma" ng-model="newValue" />' +
     '</div>' ,
@@ -67,6 +67,9 @@ module.exports = function() {
 
       // adds the new tag to the array
       $scope.add = function() {
+          if (!$scope.newValue) {
+              return false;
+          }
         // if not dupe, add it
         if(!$scope.tags) {
           $scope.tags = [];
@@ -80,15 +83,17 @@ module.exports = function() {
 
       // remove an item
       $scope.remove = function ( idx ) {
-        $scope.tags.splice( idx, 1 );
+          $scope.tags.splice( idx, 1 );
       };
 
-      // capture keypresses
-      input.bind( 'keypress', function ( event ) {
-        // enter was pressed
-        if ( event.keyCode == 13 ) {
-          $scope.$apply( $scope.add );
-        }
+      // capture enter
+      input.bind( 'keydown', function ( event ) {
+          if ( event.keyCode == 13 ) {
+             event.preventDefault(); // Doesn't work at all
+             window.stop(); // Works in all browsers but IE    
+             document.execCommand("Stop"); // Works in IE
+             return false; // Don't even know why it's here. Does nothing. 
+          }
       });
     }
   };
