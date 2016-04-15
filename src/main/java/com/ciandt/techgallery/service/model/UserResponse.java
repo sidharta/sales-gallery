@@ -73,8 +73,7 @@ public class UserResponse implements Response, Serializable {
   }
 
   public boolean isAdmin() {
-    // return admin;
-    return true;
+     return admin;
   }
 
   public void setAdmin(boolean admin) {
