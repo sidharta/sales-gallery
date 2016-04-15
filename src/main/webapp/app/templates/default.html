@@ -10,7 +10,7 @@
         <form ng-controller="SearchController as searchController" id="app-search"
         ng-submit="searchController.searchTechnology()" class="navbar-form navbar-left">
         <div class="form-group">
-          <input type="text" ng-disabled="app.isLoading" ng-change="searchController.changeTextFilter()" ng-model="searchController.textSearch" class="form-control" placeholder="Digite sua busca&hellip;">
+          <input type="text" ng-disabled="app.isLoading" ng-change="searchController.changeTextFilter()" ng-model="searchController.textSearch" class="form-control" placeholder="Type your search&hellip;">
           <button type="submit" class="btn btn-link"><span class="glyphicon glyphicon-search"></span></button>
         </div>
       </form>

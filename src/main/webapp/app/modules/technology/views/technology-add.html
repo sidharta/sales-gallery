@@ -12,9 +12,9 @@
       <div class="col-md-10 col-md-offset-1">
         <div class="card no-margin">
           <div class="card-section">
-            <h1 class="card-title" ng-if="!technology.id.length">Adicionar nova proposta</h1>
+            <h1 class="card-title" ng-if="!technology.id.length">Add new proposal</h1>
 
-            <h1 class="card-title" ng-if="technology.id.length">Editar proposta</h1>
+            <h1 class="card-title" ng-if="technology.id.length">Edit proposal</h1>
           </div>
           <div class="card-section">
             <form id="addTechnologyForm" name="addTechnologyForm" ng-submit="technology.addOrUpdateTechnology(addTechnologyForm)" novalidate>
@@ -24,42 +24,42 @@
                     <div id="div_image" class="media-left">
                       <output id="list">
                         <label for="technology-image">
-                            <img title="Insira uma imagem" ng-src="{{technology.imagePreview}}">
+                            <img title="Insert an image" ng-src="{{technology.imagePreview}}">
                         </label>
                       </output>
                     </div>
                     <div class="media-body">
-                      <label for="technology-image">Imagem</label>
+                      <label for="technology-image">Image</label>
                       <input type="file" class="form-control" id="technology-image" onchange="angular.element(this).scope().handleFileSelect(event)" onclick="this.value=''">
                     </div>
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-class="{'has-error': (addTechnologyForm.pipedriveLink.$invalid && addTechnologyForm.pipedriveLink.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.pipedriveLink.$invalid)}">
-                  <label for="pipedrive-link">Link Pipedrive</label>
+                  <label for="pipedrive-link">Pipedrive Link</label>
                   <input type="text" class="form-control"  id="technology-pipedriveLink" ng-model="technology.pipedriveLink"
                   ng-if="!technology.id || !technology.hasPipedriveLink"
                   ng-pattern='technology.regexPipedrive' ng-blur="technology.onLostFocus(technology.pipedriveLink)"
                   name="pipedriveLink" placeholder="Ex: https://citsoftware.pipedrive.com/deal/{id}">
                   <a readonly target="_blank" class="form-control" ng-href="{{technology.pipedriveLink}}" ng-if="technology.id && technology.hasPipedriveLink">{{ technology.pipedriveLink }}</a>
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.pipedriveLink.$touched">
-                    <span ng-show="addTechnologyForm.pipedriveLink.$invalid" class="help-block">O link do pipedrive está incorreto</span>
+                    <span ng-show="addTechnologyForm.pipedriveLink.$invalid" class="help-block">Pipedrive link is incorrect</span>
                   </div>
                 </div>
               </div>
               <hr>
               <div class="row">
                 <div class="form-group col-md-6" ng-class="{'has-error': (addTechnologyForm.name.$invalid && addTechnologyForm.name.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.name.$invalid)}">
-                  <label for="technology-name">Nome da proposta</label>
-                  <input type="text" class="form-control"  ng-disabled="technology.pipedriveLink" id="technology-name" name="name" ng-model="technology.name" placeholder="Ex.: GPV Ferrovias" required="" ng-disabled="technology.id.length">
+                  <label for="technology-name">Proposal name</label>
+                  <input type="text" class="form-control"  ng-disabled="technology.pipedriveLink" id="technology-name" name="name" ng-model="technology.name" placeholder="e.g., GPV Ferrovias" required="" ng-disabled="technology.id.length">
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.name.$touched">
-                    <span ng-show="addTechnologyForm.name.$error.required" class="help-block">O campo Nome é obrigatório</span>
+                    <span ng-show="addTechnologyForm.name.$error.required" class="help-block"><i>Proposal name</i> is a required field</span>
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-class="{'has-error': (addTechnologyForm.client.$invalid && addTechnologyForm.client.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.client.$invalid)}">
-                  <label for="technology-client">Nome do cliente</label>
-                  <input type="text" class="form-control" id="technology-client" ng-disabled="technology.pipedriveLink" name="client" ng-model="technology.client" required placeholder="nome do cliente">
+                  <label for="technology-client">Client name</label>
+                  <input type="text" class="form-control" id="technology-client" ng-disabled="technology.pipedriveLink" name="client" ng-model="technology.client" required placeholder="Client name">
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.client.$touched">
-                    <span ng-show="addTechnologyForm.client.$error.required" class="help-block">O campo Cliente é obrigatório</span>
+                    <span ng-show="addTechnologyForm.client.$error.required" class="help-block"><i>Client name</i> is a required field</span>
                   </div>
                 </div>
               </div>
@@ -68,11 +68,11 @@
                   <label for="technology-status">Owner</label>
                   <input type="email" class="form-control" name="ownerEmail" ng-model="technology.ownerEmail" ng-disabled="technology.pipedriveLink" placeholder="[login]@ciandt.com">
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.ownerEmail.$touched">
-                    <span ng-show="addTechnologyForm.ownerEmail.$invalid" class="help-block">Email inválido</span>
+                    <span ng-show="addTechnologyForm.ownerEmail.$invalid" class="help-block">Invalid email</span>
                   </div>
                 </div>
                 <div class="form-group col-md-6" ng-show="loggedUserInformation.admin">
-                  <label for="technology-status">Selecione o status da proposta</label> </br>
+                  <label for="technology-status">Select proposal status</label> </br>
                   <div class="btn-group" uib-dropdown ng-class="technology.pipedriveLink ? 'selected-pipedrive' : ''">
                     <button id="single-button" type="button" ng-disabled="technology.pipedriveLink" class="btn btn-default" uib-dropdown-toggle>
                       {{ technology.selectedStatus==null ? 'Status Proposta' : technology.selectedStatus }}
@@ -80,7 +80,7 @@
                     </button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
                       <li role="menuitem" ng-repeat="item in technology.dropDownStatus">
-                        <a ng-show="item != 'Todos' && item != 'Não informado'" ng-click="technology.selectStatus(item)">{{item}}</a>
+                        <a ng-show="item != 'All' && item != 'Not provided'" ng-click="technology.selectStatus(item)">{{item}}</a>
                       </li>
                     </ul>
                   </div>
@@ -88,16 +88,16 @@
               </div>
               <div class="row">
                 <div class="form-group col-md-6" >
-                  <label for="technology-offer">Selecione a oferta</label>
+                  <label for="technology-offer">Select an offer</label>
                   <fieldset ng-disabled="technology.pipedriveLink">
                     <tag-manager tags="technology.offers" autocomplete="technology.allOffers" disable="technology.pipedriveLink? true: false"></tag-manager>
                   </fieldset>
                 </div>
                 <div class="form-group col-md-6" >
-                  <label for="technology-status">Selecione a torre</label> </br>
+                  <label for="technology-status">Select a tower</label> </br>
                   <div class="btn-group" uib-dropdown ng-class="technology.pipedriveLink ? 'selected-pipedrive' : ''">
                     <button id="single-button" type="button" ng-disabled="technology.pipedriveLink" class="btn btn-default" uib-dropdown-toggle>
-                      {{ technology.selectedTower==null ? 'Selecione a Torre' : technology.selectedTower }}
+                      {{ technology.selectedTower==null ? 'Select a tower' : technology.selectedTower }}
                       <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
@@ -110,39 +110,39 @@
               </div>
               <div class="row">
                 <div class="form-group col-md-12" ng-class="{'has-error': (addTechnologyForm.shortDescription.$invalid && addTechnologyForm.shortDescription.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.shortDescription.$invalid)}">
-                  <label for="technology-shortDescription">Resumo</label>
-                  <textarea class="form-control" id="technology-shortDescription" name="shortDescription" ng-model="technology.shortDescription" maxlength="140"  style="max-height: 50px; height: 50px; " placeholder="O resumo é o texto que aparece no card" required></textarea>
+                  <label for="technology-shortDescription">Summary</label>
+                  <textarea class="form-control" id="technology-shortDescription" name="shortDescription" ng-model="technology.shortDescription" maxlength="140"  style="max-height: 50px; height: 50px; " placeholder="Summary is displayed in card" required></textarea>
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.shortDescription.$touched">
-                    <span ng-show="addTechnologyForm.shortDescription.$error.required" class="help-block">O campo Resumo é obrigatório</span>
+                    <span ng-show="addTechnologyForm.shortDescription.$error.required" class="help-block"><i>Summary is a required field</i></span>
                   </div>
                 </div>
                 <div class="form-group col-md-12" ng-class="{'has-error': (addTechnologyForm.description.$invalid && addTechnologyForm.description.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.description.$invalid)}">
-                  <label for="technology-description">Descrição</label>
-                  <textarea class="form-control" id="technology-description" style="min-height: 50px; height: 100px; max-height: 300px;" name="description" ng-model="technology.description" maxlength="2000" placeholder="Uma descrição mais detalhada ajudará nas buscas" required></textarea>
+                  <label for="technology-description">Description</label>
+                  <textarea class="form-control" id="technology-description" style="min-height: 50px; height: 100px; max-height: 300px;" name="description" ng-model="technology.description" maxlength="2000" placeholder="A detailed description helps searchability" required></textarea>
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.description.$touched">
-                    <span ng-show="addTechnologyForm.description.$error.required" class="help-block">O campo Descrição é obrigatório</span>
+                    <span ng-show="addTechnologyForm.description.$error.required" class="help-block"><i>Description</i> field is required</span>
                   </div>
                 </div>
                 <div class="form-group col-md-12" ng-class="{'has-error': (addTechnologyForm.website.$invalid && addTechnologyForm.website.$touched) || (addTechnologyForm.$submitted && addTechnologyForm.website.$invalid)}">
-                  <label for="technology-website">Link da pasta do drive</label>
+                  <label for="technology-website">Drive folder link</label>
                   <input type="text" class="form-control" ng-pattern='technology.regexGoogledrive' name="website" id="technology-website" ng-model="technology.webSite" placeholder="https://drive.google.com/open?id={}">
                   <div ng-show="addTechnologyForm.$submitted || addTechnologyForm.website.$touched">
-                    <span ng-show="addTechnologyForm.website.$invalid" class="help-block">O link do Google Drive está incorreto</span>
+                    <span ng-show="addTechnologyForm.website.$invalid" class="help-block">Drive folder link is incorrect</span>
                   </div>
                 </div>
                 <div class=" col-md-12">
-                  <label for="technology-technologies">Principais tecnologias envolvidas</label>
+                  <label for="technology-technologies">Major technologies used</label>
                   <tag-manager tags="technology.technologies" autocomplete="technology.allTechnologies" disable=false></tag-manager>
                 </div>
                 <div class="form-inline col-md-12 text-right">
                   <div class="checkbox" ng-if="!technology.id.length">
                     <label>
-                      <input type="checkbox" ng-model="technology.addNew"> Adicionar outra
+                      <input type="checkbox" ng-model="technology.addNew"> Add and new
                     </label>
                   </div>
-                  <button type="submit" class="btn btn-primary" ng-disabled="addTechnologyForm.$invalid" ng-if="technology.id.length">Salvar proposta</button>
-                  <button type="submit" class="btn btn-primary" ng-disabled="addTechnologyForm.$invalid" ng-if="!technology.id.length">Adicionar proposta</button>
-                  <a href="#/proposals" class="btn btn-link">Cancelar</a>
+                  <button type="submit" class="btn btn-primary" ng-disabled="addTechnologyForm.$invalid" ng-if="technology.id.length">Save proposal</button>
+                  <button type="submit" class="btn btn-primary" ng-disabled="addTechnologyForm.$invalid" ng-if="!technology.id.length">Add proposal</button>
+                  <a href="#/proposals" class="btn btn-link">Cancel</a>
                 </div>
               </div>
             </form>

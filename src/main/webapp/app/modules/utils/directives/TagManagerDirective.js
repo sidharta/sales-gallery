@@ -10,7 +10,7 @@ module.exports = function() {
     '<div class="tags">' +
     '<div ng-repeat="(idx, tag) in tags" class="tag label technology-chips">{{tag}} <button type="button" class="bnt-chip" ng-disabled={{disable}} ng-click="remove(idx)">x</button>  </div>' +
     '</div>' +
-    '<div class="input-group"><input type="text" class="form-control" placeholder="Adicione alguma" ng-model="newValue" />' +
+    '<div class="input-group"><input type="text" class="form-control" placeholder="Add some item" ng-model="newValue" />' +
     '</div>' ,
 
     link: function ( $scope, $element, $attr ) {

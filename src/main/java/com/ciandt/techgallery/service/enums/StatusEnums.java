@@ -12,7 +12,7 @@ public enum StatusEnums {
   IN_PROPOSAL("open"),
   LOST("lost"),
   WON("won"),
-  UNINFORMED("Não informado");
+  NOT_PROVIDED("Not provided");
 
   private String message;
 
