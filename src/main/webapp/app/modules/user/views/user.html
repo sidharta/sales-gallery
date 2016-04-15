@@ -21,7 +21,7 @@
             </div>
             <div class="card card--stats">
               <div class="card-section">
-                <span class="panel-title">Comentários</span>
+                <span class="panel-title">Comments</span>
               </div>
               <div class="card-section text-center">
                 <span class="user-stats">{{ user.profile.owner.commentsCount }}</span>
@@ -32,19 +32,19 @@
       </div>
     </header>
     <div class="user-body">
-      <h3>Propostas</h3>
-      <p ng-if="!user.profile.technologies.length">Este usuário não está relacionado à nenhuma proposta.</p>
+      <h3>Proposals</h3>
+      <p ng-if="!user.profile.technologies.length">This user is not related with any proposal.</p>
       <div class="row" ng-if="user.profile.technologies.length">
         <div ng-repeat-start="technology in user.profile.technologies"></div>
         <div class="col-sm-6 col-md-3">
           <div class="card user-technology">
             <div class="card-section">
               <h3 class="card-title"><a href="#/proposals/{{ technology.id }}">{{ technology.technologyName }}</a></h3>
-              <small><a href="#/proposals/{{ technology.id }}">Ver proposta</a></small>
+              <small><a href="#/proposals/{{ technology.id }}">Show proposal</a></small>
             </div>
             <div class="card-section">
               <div class="user-technology-meta">
-                <button class="btn btn-link btn-block" ng-click="user.openCommentsFor(technology)"><span class="glyphicon glyphicon-comment"></span> Ver comentários</button>
+                <button class="btn btn-link btn-block" ng-click="user.openCommentsFor(technology)"><span class="glyphicon glyphicon-comment"></span> Show comments</button>
               </div>
             </div>
           </div>
@@ -57,10 +57,10 @@
 
   <script type="text/ng-template" id="comments.html">
     <div class="modal-header">
-      <h3 class="modal-title">Comentários de {{ user.name }} sobre {{ technology.technologyName }}</h3>
+      <h3 class="modal-title">Comments of {{ user.name }} about {{ technology.technologyName }}</h3>
     </div>
     <div class="modal-body">
-      <p ng-if="!technology.comments.length">Nenhum comentário encontrado.</p>
+      <p ng-if="!technology.comments.length">No comments found.</p>
       <ol class="technology-comments" ng-if="technology.comments.length">
         <li class="technology-comment" ng-repeat="comment in technology.comments">
           <p>{{comment.body}}</p>
@@ -70,7 +70,7 @@
             </div>
             <div class="media-content">
               <strong>{{ user.name }}</strong><br>
-              em {{ comment.timestamp | date:"dd/MM/yyyy 'às' HH:mm" }}
+              at {{ comment.timestamp | date:"dd/MM/yyyy 'às' HH:mm" }}
             </div>
           </div>
         </li>
