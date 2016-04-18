@@ -8,7 +8,7 @@
               <a ng-href="{{technology.item.pipedriveLink}}" target="_blank" ng-if="technology.item.pipedriveLink"  class="btn primary  btn-xs"><img src="assets/images/pipedrive.png" title="Link to pipedrive" class="pull-left"/></a>
               <a ng-href="{{technology.item.website}}" target="_blank" ng-if="technology.item.website" class="btn primary  btn-xs"><img src="assets/images/googledrive.png" title="Link to google drive" class="pull-left"/></a>
               <button id="idFollowButton" ng-click="technology.followTechnology()" ng-class="technology.setFollowedClass(technology.item.followedByUser)"><span class="glyphicon glyphicon-star-empty"></span> Follow</button>
-              <a href="#/proposals/{{ technology.item.id }}/edit" class="btn btn-default btn-xs" title="Editar {{ technology.item.name }}"><span class="glyphicon glyphicon-pencil"></span> Editr</a>
+              <a href="#/proposals/{{ technology.item.id }}/edit" class="btn btn-default btn-xs" title="Edit {{ technology.item.name }}"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
           </div>
         </div>
         </div>
