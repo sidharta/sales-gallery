@@ -96,10 +96,10 @@ module.exports = function ($rootScope, $stateParams, AppService, TechnologyServi
         context.recommended = true;
         loadComments();
         document.getElementById('idFollowButton').className = 'btn btn-xs btn-danger';
-        AppService.setAlertBotton('Recomendação incluída com sucesso.', 'success');
+        AppService.setAlertBotton('Recommendation added successfully.', 'success');
       });
     }else{
-      AppService.setAlertBotton('Você deve informar um comentário sobre sua recomendação.', 'warning');
+      AppService.setAlertBotton('You should provide a comment to recommendation.', 'warning');
     }
   }
 
@@ -110,7 +110,7 @@ module.exports = function ($rootScope, $stateParams, AppService, TechnologyServi
     	context.comment = '';
         loadComments();
        document.getElementById('idFollowButton').className = 'btn btn-xs btn-danger';
-        AppService.setAlertBotton('Comentário incluído com sucesso.', 'success');
+        AppService.setAlertBotton('Comment added successfully.', 'success');
       });
     }
   }

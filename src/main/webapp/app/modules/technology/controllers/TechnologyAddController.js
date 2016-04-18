@@ -72,9 +72,9 @@ module.exports = function ($rootScope, AppService, TechnologyService, $statePara
             $state.go('root.technologies');
           }
           if(isEdit){
-            AppService.setAlert('Proposta editada com sucesso', 'success');
+            AppService.setAlert('Proposal edited successfully', 'success');
           }else{
-            AppService.setAlert('Proposta criada com sucesso', 'success');
+            AppService.setAlert('Proposal edited successfully', 'success');
           }
         }
       });
