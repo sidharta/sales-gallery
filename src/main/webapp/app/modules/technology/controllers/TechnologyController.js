@@ -1,4 +1,4 @@
-module.exports = function ($rootScope, $stateParams, AppService, TechnologyService, $uibModal, Analytics) {
+module.exports = function ($rootScope, $stateParams, AppService, TechnologyService, $uibModal) {
 
   /**
    * Object context
@@ -92,7 +92,6 @@ module.exports = function ($rootScope, $stateParams, AppService, TechnologyServi
     if(context.commentRecommend && context.commentRecommend.trim().length <= 500){
       TechnologyService.addRecommendationComment(context, $stateParams.id).then(function(){
         context.commentRecommend = '';
-        Analytics.sendRecommendationEvent(context.item.name, context.recommended);
         context.recommended = true;
         loadComments();
         document.getElementById('idFollowButton').className = 'btn btn-xs btn-danger';
@@ -106,7 +105,6 @@ module.exports = function ($rootScope, $stateParams, AppService, TechnologyServi
   this.addComment = function(){
     if(context.comment && context.comment.trim().length <= 2000){
       TechnologyService.addComment(context, $stateParams.id).then(function(){
-    	Analytics.sendCommentEvent(context.item.name);
     	context.comment = '';
         loadComments();
        document.getElementById('idFollowButton').className = 'btn btn-xs btn-danger';
@@ -157,7 +155,6 @@ module.exports = function ($rootScope, $stateParams, AppService, TechnologyServi
   this.endorseUser = function() {
     TechnologyService.endorseUser($stateParams.id, this.endorsed.email).then(function(data){
       if(!data.hasOwnProperty('error')){
-        Analytics.sendEndorsementEvent(context.item.name, context.endorsed.email);
         context.getEndorsementsByTech();
         AppService.setAlert('Usuário indicado!' ,'success');
       } else {

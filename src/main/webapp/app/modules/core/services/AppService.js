@@ -1,4 +1,4 @@
-module.exports = function ($rootScope, $location, Analytics) {
+module.exports = function ($rootScope, $location) {
 
   /**
    * Object context
@@ -69,9 +69,6 @@ module.exports = function ($rootScope, $location, Analytics) {
    * @return {Void}
    */
   $rootScope.$on('$locationChangeSuccess', function(event, newUrl, oldUrl) {
-    if(newUrl.indexOf('proposals/') >= 0){
-      Analytics.trackTechnologyAcess(newUrl.substring(newUrl.indexOf('proposals')+13));
-    }
     if(!$rootScope.technologySaved && (oldUrl.indexOf('/new') < 0 || oldUrl.indexOf('/edit') < 0)){
       context.closeAlert();
     }

@@ -1,4 +1,4 @@
-module.exports = function ($rootScope, $q, $timeout, TechnologyService, Analytics) {
+module.exports = function ($rootScope, $q, $timeout, TechnologyService) {
 
   /**
    * Object context
@@ -68,9 +68,6 @@ this.getUserEmail = function(callBackFunction, authResult){
     gapi.client.load('oauth2', 'v2', function() {
       gapi.client.oauth2.userinfo.get().execute(function(resp) {
         $rootScope.userEmail = resp.email;
-          if(authResult == undefined && $rootScope.userEmail){
-        	  Analytics.trackUser($rootScope.userEmail.replace('@'+resp.hd, ''));
-          }
           if(callBackFunction){
             callBackFunction(authResult);
           }
