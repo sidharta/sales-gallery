@@ -1,4 +1,4 @@
-module.exports = function ($rootScope, $q, $timeout, TechnologyService) {
+module.exports = function ($rootScope, $q, $timeout, TechnologyService, $window) {
 
   /**
    * Object context
@@ -68,10 +68,14 @@ this.getUserEmail = function(callBackFunction, authResult){
     gapi.client.load('oauth2', 'v2', function() {
       gapi.client.oauth2.userinfo.get().execute(function(resp) {
         $rootScope.userEmail = resp.email;
-          if(callBackFunction){
-            callBackFunction(authResult);
-          }
-        })
+
+        // salva no dataLayer do GTM
+        $window.dataLayer[0].userID = resp.email;
+
+        if(callBackFunction){
+          callBackFunction(authResult);
+        }
+      })
     });
   },200);
 }
