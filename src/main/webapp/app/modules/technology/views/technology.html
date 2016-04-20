@@ -100,7 +100,7 @@
           <div class="card-section">
             <div class="form-inline">
               <div class="input-group typeahead-input">
-                <input ng-model="technology.endorsed" type="text" class="form-control" placeholder="user" aria-describedby="basic-addon2" uib-typeahead="user as user.email for user in technology.getUsersList($viewValue)" typeahead-min-length="3" typeahead-template-url="customTemplate.html" style="width: 230px;">
+                <input ng-model="technology.endorsed" type="text" class="form-control" placeholder="user" aria-describedby="basic-addon2" uib-typeahead="user as user.email for user in technology.getUsersList($viewValue)" typeahead-min-length="3" typeahead-template-url="customTemplate.html" style="width: 230px;" ng-model-options="{ debounce: { 'default': 300 } }">
                 <span class="input-group-addon">@ciandt.com</span>
               </div>
               <!--<div ng-show="loadingUsers">
