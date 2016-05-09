@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>[Tech Gallery] Resumo diário - {{formattedTimestamp}}</title>
+  <title>[Sales Gallery] Daily summary - {{formattedTimestamp}}</title>
 </head>
 <body>
   <table width="670" cellpadding="0" cellspacing="0" style="width: 670px;">
@@ -14,10 +14,10 @@
           <table style="background-color: #ededed; border-radius: 5px 5px 0 0; width: 670px;" cellpadding="0" cellspacing="0">
             <tr>
               <td style="padding: 30px 0 30px 30px; font-size: 20px; line-height: 24px;">
-                Resumo diário - {{formattedTimestamp}}
+                Daily summary - {{formattedTimestamp}}
               </td>
               <td style="padding: 30px 30px 30px 0;">
-                <a href="{{techgalleryLink}}"><img src="https://storage.googleapis.com/tech-gallery-assets/appLogo/tech-gallery.png" style="max-height: 36px; height: 36px; display: inline-block; border: 0;"></a>
+                <a href="{{techgalleryLink}}"><img src="https://salesgallery.ciandt.com/assets/images/logo.png" style="max-height: 36px; height: 36px; display: inline-block; border: 0;"></a>
               </td>
             </tr>
           </table>
@@ -47,7 +47,7 @@
                     <img src="{{scoreImg}}" alt="" style="height: 30px;">
                   </td>
                   <td style="vertical-align: top; padding-bottom: 20px;">
-                    <div style="margin-bottom: 10px;"><strong>{{recommenderEntity.name}}</strong> em {{formattedTimestamp}}:</div>
+                    <div style="margin-bottom: 10px;"><strong>{{recommenderEntity.name}}</strong> at {{formattedTimestamp}}:</div>
                     <div style="margin-bottom: 10px;">{{commentEntity.comment}}</div>
                   </td>
                 </tr>
@@ -67,7 +67,7 @@
                     &nbsp;
                   </td>
                   <td style="vertical-align: top; padding-bottom: 20px;">
-                    <div style="margin-bottom: 10px;"><strong>{{authorEntity.name}}</strong> em {{formattedTimestamp}}:</div>
+                    <div style="margin-bottom: 10px;"><strong>{{authorEntity.name}}</strong> at {{formattedTimestamp}}:</div>
                     <div style="margin-bottom: 10px;">{{comment}}</div>
                   </td>
                 </tr>
@@ -76,7 +76,7 @@
             </div>
             {{/technologyActivitiesTo}}
             <div style="padding: 30px; border-top: solid 1px #dfdfdf; border-radius: 0 0 5px 5px;">
-              Você está recebendo este email porque está seguindo as tecnologias acima no <a href="{{techgalleryLink}}" style="color: #337ab7; text-decoration: none;">{{appName}}</a>.
+              You're getting this email because you're following the technologies above at <a href="{{techgalleryLink}}" style="color: #337ab7; text-decoration: none;">{{appName}}</a>.
             </div>
           </div>
         </div>

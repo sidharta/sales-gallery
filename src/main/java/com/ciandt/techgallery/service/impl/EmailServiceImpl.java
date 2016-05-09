@@ -119,7 +119,7 @@ public class EmailServiceImpl implements EmailService {
 
   private InternetAddress getFrom() throws UnsupportedEncodingException {
     if (from == null) {
-      String addr = "no-reply@" + TechGalleryUtil.getAppId() + ".com";
+      String addr = "no-reply@sales-gallery.appspot.com";
       log.info("app email from address set to: " + Constants.APP_EMAIL);
       from = new InternetAddress(Constants.APP_EMAIL, addr);
     }
